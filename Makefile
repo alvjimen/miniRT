@@ -29,14 +29,19 @@ CC					:=	gcc
 SRC					=	main.c
 
 OBJ		=	$(SRC:.c=.o)
-INFLAGS			:=	-Imlx_linux -I/usr/include
-CFLAGS			=	-Wall -Werror -Wextra $(INFLAGS)
 RM		=	rm -rf
-LFLAGS			:=	-Lmlx_linux -lmlx_Linux -L/usr/lib -lbsd -lXext -lX11 -lm -lz
+UNAME	:=	$(shell uname)
+ifeq ($(UNAME), Linux)
+	LFLAGS			:=	-Lmlx_linux -lmlx_Linux -L/usr/lib -lbsd -lXext -lX11 -lm -lz
+	INFLAGS			:=	-Imlx_linux -I/usr/include
+else
+	LFLAGS			:=	-lmlx -framework OpenGL -framework Appkit -lm
+endif
 END-RULE				=	@echo "$(CSI)$(BLINK)$(END)🎉🎊$(CSI)$(UNBLINK)$(END)\
 	$(CSI)$(FOREGROUND)$(GREEN)$(END) $@ $(CSI)$(END)$(CSI)$(BLINK)$(END)🎊\
 	$(CSI)$(UNBLINK)$(END)"
 
+CFLAGS			=	-Wall -Werror -Wextra $(INFLAGS) -g3
 all:	$(NAME)
 
 $(NAME):	$(OBJ)

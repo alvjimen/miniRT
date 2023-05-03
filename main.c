@@ -1,7 +1,11 @@
 #include "mlx.h"
 #include <stdio.h>
 #include <stdlib.h>
-#define ESC 65307
+#ifdef	__APPLE__
+# define ESC 53
+#else
+# define ESC 65307
+#endif
 #define WIN_H 640
 #define WIN_W 640
 
@@ -35,6 +39,23 @@ int	hook_close(void)
 	printf("Closing the window\n");	
 	exit(0);
 }
+void	ft_draw_square(t_data *img, int px, int py, int width, int height)
+{
+	int	counterx = 0;
+	int	countery = 0;
+
+	while (px + counterx < WIN_W && px + counterx >= 0 && width >= counterx)
+	{
+		countery = 0;
+		while (py + countery < WIN_H && py + countery >= 0 && height >= countery)
+		{
+			my_mlx_pixel_put(img, py + countery, px + counterx, 0x00FF0000); 
+			countery++;
+		}
+		counterx++;
+	}
+
+}
 
 int main(void)
 {
@@ -46,12 +67,16 @@ int main(void)
 	mlx_win  = mlx_new_window(mlx, WIN_W, WIN_H, "Hello World");
 	img.img = mlx_new_image(mlx, WIN_W, WIN_H);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
-	my_mlx_pixel_put(&img, 5, 5, 0x00FF0000); 
-	my_mlx_pixel_put(&img, 4, 4, 0x00FF0000); 
-	my_mlx_pixel_put(&img, 3, 3, 0x00FF0000); 
-	my_mlx_pixel_put(&img, 2, 2, 0x00FF0000); 
-	my_mlx_pixel_put(&img, 1, 1, 0x00FF0000); 
-	my_mlx_pixel_put(&img, 0, 0, 0x00FF0000); 
+
+	/*
+	my_mlx_pixel_put(&img, 5, 5, 0x00FF0000);
+	my_mlx_pixel_put(&img, 4, 4, 0x00FF0000);
+	my_mlx_pixel_put(&img, 3, 3, 0x00FF0000);
+	my_mlx_pixel_put(&img, 2, 2, 0x00FF0000);
+	my_mlx_pixel_put(&img, 1, 1, 0x00FF0000);
+	my_mlx_pixel_put(&img, 0, 0, 0x00FF0000);
+	*/
+	ft_draw_square(&img, 5, 5, 100, 100);
 	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
 	mlx_key_hook(mlx_win, key_hook, &img);
 	mlx_hook(mlx_win, 17, 0, hook_close, &img);
