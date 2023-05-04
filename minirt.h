@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:49:59 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/05/04 13:11:45 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/05/04 18:37:55 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINIRT_H
@@ -24,6 +24,8 @@
 # include "mlx.h"
 # include <stdio.h>
 # include <stdlib.h>
+# include <math.h>
+# include "lib/include/libft.h"
 
 typedef	struct	s_data
 {
@@ -41,9 +43,15 @@ typedef struct	s_3dcord
 	float	z;
 }	t_3dcord;
 
+int			coordx_center(int x);
+int			coordx_uncenter(int x);
+int			coordy_center(int y);
+int			coordy_uncenter(int y);
 int			key_hook(int keycode);
 int			hook_close(void);
-void		ft_draw_square(t_data *img, int px, int py, int width, int height);
 void		my_mlx_pixel_put(t_data *data, int x, int y, int color);
+void		ft_draw_square(t_data *img, int c, int p, int px, int py);
+void		ft_draw_circle(t_data *img, int c, int p, int radius);
+double		ft_aspect_ratio(void);
 #endif
 

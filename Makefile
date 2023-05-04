@@ -29,10 +29,14 @@ CC					:=	gcc
 SRC					=	main.c\
 						hooks.c\
 						draw.c\
+						coords.c\
+
 
 OBJ		=	$(SRC:.c=.o)
 RM		=	rm -rf
 UNAME	:=	$(shell uname)
+LIB		:=	lib/libft.a
+
 ifeq ($(UNAME), Linux)
 	LFLAGS			:=	-Lmlx_linux -lmlx_Linux -L/usr/lib -lbsd -lXext -lX11 -lm -lz
 	INFLAGS			:=	-Imlx_linux -I/usr/include
@@ -46,10 +50,12 @@ END-RULE				=	@echo "$(CSI)$(BLINK)$(END)🎉🎊$(CSI)$(UNBLINK)$(END)\
 CFLAGS			=	-Wall -Werror -Wextra $(INFLAGS) -g3
 all:	$(NAME)
 
-$(NAME):	$(OBJ)
-	@$(CC) -o $(NAME) $(OBJ) $(LFLAGS)
+$(NAME):	$(OBJ) $(LIB)
+	@$(CC) -o $(NAME) $(OBJ) $(CFLAGS) $(LFLAGS) $(LIB)
 	$(END-RULE)
 
+$(LIB):
+	$(MAKE) -C lib
 clean:
 	$(RM) $(OBJ)
 
