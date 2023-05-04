@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:49:59 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/05/04 13:10:23 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/05/04 13:11:45 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINIRT_H
@@ -43,5 +43,7 @@ typedef struct	s_3dcord
 
 int			key_hook(int keycode);
 int			hook_close(void);
+void		ft_draw_square(t_data *img, int px, int py, int width, int height);
+void		my_mlx_pixel_put(t_data *data, int x, int y, int color);
 #endif
 
