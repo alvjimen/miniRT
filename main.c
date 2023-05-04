@@ -22,7 +22,7 @@ int main(void)
 	img.img = mlx_new_image(mlx, WIN_W, WIN_H);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
 
-	ft_draw_square(&img, 5, 5, 10, 10);
+	ft_draw_square(&img, 5, 5, 100, 100);
 	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
 	mlx_key_hook(mlx_win, key_hook, &img);
 	mlx_hook(mlx_win, 17, 0, hook_close, &img);

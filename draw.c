@@ -13,22 +13,25 @@
 
 void	ft_draw_square(t_data *img, int px, int py, int width, int height)
 {
-	int	counterx = 0;
-	int	countery = 0;
-	int	colour = 0xFF0000;
-
+	int		counterx = 0;
+	int		countery = 0;
+	unsigned char	red = 0xFF;
+	unsigned char	blue = 0xFF;
+	unsigned char	green = 0xFF;
+	int		colour;
+	colour = red << 16 | blue << 8 | green;
 	while (px + counterx < WIN_W && px + counterx >= 0 && width >= counterx)
 	{
 		countery = 0;
 		while (py + countery < WIN_H && py + countery >= 0 && height >= countery)
 		{
 			my_mlx_pixel_put(img, py + countery, px + counterx, colour);
-			colour <<= 1;
 			countery++;
 		}
 		counterx++;
 	}
 }
+
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
 	char	*dst;
