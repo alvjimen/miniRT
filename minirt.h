@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:49:59 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/05/04 12:51:57 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/05/04 13:01:08 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINIRT_H
@@ -23,5 +23,8 @@
 
 # include <stdio.h>
 # include <stdlib.h>
+
+int			key_hook(int keycode);
+int			hook_close(void);
 #endif
 
