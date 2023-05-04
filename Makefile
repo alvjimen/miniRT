@@ -28,6 +28,7 @@ CC					:=	gcc
 
 SRC					=	main.c\
 						hooks.c\
+						draw.c\
 
 OBJ		=	$(SRC:.c=.o)
 RM		=	rm -rf
