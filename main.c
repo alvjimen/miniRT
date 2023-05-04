@@ -16,11 +16,11 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
 	char	*dst;
 
-	printf("%d\n", data->bits_per_pixel);
-	dst = data->addr + (y *data->line_length + x * (data->bits_per_pixel / 8));
+	dst = data->addr + (y *data->line_length + x * 4);
 	*(unsigned int *)dst = color;
 }
 
+/*
 int	key_hook(int keycode)
 {
 	if (keycode == ESC)
@@ -34,6 +34,7 @@ int	hook_close(void)
 	printf("Closing the window\n");	
 	exit(0);
 }
+*/
 void	ft_draw_square(t_data *img, int px, int py, int width, int height)
 {
 	int	counterx = 0;

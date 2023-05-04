@@ -26,7 +26,8 @@ NAME				:=	graphics
 DIR_DUP				=	mkdir -p $(@D)
 CC					:=	gcc
 
-SRC					=	main.c
+SRC					=	main.c\
+						hooks.c\
 
 OBJ		=	$(SRC:.c=.o)
 RM		=	rm -rf
