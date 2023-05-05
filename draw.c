@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 13:03:13 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/05/04 20:03:46 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/05/05 08:43:10 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -27,9 +27,21 @@ void	ft_draw_square(t_data *img, int px, int py, int width, int height)
 	}
 }
 
+int	ft_abs(int num)
+{
+	if (num < 0)
+		num = -num;
+	return (num);
+}
+
 int	circle_form(int px, int py, int cx, int cy)
 {
-	 return ((px - cx) + (py - cy));
+	int	resultx;
+	int	resulty;
+
+	resultx = ft_abs(cx - px);
+	resulty = ft_abs(cy - py);
+	return (resultx + resulty);
 }
 
 void	ft_draw_circle(t_data *img, int cx, int cy, int radius)
