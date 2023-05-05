@@ -1,22 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   angle.c                                            :+:      :+:    :+:   */
+/*   scale.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/05 11:30:04 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/05/05 13:23:10 by alvjimen         ###   ########.fr       */
+/*   Created: 2023/05/05 14:48:21 by alvjimen          #+#    #+#             */
+/*   Updated: 2023/05/05 16:36:51 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
 
-double	ft_degree_to_radians(double degree)
+void	scale(t_triangle *triangle)
 {
-	return (degree * (M_PI / 180));
+	triangle->p[0].x += 1.0f;
+	triangle->p[0].x *= 0.5f * WIN_W;
+	triangle->p[0].y += 1.0f;
+	triangle->p[0].y *= 0.5f * WIN_H;
+	triangle->p[1].x += 1.0f;
+	triangle->p[1].x *= 0.5f * WIN_W;
+	triangle->p[1].y += 1.0f;
+	triangle->p[1].y *= 0.5f * WIN_H;
+	triangle->p[2].x += 1.0f;
+	triangle->p[2].x *= 0.5f * WIN_W;
+	triangle->p[2].y += 1.0f;
+	triangle->p[2].y *= 0.5f * WIN_H;
 }
 
-double	ft_radians_to_degree(double radians)
-{
-	return (radians / (M_PI/ 180));
-}
