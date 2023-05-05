@@ -1,32 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   coords.c                                           :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/04 18:06:37 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/05/05 11:01:18 by alvjimen         ###   ########.fr       */
+/*   Created: 2022/06/15 11:02:59 by alvjimen          #+#    #+#             */
+/*   Updated: 2022/06/27 19:22:59 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "minirt.h"
 
-int	coordx_center(int x)
-{
-	return (x + (WIN_W / 2));
-}
+#include "libft.h"
 
-int	coordx_uncenter(int x)
+void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
-	return (x - (WIN_W / 2));
-}
+	size_t		nbr;
+	char		*str;
+	char		*src1;
 
-int	coordy_center(int y)
-{
-	return (y + (WIN_H / 2));
-}
-
-int	coordy_uncenter(int y)
-{
-	return (y - (WIN_W / 2));
+	if (src == dest)
+		return (dest);
+	src1 = (char *)src;
+	str = dest;
+	nbr = 0;
+	while (nbr < n)
+	{
+		str[nbr] = src1[nbr];
+		nbr++;
+	}
+	return (dest);
 }

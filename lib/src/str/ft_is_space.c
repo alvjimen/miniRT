@@ -1,32 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   coords.c                                           :+:      :+:    :+:   */
+/*   ft_is_space.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/04 18:06:37 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/05/05 11:01:18 by alvjimen         ###   ########.fr       */
+/*   Created: 2023/01/30 17:09:48 by alvjimen          #+#    #+#             */
+/*   Updated: 2023/01/30 17:10:22 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "minirt.h"
 
-int	coordx_center(int x)
+int	ft_is_space(char chr)
 {
-	return (x + (WIN_W / 2));
-}
-
-int	coordx_uncenter(int x)
-{
-	return (x - (WIN_W / 2));
-}
-
-int	coordy_center(int y)
-{
-	return (y + (WIN_H / 2));
-}
-
-int	coordy_uncenter(int y)
-{
-	return (y - (WIN_W / 2));
+	return ((chr > 8 && chr < 14) || chr == 32);
 }

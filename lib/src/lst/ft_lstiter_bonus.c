@@ -1,32 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   coords.c                                           :+:      :+:    :+:   */
+/*   ft_lstiter_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/04 18:06:37 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/05/05 11:01:18 by alvjimen         ###   ########.fr       */
+/*   Created: 2022/06/27 16:32:15 by alvjimen          #+#    #+#             */
+/*   Updated: 2023/01/30 17:18:25 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "minirt.h"
 
-int	coordx_center(int x)
-{
-	return (x + (WIN_W / 2));
-}
+#include "lst.h"
 
-int	coordx_uncenter(int x)
+void	ft_lstiter(t_list *lst, void (*f)(void *))
 {
-	return (x - (WIN_W / 2));
-}
+	t_list	*node;
 
-int	coordy_center(int y)
-{
-	return (y + (WIN_H / 2));
-}
-
-int	coordy_uncenter(int y)
-{
-	return (y - (WIN_W / 2));
+	if (!lst)
+		return ;
+	node = lst;
+	while (node)
+	{		
+		f(node->content);
+		node = node->next;
+	}
 }

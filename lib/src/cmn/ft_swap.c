@@ -1,32 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   coords.c                                           :+:      :+:    :+:   */
+/*   ft_swap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/04 18:06:37 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/05/05 11:01:18 by alvjimen         ###   ########.fr       */
+/*   Created: 2023/03/31 12:21:59 by alvjimen          #+#    #+#             */
+/*   Updated: 2023/03/31 12:23:19 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "minirt.h"
 
-int	coordx_center(int x)
+void	ft_swap(void **ptr1, void **ptr2)
 {
-	return (x + (WIN_W / 2));
-}
+	void	*ptr;
 
-int	coordx_uncenter(int x)
-{
-	return (x - (WIN_W / 2));
-}
-
-int	coordy_center(int y)
-{
-	return (y + (WIN_H / 2));
-}
-
-int	coordy_uncenter(int y)
-{
-	return (y - (WIN_W / 2));
+	ptr = *ptr1;
+	*ptr1 = *ptr2;
+	*ptr2 = ptr;
 }

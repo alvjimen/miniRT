@@ -1,32 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   coords.c                                           :+:      :+:    :+:   */
+/*   ft_printf_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/04 18:06:37 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/05/05 11:01:18 by alvjimen         ###   ########.fr       */
+/*   Created: 2022/07/15 16:59:10 by alvjimen          #+#    #+#             */
+/*   Updated: 2022/07/26 19:40:50 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "minirt.h"
+#include "prt.h"
 
-int	coordx_center(int x)
+int	ft_printf(const char *str, ...)
 {
-	return (x + (WIN_W / 2));
-}
+	va_list	args;
+	ssize_t	count;
+	char	*s;
 
-int	coordx_uncenter(int x)
-{
-	return (x - (WIN_W / 2));
-}
-
-int	coordy_center(int y)
-{
-	return (y + (WIN_H / 2));
-}
-
-int	coordy_uncenter(int y)
-{
-	return (y - (WIN_W / 2));
+	count = 0;
+	s = (char *)str;
+	va_start(args, str);
+	while (*s)
+	{
+		if (*s == '%')
+			ft_conversion(&s, args, &count);
+		else
+			count += write(1, s, 1);
+		s++;
+	}
+	va_end(args);
+	return (count);
 }

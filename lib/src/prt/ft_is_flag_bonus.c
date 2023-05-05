@@ -1,32 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   coords.c                                           :+:      :+:    :+:   */
+/*   ft_is_flag_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alvaro </var/spool/mail/alvaro>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/04 18:06:37 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/05/05 11:01:18 by alvjimen         ###   ########.fr       */
+/*   Created: 2022/07/26 12:17:40 by alvaro            #+#    #+#             */
+/*   Updated: 2022/08/16 17:42:23 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "minirt.h"
 
-int	coordx_center(int x)
-{
-	return (x + (WIN_W / 2));
-}
+#include "prt.h"
 
-int	coordx_uncenter(int x)
+int	ft_is_flag(char **str)
 {
-	return (x - (WIN_W / 2));
-}
-
-int	coordy_center(int y)
-{
-	return (y + (WIN_H / 2));
-}
-
-int	coordy_uncenter(int y)
-{
-	return (y - (WIN_W / 2));
+	return (*str[0] == '#' || *str[0] == ' ' || *str[0] == '+'
+		|| *str[0] == '-' || (*str[0] >= '0' && *str[0] <= '9'));
 }

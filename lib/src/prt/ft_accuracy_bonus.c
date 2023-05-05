@@ -1,32 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   coords.c                                           :+:      :+:    :+:   */
+/*   ft_accuracy_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alvaro </var/spool/mail/alvaro>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/04 18:06:37 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/05/05 11:01:18 by alvjimen         ###   ########.fr       */
+/*   Created: 2022/07/26 10:43:51 by alvaro            #+#    #+#             */
+/*   Updated: 2022/09/12 17:44:31 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "minirt.h"
+#include "prt.h"
 
-int	coordx_center(int x)
+ssize_t	ft_accuracy(t_flags *flags)
 {
-	return (x + (WIN_W / 2));
-}
+	ssize_t			count;
 
-int	coordx_uncenter(int x)
-{
-	return (x - (WIN_W / 2));
-}
-
-int	coordy_center(int y)
-{
-	return (y + (WIN_H / 2));
-}
-
-int	coordy_uncenter(int y)
-{
-	return (y - (WIN_W / 2));
+	count = 0;
+	while (count < flags->accuracy)
+		count += write(1, "0", 1);
+	flags->accuracy = 0;
+	return (count);
 }

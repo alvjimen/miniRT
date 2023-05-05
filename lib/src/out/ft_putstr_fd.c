@@ -1,32 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   coords.c                                           :+:      :+:    :+:   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/04 18:06:37 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/05/05 11:01:18 by alvjimen         ###   ########.fr       */
+/*   Created: 2022/06/25 13:54:00 by alvjimen          #+#    #+#             */
+/*   Updated: 2022/06/30 14:31:36 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "minirt.h"
 
-int	coordx_center(int x)
-{
-	return (x + (WIN_W / 2));
-}
+#include "libft.h"
 
-int	coordx_uncenter(int x)
+void	ft_putstr_fd(char *s, int fd)
 {
-	return (x - (WIN_W / 2));
-}
+	size_t	pos;
 
-int	coordy_center(int y)
-{
-	return (y + (WIN_H / 2));
-}
-
-int	coordy_uncenter(int y)
-{
-	return (y - (WIN_W / 2));
+	if (!s || write(fd, NULL, 0))
+		return ;
+	pos = 0;
+	while (s && s[pos])
+		pos ++;
+	write(fd, s, pos);
 }

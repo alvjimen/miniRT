@@ -1,32 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   coords.c                                           :+:      :+:    :+:   */
+/*   ft_dict_search.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/04 18:06:37 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/05/05 11:01:18 by alvjimen         ###   ########.fr       */
+/*   Created: 2022/09/22 16:06:00 by alvjimen          #+#    #+#             */
+/*   Updated: 2022/09/26 16:30:38 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "minirt.h"
+#include "dct.h"
 
-int	coordx_center(int x)
+void	*ft_dict_search(t_list *lst, void *key, size_t step_size)
 {
-	return (x + (WIN_W / 2));
-}
+	t_dict	*dict_field;
 
-int	coordx_uncenter(int x)
-{
-	return (x - (WIN_W / 2));
-}
-
-int	coordy_center(int y)
-{
-	return (y + (WIN_H / 2));
-}
-
-int	coordy_uncenter(int y)
-{
-	return (y - (WIN_W / 2));
+	if (!lst)
+		return (NULL);
+	while (lst)
+	{
+		dict_field = lst->content;
+		if (ft_memcmp(dict_field->key, key, step_size))
+			return (dict_field->value);
+		lst = lst->next;
+	}
+	return (NULL);
 }

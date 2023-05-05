@@ -1,32 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   coords.c                                           :+:      :+:    :+:   */
+/*   ft_content.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/04 18:06:37 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/05/05 11:01:18 by alvjimen         ###   ########.fr       */
+/*   Created: 2022/12/16 17:36:13 by alvjimen          #+#    #+#             */
+/*   Updated: 2022/12/18 17:56:12 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "minirt.h"
 
-int	coordx_center(int x)
-{
-	return (x + (WIN_W / 2));
-}
+#include "dbg.h"
 
-int	coordx_uncenter(int x)
+void	ft_content(int fd, char *str, int padding, char *delimiter[2])
 {
-	return (x - (WIN_W / 2));
-}
+	int	len;
 
-int	coordy_center(int y)
-{
-	return (y + (WIN_H / 2));
-}
-
-int	coordy_uncenter(int y)
-{
-	return (y - (WIN_W / 2));
+	write(fd, delimiter[0], ft_strlen(delimiter[0]));
+	len = (int)ft_strlen(str);
+	write(fd, " ", 1);
+	if (len < (padding - 2))
+	{
+		padding -= (len + 2);
+		while (padding--)
+			write(fd, " ", 1);
+	}
+	write(fd, str, len);
+	write(fd, " ", 1);
+	write(fd, delimiter[1], ft_strlen(delimiter[1]));
+	fflush(NULL);
 }

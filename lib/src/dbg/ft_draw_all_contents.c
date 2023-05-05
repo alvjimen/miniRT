@@ -1,32 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   coords.c                                           :+:      :+:    :+:   */
+/*   ft_draw_all_contents.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/04 18:06:37 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/05/05 11:01:18 by alvjimen         ###   ########.fr       */
+/*   Created: 2022/12/16 17:36:02 by alvjimen          #+#    #+#             */
+/*   Updated: 2023/01/30 18:40:38 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "minirt.h"
 
-int	coordx_center(int x)
-{
-	return (x + (WIN_W / 2));
-}
+#include "dbg.h"
 
-int	coordx_uncenter(int x)
+void	ft_draw_all_contents(t_dbg stc, char **data, char *delimiter[2])
 {
-	return (x - (WIN_W / 2));
-}
+	int		count;
 
-int	coordy_center(int y)
-{
-	return (y + (WIN_H / 2));
-}
-
-int	coordy_uncenter(int y)
-{
-	return (y - (WIN_W / 2));
+	count = 0;
+	while (count < stc.num_fields)
+	{
+		if (count)
+			delimiter[0] = "\0";
+		ft_content(stc.fd, data[count], stc.len, delimiter);
+		count ++;
+	}
+	write(stc.fd, "\n", 1);
 }

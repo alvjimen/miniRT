@@ -1,32 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   coords.c                                           :+:      :+:    :+:   */
+/*   ft_atof.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/04 18:06:37 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/05/05 11:01:18 by alvjimen         ###   ########.fr       */
+/*   Created: 2022/10/21 17:45:04 by alvjimen          #+#    #+#             */
+/*   Updated: 2022/10/28 16:42:58 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "minirt.h"
+#include "libft.h"
 
-int	coordx_center(int x)
+double	ft_atof(char	*str)
 {
-	return (x + (WIN_W / 2));
-}
+	double	result;
+	double	period;
+	size_t	divider;
 
-int	coordx_uncenter(int x)
-{
-	return (x - (WIN_W / 2));
-}
-
-int	coordy_center(int y)
-{
-	return (y + (WIN_H / 2));
-}
-
-int	coordy_uncenter(int y)
-{
-	return (y - (WIN_W / 2));
+	result = ft_atoi(str);
+	period = 0;
+	divider = 1;
+	while (*str >= '0' && *str < '9')
+		str++;
+	if (*str == '.')
+	{
+		str++;
+		period = ft_atoi(str);
+		while (*str >= '0' && *str < '9')
+		{
+			str ++;
+			divider *= 10;
+		}
+	}
+	return (result + period / divider);
 }

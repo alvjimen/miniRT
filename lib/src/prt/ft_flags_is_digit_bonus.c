@@ -1,32 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   coords.c                                           :+:      :+:    :+:   */
+/*   ft_flags_is_digit_bonus.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alvaro </var/spool/mail/alvaro>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/04 18:06:37 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/05/05 11:01:18 by alvjimen         ###   ########.fr       */
+/*   Created: 2022/07/26 10:51:20 by alvaro            #+#    #+#             */
+/*   Updated: 2022/07/30 17:45:04 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "minirt.h"
+#include "prt.h"
 
-int	coordx_center(int x)
+int	ft_flags_is_digit(t_flags *flags, char *str)
 {
-	return (x + (WIN_W / 2));
-}
-
-int	coordx_uncenter(int x)
-{
-	return (x - (WIN_W / 2));
-}
-
-int	coordy_center(int y)
-{
-	return (y + (WIN_H / 2));
-}
-
-int	coordy_uncenter(int y)
-{
-	return (y - (WIN_W / 2));
+	return (*str == 'd' || *str == 'i' || *str == 'u'
+		|| *str == 'x' || *str == 'X' || *str == 'p' || *str == 'o' || !flags);
 }

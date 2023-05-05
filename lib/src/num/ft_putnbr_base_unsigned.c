@@ -1,32 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   coords.c                                           :+:      :+:    :+:   */
+/*   putnbr_base_unsigned.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/04 18:06:37 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/05/05 11:01:18 by alvjimen         ###   ########.fr       */
+/*   Created: 2022/07/20 12:21:21 by alvjimen          #+#    #+#             */
+/*   Updated: 2022/09/20 17:47:37 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "minirt.h"
 
-int	coordx_center(int x)
+#include "num.h"
+
+static void	ft_print_base_unsigned(size_t n, char *str, size_t len)
 {
-	return (x + (WIN_W / 2));
+	if (n >= len)
+		ft_print_base_unsigned(n / len, str, len);
+	write(1, &str[n % len], 1);
 }
 
-int	coordx_uncenter(int x)
+void	ft_putnbr_base_unsigned(size_t nbr, char *base)
 {
-	return (x - (WIN_W / 2));
-}
+	size_t	len;
 
-int	coordy_center(int y)
-{
-	return (y + (WIN_H / 2));
-}
-
-int	coordy_uncenter(int y)
-{
-	return (y - (WIN_W / 2));
+	len = 0;
+	if (!base)
+		return ;
+	while (base[len])
+		len++;
+	if (ft_is_str_uniq_exclude_rule(base, ft_is_plus_or_minus))
+		ft_print_base_unsigned(nbr, base, len);
 }

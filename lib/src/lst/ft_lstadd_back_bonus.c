@@ -1,32 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   coords.c                                           :+:      :+:    :+:   */
+/*   ft_lstadd_back_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/04 18:06:37 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/05/05 11:01:18 by alvjimen         ###   ########.fr       */
+/*   Created: 2022/06/27 16:29:51 by alvjimen          #+#    #+#             */
+/*   Updated: 2022/06/27 16:29:55 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "minirt.h"
 
-int	coordx_center(int x)
-{
-	return (x + (WIN_W / 2));
-}
+#include "lst.h"
 
-int	coordx_uncenter(int x)
+void	ft_lstadd_back(t_list **lst, t_list *new)
 {
-	return (x - (WIN_W / 2));
-}
+	t_list	*lst_last;
 
-int	coordy_center(int y)
-{
-	return (y + (WIN_H / 2));
-}
-
-int	coordy_uncenter(int y)
-{
-	return (y - (WIN_W / 2));
+	if (!new || !lst)
+		return ;
+	if (*lst == NULL)
+		*lst = new;
+	else
+	{
+		lst_last = ft_lstlast(*lst);
+		lst_last->next = new;
+	}
 }

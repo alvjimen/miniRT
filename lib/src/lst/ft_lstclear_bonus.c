@@ -1,32 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   coords.c                                           :+:      :+:    :+:   */
+/*   ft_lstclear_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/04 18:06:37 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/05/05 11:01:18 by alvjimen         ###   ########.fr       */
+/*   Created: 2022/06/27 16:52:54 by alvjimen          #+#    #+#             */
+/*   Updated: 2023/01/30 17:15:55 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "minirt.h"
 
-int	coordx_center(int x)
-{
-	return (x + (WIN_W / 2));
-}
+#include "lst.h"
 
-int	coordx_uncenter(int x)
+void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
-	return (x - (WIN_W / 2));
-}
+	t_list	*node;
+	t_list	*tmp;
 
-int	coordy_center(int y)
-{
-	return (y + (WIN_H / 2));
-}
-
-int	coordy_uncenter(int y)
-{
-	return (y - (WIN_W / 2));
+	if (!lst || !*lst)
+		return ;
+	node = *lst;
+	while (node)
+	{
+		tmp = node->next;
+		ft_lstdelone(node, del);
+		node = tmp;
+	}
+	*lst = NULL;
 }

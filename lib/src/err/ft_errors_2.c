@@ -1,32 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   coords.c                                           :+:      :+:    :+:   */
+/*   errors_2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/04 18:06:37 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/05/05 11:01:18 by alvjimen         ###   ########.fr       */
+/*   Created: 2022/11/25 17:27:57 by alvjimen          #+#    #+#             */
+/*   Updated: 2022/12/01 10:30:43 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "minirt.h"
+#include "err.h"
 
-int	coordx_center(int x)
+void	ft_check_fork(pid_t *child, size_t num_cmd)
 {
-	return (x + (WIN_W / 2));
+	if (child[num_cmd] == -1)
+	{
+		perror("fork with zombies processes");
+		exit (EXIT_FAILURE);
+	}
 }
 
-int	coordx_uncenter(int x)
+void	ft_check_access(int access)
 {
-	return (x - (WIN_W / 2));
-}
-
-int	coordy_center(int y)
-{
-	return (y + (WIN_H / 2));
-}
-
-int	coordy_uncenter(int y)
-{
-	return (y - (WIN_W / 2));
+	if (access == -1)
+	{
+		perror ("ACCESS ");
+		exit (EXIT_FAILURE);
+	}
 }

@@ -1,32 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   coords.c                                           :+:      :+:    :+:   */
+/*   ft_dict_new.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/04 18:06:37 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/05/05 11:01:18 by alvjimen         ###   ########.fr       */
+/*   Created: 2022/09/22 14:19:15 by alvjimen          #+#    #+#             */
+/*   Updated: 2022/09/26 16:26:19 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "minirt.h"
+#include "dct.h"
 
-int	coordx_center(int x)
+t_dict	*ft_dict_new(void *key, void *value)
 {
-	return (x + (WIN_W / 2));
-}
+	t_dict	*dict;
 
-int	coordx_uncenter(int x)
-{
-	return (x - (WIN_W / 2));
-}
-
-int	coordy_center(int y)
-{
-	return (y + (WIN_H / 2));
-}
-
-int	coordy_uncenter(int y)
-{
-	return (y - (WIN_W / 2));
+	if (!value)
+		return (NULL);
+	dict = ft_calloc(1, sizeof(t_dict));
+	if (!dict)
+		return (NULL);
+	dict->key = key;
+	dict->value = value;
+	return (dict);
 }

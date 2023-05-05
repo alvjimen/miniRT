@@ -1,32 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   coords.c                                           :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/04 18:06:37 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/05/05 11:01:18 by alvjimen         ###   ########.fr       */
+/*   Created: 2022/06/15 19:20:53 by alvjimen          #+#    #+#             */
+/*   Updated: 2022/07/09 16:43:17 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "minirt.h"
 
-int	coordx_center(int x)
-{
-	return (x + (WIN_W / 2));
-}
+#include "libft.h"
 
-int	coordx_uncenter(int x)
+void	*ft_memmove(void *dst, const void *src, size_t len)
 {
-	return (x - (WIN_W / 2));
-}
+	size_t	c;
+	char	*s;
+	char	*d;
 
-int	coordy_center(int y)
-{
-	return (y + (WIN_H / 2));
-}
-
-int	coordy_uncenter(int y)
-{
-	return (y - (WIN_W / 2));
+	s = (char *)src;
+	d = dst;
+	c = 0;
+	if (!len)
+		return (dst);
+	if (dst < src)
+	{
+		while (++c <= len)
+			d[c - 1] = s[c - 1];
+	}
+	else if (dst > src)
+	{
+		c = len;
+		while (--c <= len)
+			d[c] = s[c];
+	}
+	return (dst);
 }
