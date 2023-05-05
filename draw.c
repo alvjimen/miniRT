@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 13:03:13 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/05/05 08:43:10 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/05/05 08:56:37 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -39,8 +39,8 @@ int	circle_form(int px, int py, int cx, int cy)
 	int	resultx;
 	int	resulty;
 
-	resultx = ft_abs(cx - px);
-	resulty = ft_abs(cy - py);
+	resultx = ft_abs(cx - coordx_center(px));
+	resulty = ft_abs(cy - coordy_center(py));
 	return (resultx + resulty);
 }
 
@@ -53,7 +53,7 @@ void	ft_draw_circle(t_data *img, int cx, int cy, int radius)
 		countery = 0;
 		while (countery < WIN_H && countery >= 0)
 		{
-			if (circle_form(counterx, countery, cx, cy) <= (radius))
+			if (circle_form(counterx, countery, cx, cy) < (radius))
 				my_mlx_pixel_put(img, counterx, countery, 0xff0000);
 			countery++;
 		}
