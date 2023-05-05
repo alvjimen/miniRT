@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:49:59 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/05/04 18:37:55 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/05/05 11:36:55 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINIRT_H
@@ -43,15 +43,25 @@ typedef struct	s_3dcord
 	float	z;
 }	t_3dcord;
 
+/*coord.c*/
 int			coordx_center(int x);
 int			coordx_uncenter(int x);
 int			coordy_center(int y);
 int			coordy_uncenter(int y);
 int			key_hook(int keycode);
 int			hook_close(void);
+/*draw.c*/
 void		my_mlx_pixel_put(t_data *data, int x, int y, int color);
 void		ft_draw_square(t_data *img, int c, int p, int px, int py);
 void		ft_draw_circle(t_data *img, int c, int p, int radius);
+/*aspect_ratio.c*/
 double		ft_aspect_ratio(void);
+/*perspective.c*/
+void		rotation_x(double angle, int *y, int *z);
+void		rotation_y(double angle, int *x, int *z);
+void		rotation_z(double angle, int *x, int *y);
+/*angle.c*/
+double		ft_degree_to_radians(double degree);
+double		ft_radians_to_degree(double radians);
 #endif
 

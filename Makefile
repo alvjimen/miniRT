@@ -30,6 +30,8 @@ SRC					=	main.c\
 						hooks.c\
 						draw.c\
 						coords.c\
+						angle.c\
+						perspective.c\
 
 
 OBJ		=	$(SRC:.c=.o)
