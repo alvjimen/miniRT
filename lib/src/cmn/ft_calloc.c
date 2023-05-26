@@ -25,7 +25,7 @@ void	*ft_calloc(size_t count, size_t size)
 	counter = 0;
 	if (!pointer)
 		return (pointer);
-	while (counter < num_bytes + 1)
+	while (counter < num_bytes)
 		pointer[counter++] = '\0';
 	return (pointer);
 }

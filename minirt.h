@@ -24,7 +24,8 @@
 # define WIN_W 640.0
 # define ANGLE 1.5707963268f /*90º*/
 # define NEAR 0.1f
-# define FAR 1000.0f # include "mlx.h"
+# define FAR 1000.0f
+# include "mlx.h"
 # include <stdio.h>
 # include <stdlib.h>
 # include <math.h>

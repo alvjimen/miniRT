@@ -32,7 +32,22 @@ SRC					=	main.c\
 						coords.c\
 						angle.c\
 						perspective.c\
-
+						rotations.c\
+						normalize.c\
+						aspect_ratio.c\
+						element.c\
+						init_figures.c\
+						test.c\
+						sphere.c\
+						matrix.c\
+						projection.c\
+						vec3d.c\
+						vec3d_math_vec3d.c\
+						vec3d_math_double.c\
+						vector4d.c\
+						ray.c\
+						ppm.c\
+						camera.c\
 
 OBJ		=	$(SRC:.c=.o)
 RM		=	rm -rf
@@ -41,15 +56,16 @@ LIB		:=	lib/libft.a
 
 ifeq ($(UNAME), Linux)
 	LFLAGS			:=	-Lmlx_linux -lmlx_Linux -L/usr/lib -lbsd -lXext -lX11 -lm -lz
-	INFLAGS			:=	-Imlx_linux -I/usr/include
+	INFLAGS			:=	-Imlx_linux -I/usr/include -I./lib/include
 else
 	LFLAGS			:=	-lmlx -framework OpenGL -framework Appkit -lm
+	INFLAGS			:=	-I./lib/include
 endif
 END-RULE				=	@echo "$(CSI)$(BLINK)$(END)🎉🎊$(CSI)$(UNBLINK)$(END)\
 	$(CSI)$(FOREGROUND)$(GREEN)$(END) $@ $(CSI)$(END)$(CSI)$(BLINK)$(END)🎊\
 	$(CSI)$(UNBLINK)$(END)"
 
-CFLAGS			=	-Wall -Werror -Wextra $(INFLAGS) -g3
+CFLAGS			=	-Wall -Werror -Wextra $(INFLAGS) -g3 #-fsanitize=address
 all:	$(NAME)
 
 $(NAME):	$(OBJ) $(LIB)

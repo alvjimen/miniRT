@@ -17,7 +17,7 @@ t_ray	*ft_init_ray(t_vec3d *origin, t_vec3d *direction)
 
 	if (!origin || !direction)
 		return (NULL);
-	ptr = malloc(sizeof(ptr));
+	ptr = malloc(sizeof(*ptr));
 	if (!ptr)
 		return (NULL);
 	ptr->origin = origin;

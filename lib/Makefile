@@ -6,7 +6,7 @@
 #    By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/20 17:19:14 by alvjimen          #+#    #+#              #
-#    Updated: 2023/04/23 11:26:12 by alvjimen         ###   ########.fr        #
+#    Updated: 2023/05/11 09:13:04 by alvjimen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -259,7 +259,7 @@ AR						:=	ar
 ARFLAGS					:=	-rcs
 RM						:=	rm -rf
 CC						:=	gcc
-CFLAGS					:=	-Wall -Werror -Wextra --std=c89 -pedantic -g3 -fsanitize=undefined -fsanitize=address #-O2
+CFLAGS					:=	-Wall -Werror -Wextra #--std=c89 -pedantic -g3 #-fsanitize=undefined -fsanitize=address #-O2
 PPFLAGS					:=	-MMD -MP $(INCLUDE)
 INCLUDE					:=	-I $(INC-DIR)
 # For create direcotory and print
