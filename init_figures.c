@@ -1,22 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   aspect_ratio.c                                     :+:      :+:    :+:   */
+/*   init_figures.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/04 18:30:52 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/05/26 13:57:11 by alvjimen         ###   ########.fr       */
+/*   Created: 2023/05/11 09:14:56 by alvjimen          #+#    #+#             */
+/*   Updated: 2023/05/24 19:19:58 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
 
-double	aspect_ratio_h(void)
+void	sphere(t_element *element, t_vec4d coord, double diameter,
+		t_colour colour)
 {
-	return ((double)WIN_W / ASPECT_RATIO / WIN_W);
-}
-
-double	aspect_ratio_w(void)
-{
-	return ((double)WIN_W / WIN_W / ASPECT_RATIO);
+	element->type = SPHERE;
+	element->coords = coord;
+	element->diameter = diameter;
+	element->colour = colour;
 }

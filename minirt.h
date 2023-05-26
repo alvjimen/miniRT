@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:49:59 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/05/05 13:20:15 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/05/26 13:54:08 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINIRT_H
@@ -14,73 +14,171 @@
 /*KEYBOARD BINDING*/
 # ifdef	__APPLE__
 #  define ESC 53
+#  define S 115
 # else
 #  define ESC 65307
-#  define X 120
-#  define Y 121
-#  define Z 122
+#  define S 115
 # endif
 /*WIN SIZE*/
-# define WIN_H 640
-# define WIN_W 640
+# define ASPECT_RATIO 16.0 / 9.0
+# define WIN_W 640.0
 # define ANGLE 1.5707963268f /*90º*/
 # define NEAR 0.1f
-# define FAR 1000.0f
-
-# include "mlx.h"
+# define FAR 1000.0f # include "mlx.h"
 # include <stdio.h>
 # include <stdlib.h>
 # include <math.h>
-# include "lib/include/libft.h"
+# include <fcntl.h>
+# include "libft.h"
 
-typedef	struct	s_data
+typedef enum	e_type
 {
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-}	t_data;
+	AMBIENT_LIGHT,
+	CAMERA,
+	LIGHT,
+	SPHERE,
+	PLANE,
+	CYLINDER
+}	t_type;
+
 
 typedef struct	s_vec3d
 {
-	float	x;
-	float	y;
-	float	z;
+	double	x;
+	double	y;
+	double	z;
 }	t_vec3d;
+
+typedef	struct	s_camera
+{
+	double	viewport_height;
+	double	viewport_width;
+	double	focal_length;
+	t_vec3d	*lower_left_corner;
+	t_vec3d	*origin;
+}	t_camera;
+
+typedef	struct	s_colour
+{
+	unsigned char	alpha;
+	unsigned char	red;
+	unsigned char	green;
+	unsigned char	blue;
+}	t_colour;
 
 typedef struct	s_vec4d
 {
-	float	x;
-	float	y;
-	float	z;
-	float	w;
+	double	x;
+	double	y;
+	double	z;
+	double	w;
 }	t_vec4d;
 
-typedef struct s_matrix_4d
+typedef struct	s_m4x4
 {
-	t_vec4d	matrix[4];
-}	t_matrix_4d;
+	t_vec4d	r[4];
+}	t_m4x4;
+
+typedef struct	s_ray
+{
+	t_vec3d	*origin;
+	t_vec3d	*direction;
+}	t_ray;
+
+typedef struct t_element
+{
+	t_type		type;
+	t_vec4d		coords;
+	t_vec3d		orientation_vector;
+	t_colour	colour;
+	double		diameter;
+	double		height;
+	double		light_ratio;
+	double		hfov;
+}	t_element;
+
+typedef	struct	s_data
+{
+	void		*mlx;
+	void		*mlx_win;
+	void		*img;
+	char		*addr;
+	int			bits_per_pixel;
+	int			line_length;
+	int			endian;
+	int			image_width;
+	int			image_height;
+	t_list		*elements;
+	t_camera	*camera;
+	double		aspect_ratio;
+}	t_data;
+
+/*Horizontalfield of view in degrees 0-180*/
 
 /*coord.c*/
-int			coordx_center(int x);
-int			coordx_uncenter(int x);
-int			coordy_center(int y);
-int			coordy_uncenter(int y);
-int			key_hook(int keycode);
-int			hook_close(void);
+double			coordx_center(double x);
+double			coordx_uncenter(double x);
+double			coordy_center(double y);
+double			coordy_uncenter(double y);
+/*normalize.c*/
+double			normalize_coord(double coord, double max_coord, double min_coord);
+double			unnormalize_coord(double n_coord, double max_coord, double min_coord);
+/*hooks.c*/
+int				key_hook(int keycode, t_data *img);
+int				hook_close(void);
 /*draw.c*/
-void		my_mlx_pixel_put(t_data *data, int x, int y, int color);
-void		ft_draw_square(t_data *img, int c, int p, int px, int py);
-void		ft_draw_circle(t_data *img, int c, int p, int radius);
+void			my_mlx_pixel_put(t_data *data, int x, int y, int color);
+void			ft_draw_background(t_data *img);
+void			ft_draw_background_v2(t_data *img);
+int				ft_color_double_to_int(double c);
 /*aspect_ratio.c*/
-double		ft_aspect_ratio(void);
-/*perspective.c*/
-void		rotation_x(double angle, int *y, int *z);
-void		rotation_y(double angle, int *x, int *z);
-void		rotation_z(double angle, int *x, int *y);
+double			aspect_ratio_h(void);
+double			aspect_ratio_w(void);
+/*rotations.c*/
+void			rotation_x(double angle, t_vec4d *v);
+void			rotation_y(double angle, t_vec4d *v);
+void			rotation_z(double angle, t_vec4d *v);
+void			ft_rotate_elements(t_list *lst, void (f)(double, t_vec4d *));
 /*angle.c*/
-double		ft_degree_to_radians(double degree);
-double		ft_radians_to_degree(double radians);
+double			ft_degree_to_radians(double degree);
+double			ft_radians_to_degree(double radians);
+/*projection.c*/
+void			*ft_get_matrix_projection(double fovangle);
+/*element.c*/
+t_element		*element_init(void);
+/*init_figures.c*/
+void			sphere(t_element *element, t_vec4d coord, double diameter, t_colour colour);
+/*matrix.c*/
+void matrixmultiplication(t_vec4d *origin, t_vec4d *destiny, t_m4x4 *matrix);
+/*vec3d.c*/
+t_vec3d			*ft_init_vec3d(double x, double y, double z);
+double			ft_vec3d_len(t_vec3d *o1);
+double			ft_vec3d_squared_len(t_vec3d *o1);
+t_vec3d			*ft_vec3d_unit_lenght(t_vec3d *o1);
+/*vec3d_math_vec3d.c*/
+t_vec3d			*ft_vec3d_plus_vec3d(t_vec3d *o1, t_vec3d *o2);
+t_vec3d			*ft_vec3d_minus_vec3d(t_vec3d *o1, t_vec3d *o2);
+t_vec3d			*ft_vec3d_pro_vec3d(t_vec3d *o1, t_vec3d *o2);
+double			ft_vec3d_dot(t_vec3d *o1, t_vec3d *o2);
+/*vec3d_math_double.c*/
+t_vec3d			*ft_vec3d_pro_double(t_vec3d *o1, double o2);
+t_vec3d			*ft_vec3d_div_double(t_vec3d *o1, double o2);
+void			ft_vec3d_div_double_ptr(t_vec3d *o1, double o2, t_vec3d *dst);
+void			ft_vec3d_pro_double_ptr(t_vec3d *o1, double o2, t_vec3d *dst);
+/*vector4d.c*/
+t_vec4d			*ft_vec4d_init(double x, double y, double z, double w);
+/*ray.c*/
+t_ray		*ft_init_ray(t_vec3d *origin, t_vec3d *direction);
+t_vec3d		*ft_ray_at(t_ray *ray, double t);
+int			ft_ray_color(t_ray *ray);
+t_vec3d		*ft_ray_direction(t_data *img, int x, int y);
+void		ft_destroy_ray(t_ray *ray);
+/*ppm.c*/
+void	ft_draw_ppm_header(int	width, int height, int fd);
+void	ft_draw_ppm_pixel(int colour, int fd);
+int		get_mlx_pixel_colour(t_data *img, int x, int y);
+void	ft_prt_ppm_file_from_img(t_data *img, int width, int height, int fd);
+/*camera.c*/
+void	ft_img(t_data *img, const int image_width, const double aspect_ratio);
+t_camera	*ft_init_camera(t_vec3d *origin, const double aspect_ratio);
 #endif
-

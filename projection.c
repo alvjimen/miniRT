@@ -1,24 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   normalize.c                                        :+:      :+:    :+:   */
+/*   projection.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/11 08:58:29 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/05/24 19:10:24 by alvjimen         ###   ########.fr       */
+/*   Created: 2023/05/10 19:14:44 by alvjimen          #+#    #+#             */
+/*   Updated: 2023/05/24 16:25:29 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
 
-double	normalize_coord(double coord, double min_coord, double max_coord)
+void	*ft_get_matrix_projection(double fovangle)
 {
-	return (2 * ((coord - min_coord) / (max_coord - min_coord) - 0.5));
-}
-/*this return a number between -1 and 1 if is not for -0.5 it was between 0
-  and 2*/
+	t_m4x4	*project;
+	double	f;
+	double	a;
 
-double	unnormalize_coord(double n_coord, double min_coord, double max_coord)
-{
-	return ((n_coord / 2 + 0.5) * (max_coord - min_coord) + min_coord);
+	project = ft_calloc(1, sizeof(t_m4x4));
+	if (!project)
+		return (NULL);
+	f = 1 / tan(fovangle / 2);
+	a = aspect_ratio_h();
+	project->r[0].x = f * a;
+	project->r[1].y = f;
+	project->r[2].z = FAR / (FAR - NEAR);
+	project->r[2].w = 1;
+	project->r[3].z = (-FAR * NEAR) / (FAR - NEAR);
+	project->r[3].w = 0;
+	return (project);
 }

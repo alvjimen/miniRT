@@ -1,22 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   aspect_ratio.c                                     :+:      :+:    :+:   */
+/*   vector4d.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/04 18:30:52 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/05/26 13:57:11 by alvjimen         ###   ########.fr       */
+/*   Created: 2023/05/24 16:39:28 by alvjimen          #+#    #+#             */
+/*   Updated: 2023/05/24 18:17:53 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
 
-double	aspect_ratio_h(void)
+t_vec4d	*ft_vec4d_init(double x, double y, double z, double w)
 {
-	return ((double)WIN_W / ASPECT_RATIO / WIN_W);
-}
+	t_vec4d	*ptr;
 
-double	aspect_ratio_w(void)
-{
-	return ((double)WIN_W / WIN_W / ASPECT_RATIO);
+	ptr = malloc(sizeof(t_vec4d));
+	if (!ptr)
+		return (ptr);
+	ptr->x = x;
+	ptr->y = y;
+	ptr->z = z;
+	ptr->w = w;
+	return (ptr);
 }

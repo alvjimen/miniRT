@@ -6,61 +6,72 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 13:03:13 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/05/05 11:05:11 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/05/26 13:56:39 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
 
-void	ft_draw_square(t_data *img, int px, int py, int width, int height)
+int	ft_color_double_to_int(double c)
 {
-	int		counterx = 0;
-	int		countery = 0;
-	while (px + counterx < WIN_W && px + counterx >= 0 && width >= counterx)
+	return (c * 255.999);
+}
+
+void	ft_draw_background_v2(t_data *img)
+{
+	int		x;
+	int		y;
+	int		colour;
+	t_ray	*ray;
+	t_vec3d	*vector;
+
+	y = 0;
+	while (y < img->image_height)
 	{
-		countery = 0;
-		while (py + countery < WIN_H && py + countery >= 0 && height >= countery)
+		x = 0;
+		while (x < img->image_width)
 		{
-			my_mlx_pixel_put(img, py + countery, px + counterx, 0xffffff);
-			countery++;
+			vector =  ft_ray_direction(img, x, y);
+			ray = ft_init_ray(img->camera->origin, vector);
+			if (!ray)
+			{
+				free(vector);
+				return ;
+			}
+			colour = ft_ray_color(ray);
+			ft_destroy_ray(ray);
+			my_mlx_pixel_put(img, x, y, colour);
+			x++;
 		}
-		counterx++;
+		y++;
 	}
 }
 
-int	circle_form(int px, int py, int cx, int cy)
+void	ft_draw_background(t_data *img)
 {
-	int	resultx;
-	int	resulty;
+	int	x;
+	int	y;
+	int	colour;
 
-	resultx = cx - px;
-	resultx *= resultx;
-	resulty = cy - py;
-	resulty *= resulty;
-	return (resultx + resulty);
-}
-/*if ((resultx + resulty) <= (radius * radius))*/
-
-void	ft_draw_circle(t_data *img, int cx, int cy, int radius)
-{
-	int		counterx = 0;
-	int		countery = 0;
-	while (counterx < WIN_W && counterx >= 0)
+	y = 0;
+	while (y < img->image_height)
 	{
-		countery = 0;
-		while (countery < WIN_H && countery >= 0)
+		x = 0;
+		while (x < img->image_width)
 		{
-			if (circle_form(counterx, countery, cx, cy) <= (radius * radius))
-				my_mlx_pixel_put(img, counterx, countery, 0xff0000);
-			countery++;
+			colour = (int)(((double)x / (img->image_width - 1)) * 255.999) << 16
+				| (int)(((double)y / (img->image_height - 1)) * 255.999) << 8
+				| (int)(0.25 * 255.999);
+			my_mlx_pixel_put(img, x, y, colour);
+			x++;
 		}
-		counterx++;
+		y++;
 	}
 }
 
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+void	my_mlx_pixel_put(t_data *img, int x, int y, int color)
 {
 	char	*dst;
 
-	dst = data->addr + (y *data->line_length + x * 4);
+	dst = img->addr + (y * img->line_length + x * 4);
 	*(unsigned int *)dst = color;
 }
