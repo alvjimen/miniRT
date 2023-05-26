@@ -54,11 +54,11 @@ t_vec3d	*ft_ray_direction(t_data *img, int x, int y)
 
 	u = ((double)x / (img->image_width - 1));
 	v = ((double)y / (img->image_height - 1));
-	direction = ft_init_vec3d(img->camera->lower_left_corner->x
-			+ (u * img->camera->viewport_width) - img->camera->origin->x,
-			img->camera->lower_left_corner->y +(v * img->camera->viewport_height)
-			- img->camera->origin->y,
-			img->camera->lower_left_corner->z - img->camera->origin->z);
+	direction = ft_init_vec3d(-(img->camera->lower_left_corner->x
+			+ (u * img->camera->viewport_width) - img->camera->origin->x),
+			-(img->camera->lower_left_corner->y +(v * img->camera->viewport_height)
+			- img->camera->origin->y),
+			-(img->camera->lower_left_corner->z - img->camera->origin->z));
 	return (direction);
 }
 
