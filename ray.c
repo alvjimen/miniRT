@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 18:56:49 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/05/26 13:57:45 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/05/27 12:21:48 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -69,15 +69,19 @@ int	ft_ray_color(t_ray *ray)
 	int			colour;
 	t_vec3d		center_sphere = {.x=0,.y=0,.z=-1};
 	t_vec3d		*point_intersection;
+	t_vec3d		*vector_intersection;
 	t_vec3d		*normal_vector;
 
 	t = ft_hit_sphere(&center_sphere, 1, ray); 
 	if (t > 0.0)
 	{
 		point_intersection = ft_ray_at(ray, t);
-		point_intersection->z -= 1.0;
-		normal_vector = ft_vec3d_unit_lenght(point_intersection);
+		if (!point_intersection)
+			return (0);
+		vector_intersection = ft_vec3d_minus_vec3d(point_intersection, &center_sphere);
 		free(point_intersection);
+		normal_vector = ft_vec3d_unit_lenght(vector_intersection);
+		free(vector_intersection);
 		colour = ft_color_double_to_int(0.5 * (normal_vector->x + 1)) << 16 |
 			ft_color_double_to_int(0.5 * (normal_vector->y + 1)) << 8|
 			ft_color_double_to_int(0.5 * (normal_vector->z + 1));
