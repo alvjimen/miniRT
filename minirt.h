@@ -182,4 +182,6 @@ void	ft_prt_ppm_file_from_img(t_data *img, int width, int height, int fd);
 /*camera.c*/
 void	ft_img(t_data *img, const int image_width, const double aspect_ratio);
 t_camera	*ft_init_camera(t_vec3d *origin, const double aspect_ratio);
+/*sphere.c*/
+double	ft_hit_sphere(t_vec3d *center, double diameter, t_ray *ray);
 #endif

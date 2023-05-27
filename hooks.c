@@ -22,8 +22,8 @@ int	key_hook(int keycode, t_data *img)
 	return (0);
 }
 
+	/*printf("Closing the window\n");*/
 int	hook_close(void)
 {
-	/*printf("Closing the window\n");*/
 	exit(0);
 }

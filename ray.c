@@ -67,11 +67,47 @@ int	ft_ray_color(t_ray *ray)
 	t_vec3d		*unit_direction;
 	double		t;
 	int			colour;
+	t_vec3d		center_sphere = {.x=0,.y=0,.z=-1};
+	t_vec3d		*point_intersection;
+	t_vec3d		*normal_vector;
 
+	t = ft_hit_sphere(&center_sphere, 1, ray); 
+	if (t > 0.0)
+	{
+		point_intersection = ft_ray_at(ray, t);
+		point_intersection->z -= 1.0;
+		normal_vector = ft_vec3d_unit_lenght(point_intersection);
+		free(point_intersection);
+		colour = ft_color_double_to_int(0.5 * (normal_vector->x + 1)) << 16 |
+			ft_color_double_to_int(0.5 * (normal_vector->y + 1)) << 8|
+			ft_color_double_to_int(0.5 * (normal_vector->z + 1));
+		free(normal_vector);
+		return (colour);
+	}
 	unit_direction = ft_vec3d_unit_lenght(ray->direction);
 	t = 0.5 * (unit_direction->y + 1.0);
 	free(unit_direction);
 	colour = ft_color_double_to_int((1.0 - t) + t * 0.5) << 16
-		| ft_color_double_to_int((1.0 - t) + t * 0.7) << 8| ft_color_double_to_int(1.0);
+		| ft_color_double_to_int((1.0 - t) + t * 0.7) << 8
+		| ft_color_double_to_int(1.0);
 	return (colour);
 }
+/* this is just for draw a sphere no normals
+int	ft_ray_color(t_ray *ray)
+{
+	t_vec3d		*unit_direction;
+	double		t;
+	int			colour;
+	t_vec3d		center_sphere = {.x=0,.y=0,.z=-1};
+
+	if (ft_hit_sphere(&center_sphere, 1, ray))
+		return (255 << 16);
+	unit_direction = ft_vec3d_unit_lenght(ray->direction);
+	t = 0.5 * (unit_direction->y + 1.0);
+	free(unit_direction);
+	colour = ft_color_double_to_int((1.0 - t) + t * 0.5) << 16
+		| ft_color_double_to_int((1.0 - t) + t * 0.7) << 8
+		| ft_color_double_to_int(1.0);
+	return (colour);
+}
+*/
