@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:49:59 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/05/26 13:54:08 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/05/27 17:03:23 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINIRT_H
@@ -14,7 +14,7 @@
 /*KEYBOARD BINDING*/
 # ifdef	__APPLE__
 #  define ESC 53
-#  define S 115
+#  define S 1
 # else
 #  define ESC 65307
 #  define S 115
@@ -84,6 +84,7 @@ typedef struct	s_ray
 {
 	t_vec3d	*origin;
 	t_vec3d	*direction;
+	t_vec3d	*unit_direction;
 }	t_ray;
 
 typedef struct t_element

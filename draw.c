@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 13:03:13 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/05/26 13:56:39 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/05/27 19:20:00 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -30,7 +30,7 @@ void	ft_draw_background_v2(t_data *img)
 		x = 0;
 		while (x < img->image_width)
 		{
-			vector =  ft_ray_direction(img, x, y);
+			vector =  ft_ray_direction(img, x, img->image_height - y);
 			ray = ft_init_ray(img->camera->origin, vector);
 			if (!ray)
 			{
