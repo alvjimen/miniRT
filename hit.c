@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 14:17:03 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/05/28 17:58:25 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/05/28 19:06:34 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -37,7 +37,7 @@ int	ft_hittable(t_ray *ray, t_camera *camera, t_hit_record *rec,
 		if (element->ft_hit && element->ft_hit(ray, camera, &tmp_rec, element))
 		{
 			if (tmp_rec.t > closest_so_far)
-				hit_anything = 1;
+				continue ;
 			hit_anything = 1;
 			closest_so_far = tmp_rec.t;
 			*rec = tmp_rec;

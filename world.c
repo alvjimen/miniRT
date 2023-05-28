@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 15:53:16 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/05/28 16:56:08 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/05/28 18:58:03 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	ft_world(t_data *img)
 	if (!node)
 		exit(1);
 	ft_lstadd_back(&img->world, node);
+	/*
 	element = ft_alloc_struct(sizeof(*element));
 	if (!element)
 		exit(1);
@@ -37,4 +38,5 @@ void	ft_world(t_data *img)
 	if (!node)
 		exit(1);
 	ft_lstadd_back(&img->world, node);
+	*/
 }

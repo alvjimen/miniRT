@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 13:03:13 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/05/28 16:25:35 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/05/28 19:00:22 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -39,28 +39,6 @@ void	ft_draw_background_v2(t_data *img)
 			}
 			colour = ft_ray_color_v2(ray, img);
 			ft_destroy_ray(ray);
-			my_mlx_pixel_put(img, x, y, colour);
-			x++;
-		}
-		y++;
-	}
-}
-
-void	ft_draw_background(t_data *img)
-{
-	int	x;
-	int	y;
-	int	colour;
-
-	y = 0;
-	while (y < img->image_height)
-	{
-		x = 0;
-		while (x < img->image_width)
-		{
-			colour = (int)(((double)x / (img->image_width - 1)) * 255.999) << 16
-				| (int)(((double)y / (img->image_height - 1)) * 255.999) << 8
-				| (int)(0.25 * 255.999);
 			my_mlx_pixel_put(img, x, y, colour);
 			x++;
 		}
