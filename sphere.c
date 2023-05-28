@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 18:32:04 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/05/28 16:07:13 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/05/28 18:02:07 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -44,7 +44,7 @@ double	ft_root_sphere(t_vec3d *oc, t_ray *ray, t_camera  *camera,
 	half_b = ft_vec3d_dot(oc, ray->unit_direction);
 	c = ft_vec3d_squared_len(oc) - ((sphere->diameter / 2) * (sphere->diameter / 2));
 	discriminant = half_b * half_b - a * c;
-	if (discriminant)
+	if (discriminant < 0)
 		return (NAN);
 	discriminant = sqrt(discriminant);
 	t = (-half_b - discriminant) / a;
