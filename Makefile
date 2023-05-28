@@ -65,7 +65,7 @@ END-RULE				=	@echo "$(CSI)$(BLINK)$(END)🎉🎊$(CSI)$(UNBLINK)$(END)\
 	$(CSI)$(FOREGROUND)$(GREEN)$(END) $@ $(CSI)$(END)$(CSI)$(BLINK)$(END)🎊\
 	$(CSI)$(UNBLINK)$(END)"
 
-CFLAGS			=	-Wall -Werror -Wextra $(INFLAGS) -g3 #-fsanitize=address
+CFLAGS			=	-Wall -Werror -Wextra $(INFLAGS) -g3 -fsanitize=address
 all:	$(NAME)
 
 $(NAME):	$(OBJ) $(LIB)
