@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 13:03:13 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/05/28 07:05:03 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/05/28 16:25:35 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -37,7 +37,7 @@ void	ft_draw_background_v2(t_data *img)
 				free(vector);
 				return ;
 			}
-			colour = ft_ray_color(ray);
+			colour = ft_ray_color_v2(ray, img);
 			ft_destroy_ray(ray);
 			my_mlx_pixel_put(img, x, y, colour);
 			x++;

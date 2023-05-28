@@ -1,22 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_figures.c                                     :+:      :+:    :+:   */
+/*   struct.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/11 09:14:56 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/05/28 16:53:36 by alvjimen         ###   ########.fr       */
+/*   Created: 2023/05/28 15:49:25 by alvjimen          #+#    #+#             */
+/*   Updated: 2023/05/28 16:51:26 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
 
-void	sphere(t_element *element, t_vec3d coord, double diameter, t_colour colour)
+void	*ft_alloc_struct(size_t size)
 {
-	element->type = SPHERE;
-	element->coords = coord;
-	element->diameter = diameter;
-	element->colour = colour;
-	element->hittable = 1;
-	element->ft_hit = ft_hit_sphere_v2;
+	return (ft_calloc(1, size));
 }

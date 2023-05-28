@@ -6,12 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 18:52:59 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/05/24 19:07:20 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/05/28 16:09:11 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
-
-t_element	*element_init(void)
-{
-	return (ft_calloc(1, sizeof(t_element)));
-}

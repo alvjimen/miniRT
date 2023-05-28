@@ -48,6 +48,9 @@ SRC					=	main.c\
 						ray.c\
 						ppm.c\
 						camera.c\
+						hit.c\
+						world.c\
+						struct.c\
 
 OBJ		=	$(SRC:.c=.o)
 RM		=	rm -rf

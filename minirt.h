@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:49:59 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/05/28 10:14:12 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/05/28 16:38:28 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINIRT_H
@@ -55,6 +55,8 @@ typedef	struct	s_camera
 	double	viewport_height;
 	double	viewport_width;
 	double	focal_length;
+	double	t_max;
+
 	t_vec3d	*lower_left_corner;
 	t_vec3d	*origin;
 }	t_camera;
@@ -92,20 +94,21 @@ typedef struct	s_hit_record
 	t_vec3d	*p;
 	t_vec3d	*normal;
 	double	t;
+	int		front_face;
 }	t_hit_record;
 
 typedef struct s_element
 {
 	t_type		type;
-	t_vec4d		coords;
+	t_vec3d		coords;
 	t_vec3d		orientation_vector;
 	t_colour	colour;
 	double		diameter;
 	double		height;
 	double		light_ratio;
 	double		hfov;
-	int			hittable: 1;
-	int			(*f)(t_ray *, t_camera *, t_hit_record *, struct s_element *);
+	int			hittable;
+	int			(*ft_hit)(t_ray *, t_camera *, t_hit_record *, struct s_element *);
 }	t_element;
 
 typedef	struct	s_data
@@ -119,7 +122,7 @@ typedef	struct	s_data
 	int			endian;
 	int			image_width;
 	int			image_height;
-	t_list		*elements;
+	t_list		*world;
 	t_camera	*camera;
 	double		aspect_ratio;
 }	t_data;
@@ -156,16 +159,17 @@ double			ft_radians_to_degree(double radians);
 /*projection.c*/
 void			*ft_get_matrix_projection(double fovangle);
 /*element.c*/
-t_element		*element_init(void);
 /*init_figures.c*/
-void			sphere(t_element *element, t_vec4d coord, double diameter, t_colour colour);
+void			sphere(t_element *element, t_vec3d coord, double diameter, t_colour colour);
 /*matrix.c*/
 void matrixmultiplication(t_vec4d *origin, t_vec4d *destiny, t_m4x4 *matrix);
 /*vec3d.c*/
 t_vec3d			*ft_init_vec3d(double x, double y, double z);
+void			ft_set_vec3d(t_vec3d *ptr, double x, double y, double z);
 double			ft_vec3d_len(t_vec3d *o1);
 double			ft_vec3d_squared_len(t_vec3d *o1);
 t_vec3d			*ft_vec3d_unit_lenght(t_vec3d *o1);
+void			ft_vec3d_negative(t_vec3d *ptr);
 /*vec3d_math_vec3d.c*/
 t_vec3d			*ft_vec3d_plus_vec3d(t_vec3d *o1, t_vec3d *o2);
 t_vec3d			*ft_vec3d_minus_vec3d(t_vec3d *o1, t_vec3d *o2);
@@ -184,6 +188,7 @@ t_vec3d		*ft_ray_at(t_ray *ray, double t);
 int			ft_ray_color(t_ray *ray);
 t_vec3d		*ft_ray_direction(t_data *img, int x, int y);
 void		ft_destroy_ray(t_ray *ray);
+int			ft_ray_color_v2(t_ray *ray, t_data *img);
 /*ppm.c*/
 void	ft_draw_ppm_header(int	width, int height, int fd);
 void	ft_draw_ppm_pixel(int colour, int fd);
@@ -194,4 +199,14 @@ void	ft_img(t_data *img, const int image_width, const double aspect_ratio);
 t_camera	*ft_init_camera(t_vec3d *origin, const double aspect_ratio);
 /*sphere.c*/
 double	ft_hit_sphere(t_vec3d *center, double diameter, t_ray *ray);
+int		ft_hit_sphere_v2(t_ray *ray, t_camera *camera, t_hit_record *rec,
+		t_element *sphere);
+/*hit.c*/
+void	ft_hit_face(t_ray *ray, t_hit_record *rec);
+int	ft_hittable(t_ray *ray, t_camera *camera, t_hit_record *rec,
+		t_list *world);
+/*struct.c*/
+void	*ft_alloc_struct(size_t size);
+/*world.c*/
+void	ft_world(t_data *img);
 #endif

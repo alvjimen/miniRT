@@ -6,7 +6,7 @@
 /*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 18:04:11 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/05/27 18:46:33 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/05/28 16:55:05 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -15,6 +15,7 @@ void	ft_img(t_data *img, const int image_width, const double aspect_ratio)
 {
 	const int	image_height = (int)image_width / aspect_ratio;
 
+	ft_bzero(img, sizeof(t_data));
 	img->mlx = mlx_init();
 	img->mlx_win = mlx_new_window(img->mlx, image_width, image_height,
 			"miniRT");
@@ -41,6 +42,7 @@ t_camera	*ft_init_camera(t_vec3d *origin, const double aspect_ratio)
 	ptr->viewport_height = 2.0;
 	ptr->viewport_width = aspect_ratio * ptr->viewport_height;
 	ptr->focal_length = 1.0;
+	ptr->t_max = INFINITY;
 	ptr->lower_left_corner = ft_init_vec3d(origin->x
 			- (ptr->viewport_width / 2),
 			origin->y - (ptr->viewport_height / 2),

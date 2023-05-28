@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 18:56:49 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/05/27 19:20:12 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/05/28 16:31:15 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -106,4 +106,19 @@ int	ft_ray_color(t_ray *ray)
 		| ft_color_double_to_int((1.0 - t) + t * 0.7) << 8
 		| ft_color_double_to_int(1.0);
 	return (colour);
+}
+
+int	ft_ray_color_v2(t_ray *ray, t_data *img)
+{
+	t_hit_record	rec;
+	double		t;
+
+	if (ft_hittable(ray, img->camera, &rec, img->world))
+		return (ft_color_double_to_int((rec.normal->x + 1) / 2),
+			ft_color_double_to_int((rec.normal->y + 1) / 2),
+			ft_color_double_to_int((rec.normal->z + 1) / 2));
+	t = 0.5 * (ray->unit_direction->y + 1.0);
+	return (ft_color_double_to_int((1.0 - t) + t * 0.5) << 16
+		| ft_color_double_to_int((1.0 - t) + t * 0.7) << 8
+		| ft_color_double_to_int(1.0));
 }
