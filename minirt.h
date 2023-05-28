@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:49:59 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/05/27 17:03:23 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/05/28 10:14:12 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINIRT_H
@@ -87,7 +87,14 @@ typedef struct	s_ray
 	t_vec3d	*unit_direction;
 }	t_ray;
 
-typedef struct t_element
+typedef struct	s_hit_record
+{
+	t_vec3d	*p;
+	t_vec3d	*normal;
+	double	t;
+}	t_hit_record;
+
+typedef struct s_element
 {
 	t_type		type;
 	t_vec4d		coords;
@@ -97,6 +104,8 @@ typedef struct t_element
 	double		height;
 	double		light_ratio;
 	double		hfov;
+	int			hittable: 1;
+	int			(*f)(t_ray *, t_camera *, t_hit_record *, struct s_element *);
 }	t_element;
 
 typedef	struct	s_data
