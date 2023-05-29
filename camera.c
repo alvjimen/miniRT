@@ -29,12 +29,10 @@ void	ft_img(t_data *img, const int image_width, const double aspect_ratio)
 	img->aspect_ratio = aspect_ratio;
 }
 
-t_camera	*ft_init_camera(t_vec3d *origin, const double aspect_ratio)
+t_camera	*ft_init_camera(t_vec3d origin, const double aspect_ratio)
 {
 	t_camera	*ptr;
 
-	if (!origin)
-		return (NULL);
 	ptr = ft_calloc(1, sizeof(*ptr));
 	if (!ptr)
 		return (ptr);
@@ -43,9 +41,9 @@ t_camera	*ft_init_camera(t_vec3d *origin, const double aspect_ratio)
 	ptr->viewport_width = aspect_ratio * ptr->viewport_height;
 	ptr->focal_length = 1.0;
 	ptr->t_max = INFINITY;
-	ptr->lower_left_corner = ft_init_vec3d(origin->x
+	ptr->lower_left_corner = ft_init_vec3d(origin.x
 			- (ptr->viewport_width / 2),
-			origin->y - (ptr->viewport_height / 2),
-			origin->z - ptr->focal_length);
+			origin.y - (ptr->viewport_height / 2),
+			origin.z - ptr->focal_length);
 	return (ptr);
 }

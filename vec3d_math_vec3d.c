@@ -11,38 +11,28 @@
 /* ************************************************************************** */
 #include "minirt.h"
 
-t_vec3d	*ft_vec3d_plus_vec3d(t_vec3d *o1, t_vec3d *o2)
+t_vec3d	ft_vec3d_plus_vec3d(t_vec3d o1, t_vec3d o2)
 {
-	if (!o1 || !o2)
-		return (NULL);
-	return (ft_init_vec3d(o1->x + o2->x, o1->y + o2->y, o1->z + o2->z));
+	return (ft_init_vec3d(o1.x + o2.x, o1.y + o2.y, o1.z + o2.z));
 }
 
-t_vec3d	*ft_vec3d_minus_vec3d(t_vec3d *o1, t_vec3d *o2)
+t_vec3d	ft_vec3d_minus_vec3d(t_vec3d o1, t_vec3d o2)
 {
-	if (!o1 || !o2)
-		return (NULL);
-	return (ft_init_vec3d(o1->x - o2->x, o1->y - o2->y, o1->z - o2->z));
+	return (ft_init_vec3d(o1.x - o2.x, o1.y - o2.y, o1.z - o2.z));
 }
 
-t_vec3d	*ft_vec3d_cross(t_vec3d *o1, t_vec3d *o2)
+t_vec3d	ft_vec3d_cross(t_vec3d o1, t_vec3d o2)
 {
-	if (!o1 || !o2)
-		return (NULL);
-	return (ft_init_vec3d(o1->y * o2->z - o1->z * o2->y,
-			o1->z * o2->x - o1->x * o2->z, o1->x * o2->y - o1->y * o2->x));
+	return (ft_init_vec3d(o1.y * o2.z - o1.z * o2.y,
+			o1.z * o2.x - o1.x * o2.z, o1.x * o2.y - o1.y * o2.x));
 }
 
-t_vec3d	*ft_vec3d_pro_vec3d(t_vec3d *o1, t_vec3d *o2)
+t_vec3d	ft_vec3d_pro_vec3d(t_vec3d o1, t_vec3d o2)
 {
-	if (!o1 || !o2)
-		return (NULL);
-	return (ft_init_vec3d(o1->x * o2->x, o1->y * o2->y, o1->z * o2->z));
+	return (ft_init_vec3d(o1.x * o2.x, o1.y * o2.y, o1.z * o2.z));
 }
 
-double	ft_vec3d_dot(t_vec3d *o1, t_vec3d *o2)
+double	ft_vec3d_dot(t_vec3d o1, t_vec3d o2)
 {
-	if (!o1 || !o2)
-		return (NAN);
-	return (o1->x * o2->x + o1->y * o2->y + o1->z * o2->z);
+	return (o1.x * o2.x + o1.y * o2.y + o1.z * o2.z);
 }

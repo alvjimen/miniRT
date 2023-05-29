@@ -230402,29 +230402,4 @@ P3
 255 255 47
 255 253 54
 
-=================================================================
-==3679==ERROR: LeakSanitizer: detected memory leaks
-
-Direct leak of 159072 byte(s) in 6628 object(s) allocated from:
-    #0 0x7fc6c1787e8f in __interceptor_malloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:145
-    #1 0x55945d03f82c in ft_init_vec3d /home/user/projects/minilibx/vec3d.c:18
-    #2 0x55945d03fcc9 in ft_vec3d_plus_vec3d /home/user/projects/minilibx/vec3d_math_vec3d.c:18
-    #3 0x55945d040923 in ft_ray_at /home/user/projects/minilibx/ray.c:55
-    #4 0x55945d03f482 in ft_hit_sphere_v2 /home/user/projects/minilibx/sphere.c:72
-    #5 0x55945d04207f in ft_hittable /home/user/projects/minilibx/hit.c:37
-    #6 0x55945d041266 in ft_ray_color_v2 /home/user/projects/minilibx/ray.c:117
-    #7 0x55945d03e9db in ft_draw_background_v2 /home/user/projects/minilibx/draw.c:40
-    #8 0x55945d03e647 in main /home/user/projects/minilibx/main.c:23
-    #9 0x7fc6c1291d09 in __libc_start_main ../csu/libc-start.c:308
-
-Direct leak of 159072 byte(s) in 6628 object(s) allocated from:
-    #0 0x7fc6c1787e8f in __interceptor_malloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:145
-    #1 0x55945d03f82c in ft_init_vec3d /home/user/projects/minilibx/vec3d.c:18
-    #2 0x55945d03f5e0 in ft_hit_sphere_v2 /home/user/projects/minilibx/sphere.c:73
-    #3 0x55945d04207f in ft_hittable /home/user/projects/minilibx/hit.c:37
-    #4 0x55945d041266 in ft_ray_color_v2 /home/user/projects/minilibx/ray.c:117
-    #5 0x55945d03e9db in ft_draw_background_v2 /home/user/projects/minilibx/draw.c:40
-    #6 0x55945d03e647 in main /home/user/projects/minilibx/main.c:23
-    #7 0x7fc6c1291d09 in __libc_start_main ../csu/libc-start.c:308
-
 SUMMARY: AddressSanitizer: 318144 byte(s) leaked in 13256 allocation(s).

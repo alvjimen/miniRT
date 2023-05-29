@@ -11,16 +11,13 @@
 /* ************************************************************************** */
 #include "minirt.h"
 
-t_vec3d	*ft_init_vec3d(double x, double y, double z)
+t_vec3d	ft_init_vec3d(double x, double y, double z)
 {
-	t_vec3d	*ptr;
+	t_vec3d	ptr;
 
-	ptr = malloc(sizeof(*ptr));
-	if (!ptr)
-		return (ptr);
-	ptr->x = x;
-	ptr->y = y;
-	ptr->z = z;
+	ptr.x = x;
+	ptr.y = y;
+	ptr.z = z;
 	return (ptr);
 }
 
@@ -33,36 +30,37 @@ void	ft_set_vec3d(t_vec3d *ptr, double x, double y, double z)
 	ptr->z = z;
 }
 
-void	ft_vec3d_negative(t_vec3d *ptr)
+t_vec3d	ft_vec3d_negative(t_vec3d ptr)
 {
-	if (!ptr)
-		return ;
-	if (!isnan(ptr->x))
-		ptr->x = -ptr->x;
-	if (!isnan(ptr->y))
-		ptr->y = -ptr->y;
-	if (!isnan(ptr->z))
-		ptr->z = -ptr->z;
+	t_vec3d	vector;
+
+	if (!isnan(ptr.x))
+		vector.x = -ptr.x;
+	else
+		vector.x = NAN;
+	if (!isnan(ptr.y))
+		vector.y = -ptr.y;
+	else
+		vector.y = NAN;
+	if (!isnan(ptr.z))
+		vector.z = -ptr.z;
+	else
+		vector.z = NAN;
+	return (vector);
 }
 
 /*this is the same to x^2 + y^2 + z^2 */
-double	ft_vec3d_squared_len(t_vec3d *o1)
+double	ft_vec3d_squared_len(t_vec3d o1)
 {
-	if (!o1)
-		return (NAN);
 	return (ft_vec3d_dot(o1, o1));
 }
 
-double	ft_vec3d_len(t_vec3d *o1)
+double	ft_vec3d_len(t_vec3d o1)
 {
-	if (!o1)
-		return (NAN);
 	return (sqrt(ft_vec3d_squared_len(o1)));
 }
 
-t_vec3d	*ft_vec3d_unit_lenght(t_vec3d *o1)
+t_vec3d	ft_vec3d_unit_lenght(t_vec3d o1)
 {
-	if (!o1)
-		return (NULL);
 	return (ft_vec3d_div_double(o1, ft_vec3d_len(o1)));
 }

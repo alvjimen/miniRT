@@ -28,6 +28,7 @@ void	ft_world(t_data *img)
 	if (!node)
 		exit(1);
 	ft_lstadd_back(&img->world, node);
+	/*
 	element = ft_alloc_struct(sizeof(*element));
 	if (!element)
 		exit(1);
@@ -37,4 +38,5 @@ void	ft_world(t_data *img)
 	if (!node)
 		exit(1);
 	ft_lstadd_back(&img->world, node);
+	*/
 }
