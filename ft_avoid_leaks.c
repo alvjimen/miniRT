@@ -1,34 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   projection.c                                       :+:      :+:    :+:   */
+/*   ft_avoid_leaks.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/10 19:14:44 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/05/29 07:29:55 by alvjimen         ###   ########.fr       */
+/*   Created: 2023/05/29 07:32:36 by alvjimen          #+#    #+#             */
+/*   Updated: 2023/05/29 07:57:46 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
 
-/*
-void	*ft_get_matrix_projection(double fovangle)
+t_vec3d	ft_avoid_leaks_vec3d(t_vec3d	*ptr)
 {
-	t_m4x4	*project;
-	double	f;
-	double	a;
+	t_vec3d	vec;
 
-	project = ft_calloc(1, sizeof(t_m4x4));
-	if (!project)
-		return (NULL);
-	f = 1 / tan(fovangle / 2);
-	a = aspect_ratio_h();
-	project->r[0].x = f * a;
-	project->r[1].y = f;
-	project->r[2].z = FAR / (FAR - NEAR);
-	project->r[2].w = 1;
-	project->r[3].z = (-FAR * NEAR) / (FAR - NEAR);
-	project->r[3].w = 0;
-	return (project);
+	ft_bzero(&vec, sizeof(vec));
+	if (!ptr)
+		return (vec);
+	vec = *ptr;
+	free(ptr);
+	return (vec);
 }
-*/
+
+t_vec3d	ft_vec3d_pro_double_no_alloc(t_vec3d *o1, double o2)
+{
+	t_vec3d	vector;
+
+	ft_set_vec3d(&vector, o1->x * o2, o1->y * o2, o1->z * o2);
+	return (vector);
+}

@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 18:56:49 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/05/28 18:56:49 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/05/29 08:10:14 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -46,10 +46,6 @@ t_vec3d	*ft_ray_at(t_ray *ray, double t)
 	if (!ray)
 		return (NULL);
 	pro = ft_vec3d_pro_double(ray->unit_direction, t);
-	/*
-	 * pro = ft_vec3d_pro_double(ray->direction, t);
-	 */
-	
 	if (!pro)
 		return (NULL);
 	value = ft_vec3d_plus_vec3d(ray->origin, pro);
@@ -111,16 +107,14 @@ int	ft_ray_color(t_ray *ray)
 int	ft_ray_color_v2(t_ray *ray, t_data *img)
 {
 	t_hit_record	rec;
-	double		t;
-	int			colour;
+	double			t;
+	int				colour;
 
 	if (ft_hittable(ray, img->camera, &rec, img->world))
 	{
-		colour = ft_color_double_to_int((rec.normal->x + 1) / 2) << 16 |
-			ft_color_double_to_int((rec.normal->y + 1) / 2) <<  8 |
-			ft_color_double_to_int((rec.normal->z + 1) / 2);
-		free(rec.p);
-		free(rec.normal);
+		colour = ft_color_double_to_int((rec.normal.x + 1) * 0.5) << 16 |
+			ft_color_double_to_int((rec.normal.y + 1) * 0.5) <<  8 |
+			ft_color_double_to_int((rec.normal.z + 1) * 0.5);
 		return (colour);
 	}
 	t = 0.5 * (ray->unit_direction->y + 1.0);

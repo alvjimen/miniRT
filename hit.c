@@ -6,16 +6,16 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 14:17:03 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/05/28 19:06:34 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/05/29 08:56:30 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
 
 void	ft_hit_face(t_ray *ray, t_hit_record *rec)
 {
-	rec->front_face  = ft_vec3d_dot(ray->direction, rec->normal) < 0;
+	rec->front_face  = ft_vec3d_dot(ray->direction, &rec->normal) > 0.0;
 	if (!rec->front_face)
-		ft_vec3d_negative(rec->normal);
+		ft_vec3d_negative(&rec->normal);
 }
 
 int	ft_hittable(t_ray *ray, t_camera *camera, t_hit_record *rec,
@@ -23,11 +23,11 @@ int	ft_hittable(t_ray *ray, t_camera *camera, t_hit_record *rec,
 {
 	int				hit_anything;
 	t_hit_record	tmp_rec;
-	double			closest_so_far;
+	double			bk_tmax;
 	t_element		*element;
 
 	hit_anything = 0;
-	closest_so_far = camera->t_max;
+	bk_tmax = camera->t_max;
 	while (world)
 	{
 		element = world->content;
@@ -36,12 +36,11 @@ int	ft_hittable(t_ray *ray, t_camera *camera, t_hit_record *rec,
 			continue ;
 		if (element->ft_hit && element->ft_hit(ray, camera, &tmp_rec, element))
 		{
-			if (tmp_rec.t > closest_so_far)
-				continue ;
 			hit_anything = 1;
-			closest_so_far = tmp_rec.t;
+			camera->t_max = tmp_rec.t;
 			*rec = tmp_rec;
 		}
 	}
+	camera->t_max = bk_tmax;
 	return (hit_anything);
 }

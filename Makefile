@@ -51,6 +51,7 @@ SRC					=	main.c\
 						hit.c\
 						world.c\
 						struct.c\
+						ft_avoid_leaks.c\
 
 OBJ		=	$(SRC:.c=.o)
 RM		=	rm -rf

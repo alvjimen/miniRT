@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:49:59 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/05/28 16:38:28 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/05/29 07:35:08 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINIRT_H
@@ -22,9 +22,6 @@
 /*WIN SIZE*/
 # define ASPECT_RATIO 16.0 / 9.0
 # define WIN_W 640.0
-# define ANGLE 1.5707963268f /*90º*/
-# define NEAR 0.1f
-# define FAR 1000.0f
 # include "mlx.h"
 # include <stdio.h>
 # include <stdlib.h>
@@ -91,8 +88,8 @@ typedef struct	s_ray
 
 typedef struct	s_hit_record
 {
-	t_vec3d	*p;
-	t_vec3d	*normal;
+	t_vec3d	p;
+	t_vec3d	normal;
 	double	t;
 	int		front_face;
 }	t_hit_record;
@@ -209,4 +206,6 @@ int	ft_hittable(t_ray *ray, t_camera *camera, t_hit_record *rec,
 void	*ft_alloc_struct(size_t size);
 /*world.c*/
 void	ft_world(t_data *img);
+/*ft_avoid_leaks_vec3d*/
+t_vec3d	ft_avoid_leaks_vec3d(t_vec3d	*ptr);
 #endif
