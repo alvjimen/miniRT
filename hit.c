@@ -38,10 +38,10 @@ double	ft_root_sphere(t_vec3d *oc, t_ray *ray, t_camera  *camera,
 	sqrtd = sqrt(discriminant);
 
 	t = (-half_b - sqrtd) / a;
-	if (t < camera->focal_length || camera->t_max < t)
+	if (t < 0.0/*camera->focal_length*/ || camera->t_max < t)
 	{
 		t = (-half_b + sqrtd) / a;
-		if (t < camera->focal_length || camera->t_max < t)
+		if (t < 0.0/*camera->focal_length*/ || camera->t_max < t)
 			return (NAN);
 	}
 	return (t);

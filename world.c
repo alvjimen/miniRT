@@ -28,15 +28,13 @@ void	ft_world(t_data *img)
 	if (!node)
 		exit(1);
 	ft_lstadd_back(&img->world, node);
-	/*
 	element = ft_alloc_struct(sizeof(*element));
 	if (!element)
 		exit(1);
-	ft_set_vec3d(&element->coords, 0, -100, -1);
+	ft_set_vec3d(&element->coords, 0, -100.5, -1);
 	sphere(element, element->coords, 200, colour);
 	node = ft_lstnew(element);
 	if (!node)
 		exit(1);
 	ft_lstadd_back(&img->world, node);
-	*/
 }
