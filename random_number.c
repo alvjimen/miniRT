@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 #include <limits.h>
 
+// pseudo_random
 static unsigned int	lfsr113_bits(void)
 {
 	static unsigned int	z1 = 12345;
@@ -37,5 +38,11 @@ unsigned int	uint_random_nbr(void)
 
 double	pseudo_random(void)
 {
-	return (uint_random_nbr() / UINT_MAX);
+	return (uint_random_nbr() / UINT_MAX + 1);
 }
+
+double	random_double(double min, double max)
+{
+	return (min + (max - min) * pseudo_random());
+}
+//return a nbr between [0 - 1)

@@ -30,6 +30,7 @@ t_vec3d	ft_ray_at(t_ray *ray, double t)
 	return (point);
 }
 
+/*camera get_ray*/
 t_vec3d	ft_ray_direction(t_data *img, int x, int y)
 {
 	t_vec3d	direction;
@@ -83,6 +84,7 @@ int	ft_ray_color_v2(t_ray *ray, t_data *img)
 		colour = ft_color_double_to_int((rec.normal.x + 1) * 0.5) << 16
 			| ft_color_double_to_int((rec.normal.y + 1) * 0.5) << 8
 			| ft_color_double_to_int((rec.normal.z + 1) * 0.5);
+		colour = ft_color_vector_to_int(rec.normal);
 		return (colour);
 	}
 	t = 0.5 * (ray->unit_direction.y + 1.0);

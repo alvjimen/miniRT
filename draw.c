@@ -16,6 +16,13 @@ int	ft_color_double_to_int(double c)
 	return (c * 255.999);
 }
 
+int	ft_color_vector_to_int(t_vec3d v)
+{
+	return (ft_color_double_to_int((v.x + 1) * 0.5) << 16
+			| ft_color_double_to_int((v.y + 1) * 0.5) << 8
+			| ft_color_double_to_int((v.z + 1) * 0.5));
+
+}
 void	ft_draw_background_v2(t_data *img)
 {
 	int		x;

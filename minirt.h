@@ -140,10 +140,11 @@ double			unnormalize_coord(double n_coord, double max_coord,
 int				key_hook(int keycode, t_data *img);
 int				hook_close(void);
 /*draw.c*/
-void			my_mlx_pixel_put(t_data *data, int x, int y, int color);
 void			ft_draw_background(t_data *img);
 void			ft_draw_background_v2(t_data *img);
 int				ft_color_double_to_int(double c);
+int				ft_color_vector_to_int(t_vec3d v);
+void			my_mlx_pixel_put(t_data *data, int x, int y, int color);
 /*aspect_ratio.c*/
 double			aspect_ratio_h(void);
 double			aspect_ratio_w(void);
