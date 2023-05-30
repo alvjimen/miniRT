@@ -52,6 +52,7 @@ typedef	struct	s_camera
 	double	viewport_height;
 	double	viewport_width;
 	double	focal_length;
+	double	t_min;
 	double	t_max;
 
 	t_vec3d	lower_left_corner;
@@ -101,6 +102,7 @@ typedef struct s_element
 	t_vec3d		orientation_vector;
 	t_colour	colour;
 	double		diameter;
+	double		radius;
 	double		height;
 	double		light_ratio;
 	double		hfov;
@@ -159,7 +161,7 @@ void			*ft_get_matrix_projection(double fovangle);
 /*init_figures.c*/
 void			sphere(t_element *element, t_vec3d coord, double diameter, t_colour colour);
 /*matrix.c*/
-void matrixmultiplication(t_vec4d *origin, t_vec4d *destiny, t_m4x4 *matrix);
+void			 matrixmultiplication(t_vec4d *origin, t_vec4d *destiny, t_m4x4 *matrix);
 /*vec3d.c*/
 t_vec3d			ft_init_vec3d(double x, double y, double z);
 void			ft_set_vec3d(t_vec3d *ptr, double x, double y, double z);
@@ -178,31 +180,34 @@ t_vec3d			ft_vec3d_div_double(t_vec3d o1, double o2);
 /*vector4d.c*/
 t_vec4d			*ft_vec4d_init(double x, double y, double z, double w);
 /*ray.c*/
-t_ray		ft_init_ray(t_vec3d origin, t_vec3d direction);
-t_vec3d		ft_ray_at(t_ray *ray, double t);
-int			ft_ray_color(t_ray *ray);
-t_vec3d		ft_ray_direction(t_data *img, int x, int y);
-int			ft_ray_color_v2(t_ray *ray, t_data *img);
+t_ray			ft_init_ray(t_vec3d origin, t_vec3d direction);
+t_vec3d			ft_ray_at(t_ray *ray, double t);
+int				ft_ray_color(t_ray *ray);
+t_vec3d			ft_ray_direction(t_data *img, int x, int y);
+int				ft_ray_color_v2(t_ray *ray, t_data *img);
 /*ppm.c*/
-void		ft_draw_ppm_header(int	width, int height, int fd);
-void		ft_draw_ppm_pixel(int colour, int fd);
-int			get_mlx_pixel_colour(t_data *img, int x, int y);
-void		ft_prt_ppm_file_from_img(t_data *img, int width, int height, int fd);
+void			ft_draw_ppm_header(int	width, int height, int fd);
+void			ft_draw_ppm_pixel(int colour, int fd);
+int				get_mlx_pixel_colour(t_data *img, int x, int y);
+void			ft_prt_ppm_file_from_img(t_data *img, int width, int height, int fd);
 /*camera.c*/
-void		ft_img(t_data *img, const int image_width, const double aspect_ratio);
-t_camera	*ft_init_camera(t_vec3d origin, const double aspect_ratio);
+void			ft_img(t_data *img, const int image_width, const double aspect_ratio);
+t_camera		*ft_init_camera(t_vec3d origin, const double aspect_ratio);
 /*sphere.c*/
-double		ft_hit_sphere(t_vec3d *center, double diameter, t_ray *ray);
-int			ft_hit_sphere_v2(t_ray *ray, t_camera *camera, t_hit_record *rec,
+double			ft_hit_sphere(t_vec3d *center, double diameter, t_ray *ray);
+int				ft_hit_sphere_v2(t_ray *ray, t_camera *camera, t_hit_record *rec,
 				t_element *sphere);
 /*hit.c*/
-void		ft_hit_face(t_ray *ray, t_hit_record *rec);
-int			ft_hittable(t_ray *ray, t_camera *camera, t_hit_record *rec,
+void			ft_hit_face(t_ray *ray, t_hit_record *rec);
+int				ft_hittable(t_ray *ray, t_camera *camera, t_hit_record *rec,
 				t_list *world);
 /*struct.c*/
-void		*ft_alloc_struct(size_t size);
+void			*ft_alloc_struct(size_t size);
 /*world.c*/
-void		ft_world(t_data *img);
+void			ft_world(t_data *img);
 /*ft_avoid_leaks_vec3d*/
-t_vec3d		ft_avoid_leaks_vec3d(t_vec3d	*ptr);
+t_vec3d			ft_avoid_leaks_vec3d(t_vec3d	*ptr);
+/*random_number.c*/
+unsigned int	uint_random_nbr(void);
+double			pseudo_random(void);
 #endif
