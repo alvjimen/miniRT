@@ -29,7 +29,6 @@ double	ft_hit_sphere(t_vec3d *center, double diameter, t_ray *ray)
 	return ((-half_b - sqrt(discriminant)) / a);
 }
 
-/*
 double	ft_root_sphere(t_vec3d *oc, t_ray *ray, t_camera  *camera,
 		t_element *sphere)
 {
@@ -41,17 +40,19 @@ double	ft_root_sphere(t_vec3d *oc, t_ray *ray, t_camera  *camera,
 	double	t;
 
 	a = ft_vec3d_squared_len(ray->direction);
-	half_b = ft_vec3d_dot(*oc, ray->unit_direction);
-	c = ft_vec3d_squared_len(*oc) - ((sphere->diameter * sphere->diameter) / 4);
+	half_b = ft_vec3d_dot(*oc, ray->direction);
+	c = ft_vec3d_squared_len(*oc) - (sphere->radius * sphere->radius);
+
 	discriminant = half_b * half_b - a * c;
-	if (discriminant < 0)
+	if (discriminant < 0.0)
 		return (NAN);
 	sqrtd = sqrt(discriminant);
+
 	t = (-half_b - sqrtd) / a;
-	if (t < camera->focal_length || camera->t_max < t)
+	if (t < camera->t_min || camera->t_max < t)
 	{
 		t = (-half_b + sqrtd) / a;
-		if (t < camera->focal_length || camera->t_max < t)
+		if (t < camera->t_min || camera->t_max < t)
 			return (NAN);
 	}
 	return (t);
@@ -61,17 +62,15 @@ int	ft_hit_sphere_v2(t_ray *ray, t_camera *camera, t_hit_record *rec,
 		t_element *sphere)
 {
 	t_vec3d	oc;
-	double	t;
 
 	oc = ft_vec3d_minus_vec3d(ray->origin, sphere->coords);
-	t = ft_root_sphere(&oc, ray, camera, sphere);
-	if (isnan(t))
+	rec->t = ft_root_sphere(&oc, ray, camera, sphere);
+	if (isnan(rec->t))
 		return (0);
-	rec->t = t;
 	rec->p = ft_ray_at(ray, rec->t);
+	/*unit_lenght_for then colour*/
 	rec->normal = ft_vec3d_div_double(ft_vec3d_minus_vec3d(rec->p, sphere->coords),
-			(sphere->diameter / 2));
+			sphere->radius);
 	ft_hit_face(ray, rec);
 	return (1);
 }
-*/

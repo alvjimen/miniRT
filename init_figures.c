@@ -16,6 +16,7 @@ void	sphere(t_element *element, t_vec3d coord, double diameter, t_colour colour)
 	element->type = SPHERE;
 	element->coords = coord;
 	element->diameter = diameter;
+	element->radius = diameter / 2;
 	element->colour = colour;
 	element->hittable = 1;
 	element->ft_hit = ft_hit_sphere_v2;

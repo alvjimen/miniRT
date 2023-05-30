@@ -40,6 +40,7 @@ t_camera	*ft_init_camera(t_vec3d origin, const double aspect_ratio)
 	ptr->viewport_height = 2.0;
 	ptr->viewport_width = aspect_ratio * ptr->viewport_height;
 	ptr->focal_length = 1.0;
+	ptr->t_min = 0.0;
 	ptr->t_max = INFINITY;
 	ptr->lower_left_corner = ft_init_vec3d(origin.x
 			- (ptr->viewport_width / 2),

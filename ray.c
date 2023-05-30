@@ -69,7 +69,7 @@ int	ft_ray_color(t_ray *ray)
 		| ft_color_double_to_int(1.0);
 	return (colour);
 }
-/*
+
 int	ft_ray_color_v2(t_ray *ray, t_data *img)
 {
 	t_hit_record	rec;
@@ -88,4 +88,3 @@ int	ft_ray_color_v2(t_ray *ray, t_data *img)
 		| ft_color_double_to_int((1.0 - t) + t * 0.7) << 8
 		| ft_color_double_to_int(1.0));
 }
-*/
