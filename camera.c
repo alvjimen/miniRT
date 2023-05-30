@@ -33,7 +33,6 @@ t_camera	*ft_init_camera(t_vec3d origin, const double aspect_ratio)
 {
 	t_camera	*ptr;
 
-	printf("aspect_ratio: %f\n", aspect_ratio);
 	ptr = ft_calloc(1, sizeof(*ptr));
 	if (!ptr)
 		return (ptr);

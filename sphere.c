@@ -53,8 +53,6 @@ double	ft_root_sphere(t_vec3d *oc, t_ray *ray, t_camera *camera,
 	double	half_b;
 	double	c;
 	double	discriminant;
-	//double	sqrtd;
-	//double	t;
 
 	a = ft_vec3d_squared_len(ray->direction);
 	half_b = ft_vec3d_dot(*oc, ray->direction);
@@ -63,17 +61,6 @@ double	ft_root_sphere(t_vec3d *oc, t_ray *ray, t_camera *camera,
 	if (discriminant < 0.0)
 		return (NAN);
 	return (ft_sqrt_sphere(discriminant, a, half_b, camera));
-	/*
-	sqrtd = sqrt(discriminant);
-	t = (-half_b - sqrtd) / a;
-	if (t < camera->t_min || camera->t_max < t)
-	{
-		t = (-half_b + sqrtd) / a;
-		if (t < camera->t_min || camera->t_max < t)
-			return (NAN);
-	}
-	return (t);
-	*/
 }
 
 int	ft_hit_sphere_v2(t_ray *ray, t_camera *camera, t_hit_record *rec,
