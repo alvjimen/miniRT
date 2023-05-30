@@ -6,14 +6,14 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 14:17:03 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/05/29 08:56:30 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/05/30 18:48:14 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
 
 void	ft_hit_face(t_ray *ray, t_hit_record *rec)
 {
-	rec->front_face  = ft_vec3d_dot(ray->direction, rec->normal) < 0.0;
+	rec->front_face = ft_vec3d_dot(ray->direction, rec->normal) < 0.0;
 	if (!rec->front_face)
 		rec->normal = ft_vec3d_negative(rec->normal);
 }

@@ -6,15 +6,15 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 13:09:45 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/05/28 22:06:30 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/05/30 18:49:12 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
 
-int main(void)
+int	main(void)
 {
 	t_data		img;
-	
+
 	ft_img(&img, WIN_W, ASPECT_RATIO);
 	img.camera = ft_init_camera(ft_init_vec3d(0, 0, 0), ASPECT_RATIO);
 	if (!img.camera)

@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:49:59 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/05/29 07:35:08 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/05/30 18:31:13 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINIRT_H
@@ -20,16 +20,16 @@
 #  define S 115
 # endif
 /*WIN SIZE*/
-# define ASPECT_RATIO 16.0 / 9.0
+# define ASPECT_RATIO 1.7777777777777777 // 16.0 / 9.0
 # define WIN_W 640.0
-# include "mlx.h"
 # include <stdio.h>
 # include <stdlib.h>
 # include <math.h>
 # include <fcntl.h>
+# include "mlx.h"
 # include "libft.h"
 
-typedef enum	e_type
+typedef enum e_type
 {
 	AMBIENT_LIGHT,
 	CAMERA,
@@ -39,27 +39,25 @@ typedef enum	e_type
 	CYLINDER
 }	t_type;
 
-
-typedef struct	s_vec3d
+typedef struct s_vec3d
 {
 	double	x;
 	double	y;
 	double	z;
 }	t_vec3d;
 
-typedef	struct	s_camera
+typedef struct s_camera
 {
 	double	viewport_height;
 	double	viewport_width;
 	double	focal_length;
 	double	t_min;
 	double	t_max;
-
 	t_vec3d	lower_left_corner;
 	t_vec3d	origin;
 }	t_camera;
 
-typedef	struct	s_colour
+typedef struct s_colour
 {
 	unsigned char	alpha;
 	unsigned char	red;
@@ -67,7 +65,7 @@ typedef	struct	s_colour
 	unsigned char	blue;
 }	t_colour;
 
-typedef struct	s_vec4d
+typedef struct s_vec4d
 {
 	double	x;
 	double	y;
@@ -75,19 +73,19 @@ typedef struct	s_vec4d
 	double	w;
 }	t_vec4d;
 
-typedef struct	s_m4x4
+typedef struct s_m4x4
 {
 	t_vec4d	r[4];
 }	t_m4x4;
 
-typedef struct	s_ray
+typedef struct s_ray
 {
 	t_vec3d	origin;
 	t_vec3d	direction;
 	t_vec3d	unit_direction;
 }	t_ray;
 
-typedef struct	s_hit_record
+typedef struct s_hit_record
 {
 	t_vec3d	p;
 	t_vec3d	normal;
@@ -107,10 +105,12 @@ typedef struct s_element
 	double		light_ratio;
 	double		hfov;
 	int			hittable;
-	int			(*ft_hit)(t_ray *, t_camera *, t_hit_record *, struct s_element *);
+	int			(*ft_hit)(t_ray *, t_camera *, t_hit_record *,
+			struct s_element *);
 }	t_element;
+/*Horizontalfield of view in degrees 0-180*/
 
-typedef	struct	s_data
+typedef struct s_data
 {
 	void		*mlx;
 	void		*mlx_win;
@@ -126,16 +126,16 @@ typedef	struct	s_data
 	double		aspect_ratio;
 }	t_data;
 
-/*Horizontalfield of view in degrees 0-180*/
-
 /*coord.c*/
 double			coordx_center(double x);
 double			coordx_uncenter(double x);
 double			coordy_center(double y);
 double			coordy_uncenter(double y);
 /*normalize.c*/
-double			normalize_coord(double coord, double max_coord, double min_coord);
-double			unnormalize_coord(double n_coord, double max_coord, double min_coord);
+double			normalize_coord(double coord, double max_coord,
+					double min_coord);
+double			unnormalize_coord(double n_coord, double max_coord,
+					double min_coord);
 /*hooks.c*/
 int				key_hook(int keycode, t_data *img);
 int				hook_close(void);
@@ -159,9 +159,11 @@ double			ft_radians_to_degree(double radians);
 void			*ft_get_matrix_projection(double fovangle);
 /*element.c*/
 /*init_figures.c*/
-void			sphere(t_element *element, t_vec3d coord, double diameter, t_colour colour);
+void			sphere(t_element *element, t_vec3d coord, double diameter,
+					t_colour colour);
 /*matrix.c*/
-void			 matrixmultiplication(t_vec4d *origin, t_vec4d *destiny, t_m4x4 *matrix);
+void			matrixmultiplication(t_vec4d *origin, t_vec4d *destiny,
+					t_m4x4 *matrix);
 /*vec3d.c*/
 t_vec3d			ft_init_vec3d(double x, double y, double z);
 void			ft_set_vec3d(t_vec3d *ptr, double x, double y, double z);
@@ -186,21 +188,23 @@ int				ft_ray_color(t_ray *ray);
 t_vec3d			ft_ray_direction(t_data *img, int x, int y);
 int				ft_ray_color_v2(t_ray *ray, t_data *img);
 /*ppm.c*/
-void			ft_draw_ppm_header(int	width, int height, int fd);
+void			ft_draw_ppm_header(int width, int height, int fd);
 void			ft_draw_ppm_pixel(int colour, int fd);
 int				get_mlx_pixel_colour(t_data *img, int x, int y);
-void			ft_prt_ppm_file_from_img(t_data *img, int width, int height, int fd);
+void			ft_prt_ppm_file_from_img(t_data *img, int width, int height,
+					int fd);
 /*camera.c*/
-void			ft_img(t_data *img, const int image_width, const double aspect_ratio);
+void			ft_img(t_data *img, const int image_width,
+					const double aspect_ratio);
 t_camera		*ft_init_camera(t_vec3d origin, const double aspect_ratio);
 /*sphere.c*/
 double			ft_hit_sphere(t_vec3d *center, double diameter, t_ray *ray);
-int				ft_hit_sphere_v2(t_ray *ray, t_camera *camera, t_hit_record *rec,
-				t_element *sphere);
+int				ft_hit_sphere_v2(t_ray *ray, t_camera *camera,
+					t_hit_record *rec, t_element *sphere);
 /*hit.c*/
 void			ft_hit_face(t_ray *ray, t_hit_record *rec);
 int				ft_hittable(t_ray *ray, t_camera *camera, t_hit_record *rec,
-				t_list *world);
+					t_list *world);
 /*struct.c*/
 void			*ft_alloc_struct(size_t size);
 /*world.c*/

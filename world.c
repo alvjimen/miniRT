@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 15:53:16 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/05/28 21:55:43 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/05/30 18:11:56 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ft_world(t_data *img)
 	t_list		*node;
 	t_element	*element;
 	t_colour	colour;
-	
+
 	ft_bzero(&colour, sizeof(colour));
 	element = ft_alloc_struct(sizeof(*element));
 	if (!element)

@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 14:48:21 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/05/05 16:36:51 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/05/30 18:43:44 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -26,4 +26,3 @@ void	scale(t_triangle *triangle)
 	triangle->p[2].y += 1.0f;
 	triangle->p[2].y *= 0.5f * WIN_H;
 }
-

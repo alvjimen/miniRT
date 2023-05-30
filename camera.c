@@ -6,7 +6,7 @@
 /*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 18:04:11 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/05/28 16:55:05 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/05/30 18:22:22 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -33,6 +33,7 @@ t_camera	*ft_init_camera(t_vec3d origin, const double aspect_ratio)
 {
 	t_camera	*ptr;
 
+	printf("aspect_ratio: %f\n", aspect_ratio);
 	ptr = ft_calloc(1, sizeof(*ptr));
 	if (!ptr)
 		return (ptr);

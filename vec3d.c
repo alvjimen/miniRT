@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 18:07:32 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/05/28 16:29:05 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/05/30 18:33:01 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -28,25 +28,6 @@ void	ft_set_vec3d(t_vec3d *ptr, double x, double y, double z)
 	ptr->x = x;
 	ptr->y = y;
 	ptr->z = z;
-}
-
-t_vec3d	ft_vec3d_negative(t_vec3d ptr)
-{
-	t_vec3d	vector;
-
-	if (!isnan(ptr.x))
-		vector.x = -ptr.x;
-	else
-		vector.x = NAN;
-	if (!isnan(ptr.y))
-		vector.y = -ptr.y;
-	else
-		vector.y = NAN;
-	if (!isnan(ptr.z))
-		vector.z = -ptr.z;
-	else
-		vector.z = NAN;
-	return (vector);
 }
 
 /*this is the same to x^2 + y^2 + z^2 */
