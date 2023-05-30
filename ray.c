@@ -17,16 +17,16 @@ t_ray	ft_init_ray(t_vec3d origin, t_vec3d direction)
 
 	ptr.origin = origin;
 	ptr.direction = direction;
-	ptr.unit_direction = ft_vec3d_unit_lenght(direction);
+	ptr.unit_direction = ft_vec3d_unit_lenght(ptr.direction);
 	return (ptr);
 }
 
 t_vec3d	ft_ray_at(t_ray *ray, double t)
 {
-	t_vec3d	value;
+	t_vec3d	point;
 
-	value = ft_vec3d_plus_vec3d(ray->origin, ft_vec3d_pro_double(ray->direction, t));
-	return (value);
+	point = ft_vec3d_plus_vec3d(ray->origin, ft_vec3d_pro_double(ray->direction, t));
+	return (point);
 }
 
 t_vec3d	ft_ray_direction(t_data *img, int x, int y)

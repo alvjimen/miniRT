@@ -21,7 +21,7 @@ double	ft_hit_sphere(t_vec3d *center, double diameter, t_ray *ray)
 
 	oc = ft_vec3d_minus_vec3d(ray->origin, *center);
 	a = ft_vec3d_squared_len(ray->direction);
-	half_b = ft_vec3d_dot(oc, ray->unit_direction);
+	half_b = ft_vec3d_dot(oc, ray->direction);
 	c = ft_vec3d_squared_len(oc) - ((diameter  * diameter) / 4);
 	discriminant = half_b * half_b - a * c;
 	if (discriminant < 0)

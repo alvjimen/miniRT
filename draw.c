@@ -32,7 +32,7 @@ void	ft_draw_background_v2(t_data *img)
 		{
 			vector =  ft_ray_direction(img, x, img->image_height - (y + 1));
 			ray = ft_init_ray(img->camera->origin, vector);
-			colour = ft_ray_color/*_v2*/(&ray/*, img*/);
+			colour = ft_ray_color_v2(&ray, img);
 			my_mlx_pixel_put(img, x, y, colour);
 			x++;
 		}
