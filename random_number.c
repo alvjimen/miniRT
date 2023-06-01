@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 18:54:00 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/05/30 18:55:43 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/06/01 13:27:43 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <limits.h>
@@ -36,13 +36,14 @@ unsigned int	uint_random_nbr(void)
 	return (lfsr113_bits());
 }
 
+//return a nbr between [0, 1)
 double	pseudo_random(void)
 {
-	return (uint_random_nbr() / UINT_MAX + 1);
+	return (uint_random_nbr() / (UINT_MAX + 1.0));
 }
 
+//return a nbr between [min, max)
 double	random_double(double min, double max)
 {
 	return (min + (max - min) * pseudo_random());
 }
-//return a nbr between [0 - 1)

@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:49:59 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/05/30 18:31:13 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/06/01 12:38:13 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINIRT_H
@@ -213,6 +213,6 @@ void			ft_world(t_data *img);
 /*ft_avoid_leaks_vec3d*/
 t_vec3d			ft_avoid_leaks_vec3d(t_vec3d	*ptr);
 /*random_number.c*/
-unsigned int	uint_random_nbr(void);
+int				int_random_nbr(void);
 double			pseudo_random(void);
 #endif

@@ -52,6 +52,8 @@ SRC					=	main.c\
 						world.c\
 						struct.c\
 						ft_avoid_leaks.c\
+						antialiasing.c\
+						random_number.c\
 
 OBJ		=	$(SRC:.c=.o)
 RM		=	rm -rf
