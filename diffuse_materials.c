@@ -6,7 +6,7 @@
 /*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 15:50:28 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/01 18:37:21 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/06/01 18:46:12 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -14,6 +14,7 @@
 int	ft_write_color_v2(t_vec3d vector, int samplex_per_pixel)
 {
 	vector = ft_vec3d_div_double(vector, samplex_per_pixel);
+	//this is for gamma 2
 	//vector.x = sqrt(vector.x);
 	//vector.y = sqrt(vector.y);
 	//vector.z = sqrt(vector.z);
@@ -38,6 +39,20 @@ t_vec3d	random_in_unit_sphere(void)
 		return (vector);
 	}
 	return (vector);
+}
+
+t_vec3d	random_in_unit_length_sphere(void)
+{
+	t_vec3d	vector;
+
+	while (1)
+	{
+		vector = ft_vec3d_random(-1, 1);
+		if (ft_vec3d_squared_len(vector) >= 1)
+			continue ;
+		return (ft_vec3d_unit_lenght(vector));
+	}
+	return (ft_vec3d_unit_lenght(vector));
 }
 
 t_vec3d	ft_ray_color_v4(t_ray ray, t_data *img, int depth)
