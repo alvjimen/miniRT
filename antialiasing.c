@@ -6,11 +6,12 @@
 /*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 12:42:49 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/01 13:48:32 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/06/01 17:42:56 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
 
+/*
 double	clamp(double x, double min, double max)
 {
 	if (x < min)
@@ -37,6 +38,7 @@ int	ft_write_color(t_vec3d vector, int samplex_per_pixel)
 	vector = ft_vec3d_div_double(vector, samplex_per_pixel);
 	return (ft_color_vector_to_int(vector));
 }
+*/
 
 t_vec3d	ft_ray_direction_v2(t_data *img, int x, int y)
 {
@@ -71,7 +73,6 @@ int	ft_antialiasing(t_data *img, int x, int y)
 	t_vec3d	vector;
 	t_vec3d	acum;
 	int		samples;
-	img->samplex_per_pixel = 100;
 
 	samples = 0;
 	ft_bzero(&acum, sizeof(acum));
@@ -96,9 +97,6 @@ void	ft_draw_background_v3(t_data *img)
 		x = 0;
 		while (x < img->image_width)
 		{
-//			vector = ft_ray_direction(img, x, img->image_height - (y + 1));
-//			ray = ft_init_ray(img->camera->origin, vector);
-//			colour = ft_ray_color_v2(&ray, img);
 			colour = ft_antialiasing(img, x, y);
 			my_mlx_pixel_put(img, x, y, colour);
 			x++;

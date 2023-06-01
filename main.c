@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 13:09:45 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/01 13:34:01 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/06/01 17:02:47 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -21,7 +21,8 @@ int	main(void)
 		return (1);
 	ft_world(&img);
 	//ft_draw_background_v2(&img);
-	ft_draw_background_v3(&img);
+	//ft_draw_background_v3(&img);
+	ft_draw_background_v4(&img);
 	mlx_put_image_to_window(img.mlx, img.mlx_win, img.img, 0, 0);
 	mlx_loop(img.mlx);
 	return (0);

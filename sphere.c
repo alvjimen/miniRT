@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 18:32:04 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/05/30 18:42:10 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/06/01 15:49:12 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -73,7 +73,6 @@ int	ft_hit_sphere_v2(t_ray *ray, t_camera *camera, t_hit_record *rec,
 	if (isnan(rec->t))
 		return (0);
 	rec->p = ft_ray_at(ray, rec->t);
-	/*unit_lenght_for then colour*/
 	rec->normal = ft_vec3d_div_double(ft_vec3d_minus_vec3d(rec->p,
 				sphere->coords), sphere->radius);
 	ft_hit_face(ray, rec);

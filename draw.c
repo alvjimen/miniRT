@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 13:03:13 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/05/30 18:32:10 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/06/01 15:52:29 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -19,10 +19,10 @@ int	ft_color_double_to_int(double c)
 int	ft_color_vector_to_int(t_vec3d v)
 {
 	return (ft_color_double_to_int((v.x + 1) * 0.5) << 16
-			| ft_color_double_to_int((v.y + 1) * 0.5) << 8
-			| ft_color_double_to_int((v.z + 1) * 0.5));
-
+		| ft_color_double_to_int((v.y + 1) * 0.5) << 8
+		| ft_color_double_to_int((v.z + 1) * 0.5));
 }
+
 void	ft_draw_background_v2(t_data *img)
 {
 	int		x;

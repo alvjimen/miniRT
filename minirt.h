@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:49:59 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/01 12:38:13 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/06/01 17:02:16 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINIRT_H
@@ -121,9 +121,11 @@ typedef struct s_data
 	int			endian;
 	int			image_width;
 	int			image_height;
+	int			samplex_per_pixel;
 	t_list		*world;
 	t_camera	*camera;
 	double		aspect_ratio;
+	double		max_depth;
 }	t_data;
 
 /*coord.c*/
@@ -213,6 +215,25 @@ void			ft_world(t_data *img);
 /*ft_avoid_leaks_vec3d*/
 t_vec3d			ft_avoid_leaks_vec3d(t_vec3d	*ptr);
 /*random_number.c*/
-int				int_random_nbr(void);
+unsigned int	uint_random_nbr(void);
 double			pseudo_random(void);
+double			random_double(double min, double max);
+/*antialiasing.c*/
+void			ft_draw_background_v3(t_data *img);
+int				ft_antialiasing(t_data *img, int x, int y);
+t_vec3d			ft_ray_color_v3(t_ray *ray, t_data *img);
+t_vec3d			ft_ray_direction_v2(t_data *img, int x, int y);
+/*color.c*/
+int				ft_write_color(t_vec3d vector, int samplex_per_pixel);
+int				ft_color_vector_to_int_v2(t_vec3d v);
+int				ft_color_double_to_int_v2(double c);
+/*number.c*/
+double			clamp(double x, double min, double max);
+/*diffuse_materials.c*/
+void	ft_draw_background_v4(t_data *img);
+t_vec3d	ft_vec3d_random(double min, double max);
+t_vec3d	random_in_unit_sphere(void);
+t_vec3d	ft_ray_color_v4(t_ray ray, t_data *img, int depth);
+int		ft_antialiasing_v2(t_data *img, int x, int y);
+void	ft_draw_background_v4(t_data *img);
 #endif

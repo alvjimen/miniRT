@@ -54,6 +54,9 @@ SRC					=	main.c\
 						ft_avoid_leaks.c\
 						antialiasing.c\
 						random_number.c\
+						number.c\
+						color.c\
+						diffuse_materials.c\
 
 OBJ		=	$(SRC:.c=.o)
 RM		=	rm -rf
