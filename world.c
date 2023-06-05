@@ -17,13 +17,15 @@ void	ft_world(t_data *img)
 	t_list		*node;
 	t_element	*element;
 	t_colour	colour;
+	double		r;
 
 	ft_bzero(&colour, sizeof(colour));
 	element = ft_alloc_struct(sizeof(*element));
 	if (!element)
 		exit(1);
-	ft_set_vec3d(&element->coords, 0, 0, -1);
-	sphere(element, element->coords, 1, colour);
+	r = cos(M_PI / 4);
+	ft_set_vec3d(&element->coords, -r, 0, -1);
+	sphere(element, element->coords, (2 * r), colour);
 	node = ft_lstnew(element);
 	if (!node)
 		exit(1);
@@ -31,8 +33,8 @@ void	ft_world(t_data *img)
 	element = ft_alloc_struct(sizeof(*element));
 	if (!element)
 		exit(1);
-	ft_set_vec3d(&element->coords, 0, -100.5, -1);
-	sphere(element, element->coords, 200, colour);
+	ft_set_vec3d(&element->coords, r, 0, -1);
+	sphere(element, element->coords, (2 * r), colour);
 	node = ft_lstnew(element);
 	if (!node)
 		exit(1);
