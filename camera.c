@@ -6,7 +6,7 @@
 /*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 18:04:11 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/05 19:31:41 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/06/05 20:26:51 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -30,25 +30,39 @@ void	ft_img(t_data *img, const int image_width, const double aspect_ratio)
 	img->samplex_per_pixel = 10;
 }
 
-t_camera	*ft_init_camera(t_vec3d origin, const double aspect_ratio,
-		const double fov)
+t_camera	*ft_init_camera(t_vec3d lookfrom, const double aspect_ratio,
+		const double fov, t_vec3d lookat, t_vec3d vup)
 {
 	t_camera	*ptr;
+	t_vec3d		w;
+	t_vec3d		u;
+	t_vec3d		v;
 
 	ptr = ft_calloc(1, sizeof(*ptr));
 	if (!ptr)
 		return (ptr);
-	ptr->origin = origin;
+	ptr->origin = lookfrom;
 	ptr->theta = ft_degree_to_radians(fov);
-	ptr->w = tan(ptr->theta / 2);
-	ptr->viewport_height = 2.0 * ptr->w;
+	ptr->h = tan(ptr->theta / 2);
+	ptr->viewport_height = 2.0 * ptr->h;
 	ptr->viewport_width = aspect_ratio * ptr->viewport_height;
 	ptr->focal_length = 1.0;
-	ptr->t_min = 0.0;
-	ptr->t_max = INFINITY;
-	ptr->lower_left_corner = ft_init_vec3d(origin.x
+	w = ft_vec3d_unit_lenght(ft_vec3d_minus_vec3d(lookfrom, lookat));
+	u = ft_vec3d_unit_lenght(ft_vec3d_cross(vup, w));
+	v = ft_vec3d_cross(w, u);
+
+	/*ptr->lower_left_corner = ft_init_vec3d(origin.x
 			- (ptr->viewport_width / 2),
 			origin.y - (ptr->viewport_height / 2),
 			origin.z - ptr->focal_length);
+	*/
+	ptr->horizontal = ft_vec3d_pro_double(u, ptr->viewport_width);
+	ptr->vertical = ft_vec3d_pro_double(v, ptr->viewport_height);
+	ptr->lower_left_corner = ft_vec3d_minus_vec3d(lookfrom,
+			ft_vec3d_minus_vec3d(ft_vec3d_pro_double(ptr->horizontal, 2.0),
+				ft_vec3d_minus_vec3d(ft_vec3d_div_double(ptr->vertical, 2.0),
+					w)));
+	ptr->t_min = 0.0;
+	ptr->t_max = INFINITY;
 	return (ptr);
 }

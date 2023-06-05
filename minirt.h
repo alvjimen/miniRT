@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:49:59 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/05 19:30:54 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/06/05 20:26:16 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINIRT_H
@@ -54,9 +54,11 @@ typedef struct s_camera
 	double	t_min;
 	double	t_max;
 	double	theta;
-	double	w;
+	double	h;
 	t_vec3d	lower_left_corner;
 	t_vec3d	origin;
+	t_vec3d	horizontal;
+	t_vec3d	vertical;
 }	t_camera;
 
 typedef struct s_colour
@@ -181,6 +183,7 @@ t_vec3d			ft_vec3d_plus_vec3d(t_vec3d o1, t_vec3d o2);
 t_vec3d			ft_vec3d_minus_vec3d(t_vec3d o1, t_vec3d o2);
 t_vec3d			ft_vec3d_pro_vec3d(t_vec3d o1, t_vec3d o2);
 double			ft_vec3d_dot(t_vec3d o1, t_vec3d o2);
+t_vec3d			ft_vec3d_cross(t_vec3d o1, t_vec3d o2);
 /*vec3d_math_double.c*/
 t_vec3d			ft_vec3d_pro_double(t_vec3d o1, double o2);
 t_vec3d			ft_vec3d_div_double(t_vec3d o1, double o2);
@@ -201,8 +204,8 @@ void			ft_prt_ppm_file_from_img(t_data *img, int width, int height,
 /*camera.c*/
 void			ft_img(t_data *img, const int image_width,
 					const double aspect_ratio);
-t_camera	*ft_init_camera(t_vec3d origin, const double aspect_ratio,
-				const double fov);
+t_camera	*ft_init_camera(t_vec3d lookfrom, const double aspect_ratio,
+		const double fov, t_vec3d lookat, t_vec3d vup);
 /*sphere.c*/
 double			ft_hit_sphere(t_vec3d *center, double diameter, t_ray *ray);
 int				ft_hit_sphere_v2(t_ray *ray, t_camera *camera,
