@@ -6,7 +6,7 @@
 /*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 18:04:11 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/01 18:19:58 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/06/05 19:31:41 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -30,7 +30,8 @@ void	ft_img(t_data *img, const int image_width, const double aspect_ratio)
 	img->samplex_per_pixel = 10;
 }
 
-t_camera	*ft_init_camera(t_vec3d origin, const double aspect_ratio)
+t_camera	*ft_init_camera(t_vec3d origin, const double aspect_ratio,
+		const double fov)
 {
 	t_camera	*ptr;
 
@@ -38,7 +39,9 @@ t_camera	*ft_init_camera(t_vec3d origin, const double aspect_ratio)
 	if (!ptr)
 		return (ptr);
 	ptr->origin = origin;
-	ptr->viewport_height = 2.0;
+	ptr->theta = ft_degree_to_radians(fov);
+	ptr->w = tan(ptr->theta / 2);
+	ptr->viewport_height = 2.0 * ptr->w;
 	ptr->viewport_width = aspect_ratio * ptr->viewport_height;
 	ptr->focal_length = 1.0;
 	ptr->t_min = 0.0;
