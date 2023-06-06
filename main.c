@@ -16,7 +16,7 @@ int	main(void)
 	t_data		img;
 
 	ft_img(&img, WIN_W, ASPECT_RATIO);
-	img.camera = ft_init_camera(ft_init_vec3d(-2, 2, 1), ASPECT_RATIO, 90,
+	img.camera = ft_init_camera(ft_init_vec3d(-2, 2, 1), ASPECT_RATIO, 20,
 			ft_init_vec3d(0, 0, -1), ft_init_vec3d(0, 1, 0));
 	if (!img.camera)
 		return (1);
