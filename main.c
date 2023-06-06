@@ -21,8 +21,8 @@ int	main(void)
 	if (!img.camera)
 		return (1);
 	ft_world(&img);
-	//ft_draw_background_v2(&img);
-	ft_draw_background_v3(&img);
+	ft_draw_background_v2(&img);
+	//ft_draw_background_v3(&img);
 	//ft_draw_background_v4(&img);
 	mlx_put_image_to_window(img.mlx, img.mlx_win, img.img, 0, 0);
 	mlx_loop(img.mlx);

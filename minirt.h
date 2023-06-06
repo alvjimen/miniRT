@@ -194,6 +194,7 @@ t_ray			ft_init_ray(t_vec3d origin, t_vec3d direction);
 t_vec3d			ft_ray_at(t_ray *ray, double t);
 int				ft_ray_color(t_ray *ray);
 t_vec3d			ft_ray_direction(t_data *img, int x, int y);
+t_vec3d			ft_ray_direction_v3(t_data *img, int x, int y);
 int				ft_ray_color_v2(t_ray *ray, t_data *img);
 /*ppm.c*/
 void			ft_draw_ppm_header(int width, int height, int fd);

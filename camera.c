@@ -59,8 +59,8 @@ t_camera	*ft_init_camera(t_vec3d lookfrom, const double aspect_ratio,
 	ptr->horizontal = ft_vec3d_pro_double(u, ptr->viewport_width);
 	ptr->vertical = ft_vec3d_pro_double(v, ptr->viewport_height);
 	ptr->lower_left_corner = ft_vec3d_minus_vec3d(lookfrom,
-			ft_vec3d_minus_vec3d(ft_vec3d_pro_double(ptr->horizontal, 2.0),
-				ft_vec3d_minus_vec3d(ft_vec3d_div_double(ptr->vertical, 2.0),
+			ft_vec3d_plus_vec3d(ft_vec3d_div_double(ptr->horizontal, 2.0),
+				ft_vec3d_plus_vec3d(ft_vec3d_div_double(ptr->vertical, 2.0),
 					w)));
 	ptr->t_min = 0.0;
 	ptr->t_max = INFINITY;

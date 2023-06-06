@@ -46,6 +46,18 @@ t_vec3d	ft_ray_direction(t_data *img, int x, int y)
 			(img->camera->lower_left_corner.z - img->camera->origin.z));
 	return (direction);
 }
+
+t_vec3d	ft_ray_direction_v3(t_data *img, int x, int y)
+{
+	t_vec3d	direction;
+	double	s;
+	double	t;
+
+	s = ((double)x / (img->image_width - 1));
+	t = ((double)y / (img->image_height - 1));
+	direction = ft_vec3d_minus_vec3d(ft_vec3d_plus_vec3d(img->camera->lower_left_corner, ft_vec3d_plus_vec3d(ft_vec3d_pro_double(img->camera->horizontal, s), ft_vec3d_pro_double(img->camera->vertical, t))), img->camera->origin);
+	return (direction);
+}
 /*
 int	ft_ray_color(t_ray *ray)
 {

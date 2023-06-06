@@ -34,7 +34,7 @@ void	ft_world(t_data *img)
 	if (!element)
 		exit(1);
 	ft_set_vec3d(&element->coords, 0, -100.5, -1);
-	sphere(element, element->coords, (2 * 100), colour);
+	sphere(element, element->coords, 200, colour);
 	node = ft_lstnew(element);
 	if (!node)
 		exit(1);
