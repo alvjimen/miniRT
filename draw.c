@@ -6,28 +6,16 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 13:03:13 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/01 15:52:29 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/06/06 16:05:30 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
 
-int	ft_color_double_to_int(double c)
-{
-	return (c * 255.999);
-}
-
-int	ft_color_vector_to_int(t_vec3d v)
-{
-	return (ft_color_double_to_int((v.x + 1) * 0.5) << 16
-		| ft_color_double_to_int((v.y + 1) * 0.5) << 8
-		| ft_color_double_to_int((v.z + 1) * 0.5));
-}
-
-void	ft_draw_background_v2(t_data *img)
+void	ft_draw_without_antialiasing(t_data *img)
 {
 	int		x;
 	int		y;
-	int		colour;
+	t_vec3d	colour;
 	t_ray	ray;
 	t_vec3d	vector;
 
@@ -37,10 +25,12 @@ void	ft_draw_background_v2(t_data *img)
 		x = 0;
 		while (x < img->image_width)
 		{
-			vector = ft_ray_direction_v3(img, x, img->image_height - (y + 1));
-			ray = ft_init_ray(img->camera->origin, vector);
-			colour = ft_ray_color_v2(&ray, img);
-			my_mlx_pixel_put(img, x, y, colour);
+			vector = ft_ray_direction(img, ((double)(x)
+						/ (img->image_width - 1)), ((double)(img->image_height
+							- (y + 1)) / (img->image_height - 1)));
+			ray = ft_init_ray(img->camera.origin, vector);
+			colour = ft_ray_color(&ray, img);
+			my_mlx_pixel_put(img, x, y, ft_write_color(colour, 1));
 			x++;
 		}
 		y++;

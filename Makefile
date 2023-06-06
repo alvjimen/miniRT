@@ -29,18 +29,10 @@ CC					:=	gcc
 SRC					=	main.c\
 						hooks.c\
 						draw.c\
-						coords.c\
 						angle.c\
-						perspective.c\
-						rotations.c\
-						normalize.c\
-						aspect_ratio.c\
 						element.c\
 						init_figures.c\
-						test.c\
 						sphere.c\
-						matrix.c\
-						projection.c\
 						vec3d.c\
 						vec3d_math_vec3d.c\
 						vec3d_math_double.c\
@@ -50,13 +42,20 @@ SRC					=	main.c\
 						camera.c\
 						hit.c\
 						world.c\
-						struct.c\
-						ft_avoid_leaks.c\
 						antialiasing.c\
 						random_number.c\
 						number.c\
 						color.c\
-						diffuse_materials.c\
+						parse.c\
+						ft_is_space.c\
+						ft_isdigit.c\
+						ft_atof.c\
+						#diffuse_materials.c\
+						perspective.c\
+						rotations.c\
+						normalize.c\
+						matrix.c\
+						projection.c\
 
 OBJ		=	$(SRC:.c=.o)
 RM		=	rm -rf

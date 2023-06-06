@@ -1,17 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   struct.c                                           :+:      :+:    :+:   */
+/*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/28 15:49:25 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/05/28 16:51:26 by alvjimen         ###   ########.fr       */
+/*   Created: 2022/06/14 16:53:48 by alvjimen          #+#    #+#             */
+/*   Updated: 2023/03/23 13:44:06 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "minirt.h"
 
-void	*ft_alloc_struct(size_t size)
+#include "libft.h"
+
+int	ft_isdigit(int n)
 {
-	return (ft_calloc(1, size));
+	if (n >= 48 && n <= 57)
+		return (1);
+	return (0);
 }

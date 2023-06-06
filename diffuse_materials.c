@@ -6,18 +6,15 @@
 /*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 15:50:28 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/01 18:46:12 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/06/06 15:10:04 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
 
+/*
 int	ft_write_color_v2(t_vec3d vector, int samplex_per_pixel)
 {
 	vector = ft_vec3d_div_double(vector, samplex_per_pixel);
-	//this is for gamma 2
-	//vector.x = sqrt(vector.x);
-	//vector.y = sqrt(vector.y);
-	//vector.z = sqrt(vector.z);
 	return (ft_color_vector_to_int(vector));
 }
 
@@ -115,3 +112,4 @@ void	ft_draw_background_v4(t_data *img)
 		y++;
 	}
 }
+*/
