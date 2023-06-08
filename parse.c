@@ -6,7 +6,7 @@
 /*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 17:02:41 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/06 19:46:45 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/06/08 18:17:21 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -37,28 +37,39 @@ int	ft_parse_camera(char *line, size_t pos, t_data *img)
 
 	if (line[pos] != 'C')
 		return (-1);
+	pos++;
 	ft_run_is_space(line, &pos);
 	viewpoint.x = ft_atof(line + pos);
 	ft_run_is_space(line, &pos);
-	ft_run_atof(line, &pos);
+	if (ft_run_atof(line, &pos))
+		return (-1);
 	ft_run_is_space(line, &pos);
 	viewpoint.y = ft_atof(line + pos);
-	ft_run_atof(line, &pos);
+	if (ft_run_atof(line, &pos))
+		return (-1);
 	ft_run_is_space(line, &pos);
 	viewpoint.z = ft_atof(line + pos);
-	ft_run_atof(line, &pos);
-
+	if (ft_run_atof(line, &pos))
+		return (-1);
 	ft_run_is_space(line, &pos);
 	normalized_orientation_vector.x = ft_atof(line + pos);
-	ft_run_atof(line, &pos);
+	if (ft_run_atof(line, &pos))
+		return (-1);
 	ft_run_is_space(line, &pos);
 	normalized_orientation_vector.y = ft_atof(line + pos);
-	ft_run_atof(line, &pos);
+	if (ft_run_atof(line, &pos))
+		return (-1);
 	ft_run_is_space(line, &pos);
 	normalized_orientation_vector.z = ft_atof(line + pos);
-	ft_run_atof(line, &pos);
+	if (ft_run_atof(line, &pos))
+		return (-1);
 	ft_run_is_space(line, &pos);
 	fov = ft_atof(line + pos);
+	if (ft_run_atof(line, &pos))
+		return (-1);
+	ft_run_is_space(line, &pos);
+	if (line[pos]/* != '\0'*/)
+		return (-1);
 	img->camera = ft_init_camera(viewpoint, ASPECT_RATIO, fov,
 			normalized_orientation_vector);
 	return (0);
