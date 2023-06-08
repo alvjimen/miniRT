@@ -22,69 +22,86 @@ void	ft_run_is_space(char *str, size_t *pos)
 /*return -1 if no digit*/
 int	ft_run_atof(char *str, size_t *pos)
 {
-	if (!ft_isdigit(str[*pos]))
+	if (ft_is_plus_or_minus(str[*pos], str[*pos]))
+		pos[0]++;
+	if ( !ft_isdigit(str[*pos]))
 		return (-1);
 	while (str[*pos] == '.' || ft_isdigit(str[*pos]))
 		pos[0]++;
 	return (0);
 }
 
-int	ft_parse_camera(char *line, size_t pos, t_data *img)
+int	ft_parse_double(char *str, size_t *pos, double *value)
+{
+	ft_run_is_space(str, pos);
+	*value = ft_atof(str + *pos);
+	return (ft_run_atof(str, pos));
+}
+
+int	ft_parse_comma(char *str, size_t *pos)
+{
+	ft_run_is_space(str, pos);
+	if ((str[*pos] != ','))
+		return (-1);
+	pos[0]++;
+	return (0);
+}
+
+int	ft_parse_vec3d(char *str, size_t *pos, t_vec3d *vector)
+{
+	if (ft_parse_double(str, pos, &vector->x))
+		return (-1);
+	if (ft_parse_comma(str, pos))
+		return (-1);
+	if (ft_parse_double(str, pos, &vector->y))
+		return (-1);
+	if (ft_parse_comma(str, pos))
+		return (-1);
+	if (ft_parse_double(str, pos, &vector->z))
+		return (-1);
+	return (0);
+}
+
+int	ft_parse_end(char *str, size_t pos)
+{
+	ft_run_is_space(str, &pos);
+	if (str[pos] != '\0')
+		return (-1);
+	return (0);
+}
+
+int	ft_parse_camera(char *str, size_t pos, t_data *img)
 {
 	t_vec3d	viewpoint;
 	t_vec3d	normalized_orientation_vector;
 	double		fov;
 
-	if (line[pos] != 'C')
+	if (str[pos] != 'C')
 		return (-1);
 	pos++;
-	ft_run_is_space(line, &pos);
-	viewpoint.x = ft_atof(line + pos);
-	ft_run_is_space(line, &pos);
-	if (ft_run_atof(line, &pos))
+	if (ft_parse_vec3d(str, &pos, &viewpoint))
 		return (-1);
-	ft_run_is_space(line, &pos);
-	viewpoint.y = ft_atof(line + pos);
-	if (ft_run_atof(line, &pos))
+	if (ft_parse_vec3d(str, &pos, &normalized_orientation_vector))
 		return (-1);
-	ft_run_is_space(line, &pos);
-	viewpoint.z = ft_atof(line + pos);
-	if (ft_run_atof(line, &pos))
+	if (ft_parse_double(str, &pos, &fov))
 		return (-1);
-	ft_run_is_space(line, &pos);
-	normalized_orientation_vector.x = ft_atof(line + pos);
-	if (ft_run_atof(line, &pos))
-		return (-1);
-	ft_run_is_space(line, &pos);
-	normalized_orientation_vector.y = ft_atof(line + pos);
-	if (ft_run_atof(line, &pos))
-		return (-1);
-	ft_run_is_space(line, &pos);
-	normalized_orientation_vector.z = ft_atof(line + pos);
-	if (ft_run_atof(line, &pos))
-		return (-1);
-	ft_run_is_space(line, &pos);
-	fov = ft_atof(line + pos);
-	if (ft_run_atof(line, &pos))
-		return (-1);
-	ft_run_is_space(line, &pos);
-	if (line[pos]/* != '\0'*/)
+	if (ft_parse_end(str, pos))
 		return (-1);
 	img->camera = ft_init_camera(viewpoint, ASPECT_RATIO, fov,
 			normalized_orientation_vector);
 	return (0);
 }
 
-int	ft_parse_line(char *line, t_data *img)
+int	ft_parse_line(char *str, t_data *img)
 {
 	size_t	pos;
 
 	pos = 0;
-	ft_run_is_space(line, &pos);
-	if (line[pos] == '\0')
+	ft_run_is_space(str, &pos);
+	if (str[pos] == '\0')
 		return (0);
-	if (line[pos] == 'C')
-		return (ft_parse_camera(line, pos, img));
+	if (str[pos] == 'C')
+		return (ft_parse_camera(str, pos, img));
 	return (0);
 }
 
@@ -101,7 +118,7 @@ int	ft_parse_file(char *file, t_data *img)
 	{
 		str = get_next_line(fd);
 		if (!str)
-			return (-1);
+			return (0);
 		ft_parse_line(str, img);
 		free(str);
 	}
