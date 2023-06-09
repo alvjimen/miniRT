@@ -15,11 +15,15 @@ double	ft_atof(char	*str)
 {
 	double	result;
 	double	period;
-	size_t	divider;
+	double	divider;
 
 	result = ft_atoi(str);
 	period = 0;
 	divider = 1;
+	if (*str == '-')
+		divider = -divider;
+	if (ft_is_plus_or_minus(*str, *str))
+		str++;
 	while (*str >= '0' && *str < '9')
 		str++;
 	if (*str == '.')

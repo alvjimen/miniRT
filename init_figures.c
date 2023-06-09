@@ -11,9 +11,14 @@
 /* ************************************************************************** */
 #include "minirt.h"
 
-void	sphere(t_element *element, t_vec3d coord, double diameter,
+t_element	*sphere(t_vec3d coord, double diameter,
 		t_colour colour)
 {
+	t_element	*element;
+
+	element = ft_calloc(1, sizeof(*element));
+	if (!element)
+		return (element);
 	element->type = SPHERE;
 	element->coords = coord;
 	element->diameter = diameter;
@@ -21,13 +26,5 @@ void	sphere(t_element *element, t_vec3d coord, double diameter,
 	element->colour = colour;
 	element->hittable = 1;
 	element->ft_hit = ft_hit_sphere_v2;
+	return (element);
 }
-
-/*
-int	ft_parse_camera(char *line)
-{
-	if (ERROR)
-		return (-1):
-	return (0);
-}
-*/

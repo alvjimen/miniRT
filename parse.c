@@ -11,63 +11,31 @@
 /* ************************************************************************** */
 #include "minirt.h"
 
-void	ft_run_is_space(char *str, size_t *pos)
+int	ft_parse_sphere(char *str, size_t pos, t_data *img)
 {
-	if (!str || !pos)
-		return ;
-	while (ft_is_space(str[*pos]))
-		pos[0]++;
-}
+	t_list		*node;
+	t_colour	colour;
+	t_vec3d		origin;
+	double		diameter;
 
-/*return -1 if no digit*/
-int	ft_run_atof(char *str, size_t *pos)
-{
-	if (ft_is_plus_or_minus(str[*pos], str[*pos]))
-		pos[0]++;
-	if ( !ft_isdigit(str[*pos]))
+	if (str[pos] != 's' || str[pos + 1] != 'p')
 		return (-1);
-	while (str[*pos] == '.' || ft_isdigit(str[*pos]))
-		pos[0]++;
-	return (0);
-}
-
-int	ft_parse_double(char *str, size_t *pos, double *value)
-{
-	ft_run_is_space(str, pos);
-	*value = ft_atof(str + *pos);
-	return (ft_run_atof(str, pos));
-}
-
-int	ft_parse_comma(char *str, size_t *pos)
-{
-	ft_run_is_space(str, pos);
-	if ((str[*pos] != ','))
+	ft_bzero(&colour, sizeof(colour));
+	pos += 2;
+	if (ft_parse_vec3d(str, &pos, &origin))
 		return (-1);
-	pos[0]++;
-	return (0);
-}
-
-int	ft_parse_vec3d(char *str, size_t *pos, t_vec3d *vector)
-{
-	if (ft_parse_double(str, pos, &vector->x))
+	if (ft_parse_double(str, &pos, &diameter))
 		return (-1);
-	if (ft_parse_comma(str, pos))
+	if (ft_parse_colour(str, &pos, &colour))
 		return (-1);
-	if (ft_parse_double(str, pos, &vector->y))
+	if (ft_parse_end(str, pos))
 		return (-1);
-	if (ft_parse_comma(str, pos))
-		return (-1);
-	if (ft_parse_double(str, pos, &vector->z))
-		return (-1);
-	return (0);
-}
-
-int	ft_parse_end(char *str, size_t pos)
-{
-	ft_run_is_space(str, &pos);
-	if (str[pos] != '\0')
-		return (-1);
-	return (0);
+	node = ft_lstnew(sphere(origin, diameter, colour));
+	ft_lstadd_back(&img->world, node);
+	if (node && node->content)
+		return (0);
+	ft_lstclear(&img->world, free);
+	return (1);
 }
 
 int	ft_parse_camera(char *str, size_t pos, t_data *img)
@@ -102,6 +70,8 @@ int	ft_parse_line(char *str, t_data *img)
 		return (0);
 	if (str[pos] == 'C')
 		return (ft_parse_camera(str, pos, img));
+	else if (str[pos] == 's' && str[pos + 1] == 'p')
+		return (ft_parse_sphere(str, pos, img));
 	return (0);
 }
 
@@ -119,7 +89,11 @@ int	ft_parse_file(char *file, t_data *img)
 		str = get_next_line(fd);
 		if (!str)
 			return (0);
-		ft_parse_line(str, img);
+		if (ft_parse_line(str, img))
+		{
+			free(str);
+			return (-1);
+		}
 		free(str);
 	}
 	return (0);

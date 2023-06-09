@@ -158,7 +158,7 @@ double			ft_radians_to_degree(double radians);
 void			*ft_get_matrix_projection(double fovangle);
 */
 /*init_figures.c*/
-void			sphere(t_element *element, t_vec3d coord, double diameter,
+t_element		*sphere(t_vec3d coord, double diameter,
 					t_colour colour);
 /*matrix.c*/
 /*
@@ -207,7 +207,7 @@ void			ft_hit_face(t_ray *ray, t_hit_record *rec);
 int				ft_hittable(t_ray *ray, t_camera *camera, t_hit_record *rec,
 					t_list *world);
 /*world.c*/
-void			ft_world(t_data *img);
+int			ft_world(t_data *img);
 /*random_number.c*/
 unsigned int	uint_random_nbr(void);
 double			pseudo_random(void);
@@ -225,6 +225,15 @@ int				ft_parse_file(char *file, t_data *img);
 int	ft_is_space(char chr);
 /*ft_atof.c*/
 double			ft_atof(char	*str);
-/*ft_is_digit.c*/
-int				ft_isdigit(int n);
+/*parse_utils.c*/
+int				ft_parse_double(char *str, size_t *pos, double *value);
+int				ft_parse_unsigned_char(char *str, size_t *pos, unsigned char *value);
+int				ft_parse_comma(char *str, size_t *pos);
+int				ft_parse_end(char *str, size_t pos);
+int				ft_parse_vec3d(char *str, size_t *pos, t_vec3d *vector);
+int				ft_parse_colour(char *str, size_t *pos, t_colour *colour);
+/*ft_run.c*/
+void			ft_run_is_space(char *str, size_t *pos);
+int				ft_run_atof(char *str, size_t *pos);
+int				ft_run_atoi(char *str, size_t *pos);
 #endif

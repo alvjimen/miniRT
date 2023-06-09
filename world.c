@@ -12,29 +12,25 @@
 
 #include "minirt.h"
 
-void	ft_world(t_data *img)
+int	ft_world(t_data *img)
 {
 	t_list		*node;
-	t_element	*element;
 	t_colour	colour;
 
 	ft_bzero(&colour, sizeof(colour));
-	element = ft_calloc(1, sizeof(*element));
-	if (!element)
-		exit(1);
-	element->coords = ft_init_vec3d(0.0, 0, -1);
-	sphere(element, element->coords, 1, colour);
-	node = ft_lstnew(element);
-	if (!node)
-		exit(1);
+	node = ft_lstnew(sphere(ft_init_vec3d(0.0, 0.0, -1), 1, colour));
 	ft_lstadd_back(&img->world, node);
-	element = ft_calloc(1, sizeof(*element));
-	if (!element)
-		exit(1);
-	element->coords = ft_init_vec3d(0.0, -100.5, -1);
-	sphere(element, element->coords, 200, colour);
-	node = ft_lstnew(element);
-	if (!node)
-		exit(1);
+	if (!node || !node->content)
+	{
+		ft_lstclear(&img->world, free);
+		return (1);
+	}
+	node = ft_lstnew(sphere(ft_init_vec3d(0.0, -100.5, -1), 200, colour));
 	ft_lstadd_back(&img->world, node);
+	if (!node || !node->content)
+	{
+		ft_lstclear(&img->world, free);
+		return (1);
+	}
+	return (0);
 }

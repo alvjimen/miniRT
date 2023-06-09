@@ -50,6 +50,8 @@ SRC					=	main.c\
 						ft_is_space.c\
 						ft_isdigit.c\
 						ft_atof.c\
+						ft_run.c\
+						parse_utils.c\
 						#diffuse_materials.c\
 						perspective.c\
 						rotations.c\

@@ -14,7 +14,11 @@
 int	main(int argc, char	*argv[])
 {
 	t_data		img;
+	size_t		pos;
+	double		val;
 
+	pos = 0;
+	ft_parse_double("-100.5", &pos, &val);
 	if (argc < 2 && !*argv)
 		return (1);
 	ft_img(&img, WIN_W, ASPECT_RATIO);
