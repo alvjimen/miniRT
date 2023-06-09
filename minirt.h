@@ -128,6 +128,7 @@ typedef struct s_data
 	int			samplex_per_pixel;
 	t_list		*world;
 	t_camera	camera;
+	t_element	ambient_light;
 	double		aspect_ratio;
 	double		max_depth;
 }	t_data;
@@ -160,6 +161,12 @@ void			*ft_get_matrix_projection(double fovangle);
 /*init_figures.c*/
 t_element		*sphere(t_vec3d coord, double diameter,
 					t_colour colour);
+t_element	ambient_light(double intensity, t_colour colour);
+t_element	*light(t_vec3d origin, double brightness, t_colour colour);
+t_element	*plane(t_vec3d coords, t_vec3d normalized_orientation_vector,
+		t_colour colour);
+t_element	*cylinder(t_vec3d coords, t_vec3d normalized_orientation_vector,
+		double param[2], t_colour colour);
 /*matrix.c*/
 /*
 * void			matrixmultiplication(t_vec4d *origin, t_vec4d *destiny,
