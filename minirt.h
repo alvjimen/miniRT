@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:49:59 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/06 19:46:32 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/06/10 15:39:34 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINIRT_H
@@ -22,6 +22,7 @@
 /*WIN SIZE*/
 # define ASPECT_RATIO 1.7777777777777777 // 16.0 / 9.0
 # define WIN_W 640.0
+# define NEAR_ZERO 1e-8;
 # include <stdio.h>
 # include <stdlib.h>
 # include <math.h>
@@ -223,6 +224,7 @@ double			random_double(double min, double max);
 void			ft_draw_antialiasing(t_data *img);
 /*color.c*/
 int				ft_write_color(t_vec3d vector, int samplex_per_pixel);
+t_vec3d			ft_colour_to_vec3d(t_colour colour);
 /*number.c*/
 double			clamp(double x, double min, double max);
 /*parse.c*/

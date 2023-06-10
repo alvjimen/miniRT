@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 14:17:03 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/05/30 18:48:14 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/06/10 17:37:16 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -39,8 +39,10 @@ int	ft_hittable(t_ray *ray, t_camera *camera, t_hit_record *rec,
 			hit_anything = 1;
 			camera->t_max = tmp_rec.t;
 			*rec = tmp_rec;
+			rec->normal = ft_colour_to_vec3d(element->colour);
 		}
 	}
 	camera->t_max = bk_tmax;
+
 	return (hit_anything);
 }
