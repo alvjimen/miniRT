@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:49:59 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/10 15:39:34 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/06/12 18:02:26 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINIRT_H
@@ -227,6 +227,7 @@ int				ft_write_color(t_vec3d vector, int samplex_per_pixel);
 t_vec3d			ft_colour_to_vec3d(t_colour colour);
 /*number.c*/
 double			clamp(double x, double min, double max);
+double			ft_dabs(double num);
 /*parse.c*/
 void			ft_run_is_space(char *str, size_t *pos);
 int				ft_parse_file(char *file, t_data *img);
@@ -245,4 +246,7 @@ int				ft_parse_colour(char *str, size_t *pos, t_colour *colour);
 void			ft_run_is_space(char *str, size_t *pos);
 int				ft_run_atof(char *str, size_t *pos);
 int				ft_run_atoi(char *str, size_t *pos);
+/*plane.c*/
+int				ft_hit_plane(t_ray *ray, t_camera *camera, t_hit_record *rec,
+						t_element *plane);
 #endif

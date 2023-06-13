@@ -6,7 +6,7 @@
 /*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 17:02:41 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/08 18:17:21 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/06/12 18:31:27 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -111,8 +111,9 @@ int	ft_parse_plane(char *str, size_t pos, t_data *img)
 	t_vec3d		coords;
 	t_colour	colour;
 
-	if (str[pos] != 'p' || str[pos + 1] != 'l')
+	if (str[pos] != 'p' || ( str[pos] && str[pos + 1] != 'l'))
 		return (-1);
+	pos += 2;
 	if (ft_parse_vec3d(str, &pos, &coords))
 		return (-1);
 	if (ft_parse_vec3d(str, &pos, &normalized_orientation_vector))
@@ -173,6 +174,8 @@ int	ft_parse_line(char *str, t_data *img)
 		return (ft_parse_ambient_light(str, pos, img));
 	else if (str[pos] == 's' && str[pos + 1] == 'p')
 		return (ft_parse_sphere(str, pos, img));
+	else if (str[pos] == 'p' && str[pos + 1] == 'l')
+		return (ft_parse_plane(str, pos, img));
 	return (-1);
 }
 

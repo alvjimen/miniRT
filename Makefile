@@ -52,6 +52,7 @@ SRC					=	main.c\
 						ft_atof.c\
 						ft_run.c\
 						parse_utils.c\
+						plane.c\
 						#diffuse_materials.c\
 						perspective.c\
 						rotations.c\
