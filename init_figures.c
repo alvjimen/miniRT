@@ -81,6 +81,6 @@ t_element	*cylinder(t_vec3d coords, t_vec3d normalized_orientation_vector,
 	element->height = param[1];
 	element->colour = colour;
 	element->hittable = 1;
-	element->ft_hit = ft_hit_sphere_v2;
+	element->ft_hit = ft_hit_cylinder;
 	return (element);
 }

@@ -228,6 +228,8 @@ t_vec3d			ft_colour_to_vec3d(t_colour colour);
 /*number.c*/
 double			clamp(double x, double min, double max);
 double			ft_dabs(double num);
+double			ft_quadratic_equation(double a, double b, double c,
+					t_camera *camera);
 /*parse.c*/
 void			ft_run_is_space(char *str, size_t *pos);
 int				ft_parse_file(char *file, t_data *img);
@@ -249,4 +251,7 @@ int				ft_run_atoi(char *str, size_t *pos);
 /*plane.c*/
 int				ft_hit_plane(t_ray *ray, t_camera *camera, t_hit_record *rec,
 						t_element *plane);
+/*cylinder.c*/
+int				ft_hit_cylinder(t_ray *ray, t_camera *camera, t_hit_record *rec,
+						t_element *cylinder);
 #endif

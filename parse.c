@@ -140,6 +140,7 @@ int	ft_parse_cylinder(char *str, size_t pos, t_data *img)
 
 	if (str[pos] != 'c' || str[pos + 1] != 'y')
 		return (-1);
+	pos += 2;
 	if (ft_parse_vec3d(str, &pos, &coords))
 		return (-1);
 	if (ft_parse_vec3d(str, &pos, &normalized_orientation_vector))
@@ -176,6 +177,8 @@ int	ft_parse_line(char *str, t_data *img)
 		return (ft_parse_sphere(str, pos, img));
 	else if (str[pos] == 'p' && str[pos + 1] == 'l')
 		return (ft_parse_plane(str, pos, img));
+	else if (str[pos] == 'c' && str[pos + 1] == 'y')
+		return (ft_parse_cylinder(str, pos, img));
 	return (-1);
 }
 
