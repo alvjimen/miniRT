@@ -28,6 +28,7 @@ void	ft_img(t_data *img, const int image_width, const double aspect_ratio)
 	img->image_height = image_height;
 	img->aspect_ratio = aspect_ratio;
 	img->samplex_per_pixel = 100;
+	img->ft_draw = ft_draw_without_antialiasing;
 }
 
 t_camera	ft_init_camera(t_vec3d lookfrom, const double aspect_ratio,
@@ -39,6 +40,10 @@ t_camera	ft_init_camera(t_vec3d lookfrom, const double aspect_ratio,
 	t_vec3d		v;
 	t_vec3d		vup;
 
+	ptr.lookfrom = lookfrom;
+	ptr.lookat = lookat;
+	ptr.aspect_ratio = aspect_ratio;
+	ptr.fov	= fov;
 	ptr.origin = lookfrom;
 	ptr.theta = ft_degree_to_radians(fov);
 	ptr.h = tan(ptr.theta / 2);

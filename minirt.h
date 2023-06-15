@@ -17,7 +17,31 @@
 #  define S 1
 # else
 #  define ESC 65307
+/* REDRAW */
+#  define F1 65470
+#  define F2 65471
+/* Camera Origin */
 #  define S 115
+#  define A 97
+#  define D 100
+#  define W 119
+#  define E 101
+#  define Q 113
+/* Camera Lookat */
+#  define J 106
+#  define L 108
+#  define I 105
+#  define K 107
+#  define O 111
+#  define U 117
+/* Elements mod */
+#  define V 118
+#  define R 114
+#  define H 104
+#  define C 99
+#  define B 98
+/* Print values camera */
+#  define P 112
 # endif
 /*WIN SIZE*/
 # define ASPECT_RATIO 1.7777777777777777 // 16.0 / 9.0
@@ -47,8 +71,14 @@ typedef struct s_vec3d
 	double	z;
 }	t_vec3d;
 
+typedef struct s_data t_data;
+
 typedef struct s_camera
 {
+	t_vec3d	lookat;
+	t_vec3d	lookfrom;
+	double	aspect_ratio;
+	double	fov;
 	double	viewport_height;
 	double	viewport_width;
 	double	focal_length;
@@ -132,6 +162,7 @@ typedef struct s_data
 	t_element	ambient_light;
 	double		aspect_ratio;
 	double		max_depth;
+	void		(*ft_draw)(t_data *);
 }	t_data;
 
 /*normalize.c*/
