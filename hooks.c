@@ -46,23 +46,22 @@ int	key_hook(int keycode, t_data *img)
 	else if (keycode == E)
 		img->camera.lookfrom.y += 0.1;
 	else if (keycode == J)
-		img->camera.lookfrom.z -= 0.1;
+		img->camera.lookat.x -= 0.1;
 	else if (keycode == L)
-		img->camera.lookfrom.z += 0.1;
+		img->camera.lookat.x += 0.1;
 	else if (keycode == I)
-		img->camera.lookfrom.x -= 0.1;
+		img->camera.lookat.z -= 0.1;
 	else if (keycode == K)
-		img->camera.lookfrom.x += 0.1;
+		img->camera.lookat.z += 0.1;
 	else if (keycode == O)
-		img->camera.lookfrom.y -= 0.1;
+		img->camera.lookat.y -= 0.1;
 	else if (keycode == U)
-		img->camera.lookfrom.y += 0.1;
+		img->camera.lookat.y += 0.1;
 	else
 		printf("Keycode: %d\n", keycode);
 	return (0);
 }
 
-	/*printf("Closing the window\n");*/
 int	hook_close(void)
 {
 	exit(0);
