@@ -88,46 +88,60 @@ static double	ft_calculate_coefficients(t_ray *ray, t_element *cylinder,
 	r = cylinder->diameter / 2;
 	h = ft_vec3d_unit_lenght(vector);
 	abc[0] = ft_vec3d_dot(ray->direction, ray->direction) - pow(ft_vec3d_dot(ray->direction, h), 2);
-	abc[1] = 2 * (ft_vec3d_dot(ray->direction, w) - ft_vec3d_dot(ray->direction, h) * ft_vec3d_dot(w, h));
+	abc[1] = 2 * (ft_vec3d_dot(ray->direction, w)
+			- ft_vec3d_dot(ray->direction, h) * ft_vec3d_dot(w, h));
 	abc[2] = ft_vec3d_dot(w, w) - pow(ft_vec3d_dot(w, h), 2) - r * r;
 	return (ft_check_discriminant(abc, camera, ray, h));
-}
-
-static double	ft_calculate_quadratic(t_ray *ray, t_element *cylinder, t_camera *camera, t_vec3d h)
-{
-	double	t;
-
-	t = ft_calculate_coefficients(ray, cylinder, camera, h);
-	return (t);
 }
 
 double	ft_hit_surface_base(t_ray *ray, t_camera *camera, t_element *cylinder, t_hit_record *rec)
 {
 	double	denom;
 	double	t;
+	t_vec3d	p_c;
+	t_vec3d	p;
 
 	denom = ft_vec3d_dot(ft_vec3d_negative(cylinder->orientation_vector), ray->direction);
 	t = ft_vec3d_dot(ft_vec3d_negative(cylinder->orientation_vector),
 				ft_vec3d_minus_vec3d(cylinder->coords, ray->origin)) / denom;
-	if (rec)
-	{
-	}
-	if (t < 0 || isnan(t) || (t < camera->t_min || t > camera->t_max))
+	if (t < 0 || isnan(t))
 		return (NAN);
-	return (t);
+	if (rec && camera)
+	{
+		p = ft_ray_at(ray, t);
+		p_c = ft_vec3d_minus_vec3d(p, cylinder->coords);
+		if (ft_vec3d_len(p_c) <= cylinder->diameter / 2)
+		{
+			rec->p = p;
+			return (t);
+		}
+	}
+	return (NAN);
 }
 
 double	ft_hit_surface_top(t_ray *ray, t_camera *camera, t_element *cylinder, t_hit_record *rec)
 {
 	double	denom;
 	double	t;
+	t_vec3d	p_c;
+	t_vec3d	p;
 
 	denom = ft_vec3d_dot(cylinder->orientation_vector, ray->direction);
 	t = ft_vec3d_dot(cylinder->orientation_vector,
 				ft_vec3d_minus_vec3d(rec->p, ray->origin)) / denom;
-	if (t < 0 || isnan(t) || (t < camera->t_min || t > camera->t_max))
+	if (t < 0 || isnan(t))
 		return (NAN);
-	return (t);
+	if (rec && camera)
+	{
+	}
+	p = ft_ray_at(ray, t);
+	p_c = ft_vec3d_minus_vec3d(p, rec->p);
+	if (ft_vec3d_len(p_c) <= cylinder->diameter / 2)
+	{
+		rec->p = p;
+		return (t);
+	}
+	return (NAN);
 }
 
 int	ft_hit_cylinder(t_ray *ray, t_camera *camera, t_hit_record *rec,
@@ -139,7 +153,7 @@ int	ft_hit_cylinder(t_ray *ray, t_camera *camera, t_hit_record *rec,
 
 	h = ft_vec3d_plus_vec3d(cylinder->coords,
 			ft_vec3d_pro_double(cylinder->orientation_vector, cylinder->height));
-	rec->t = ft_calculate_quadratic(ray, cylinder, camera, h);
+	rec->t = ft_calculate_coefficients(ray, cylinder, camera, h);
 	if (isnan(rec->t))
 		return (0);
 	rec->p = ft_ray_at(ray, rec->t);
@@ -152,7 +166,9 @@ int	ft_hit_cylinder(t_ray *ray, t_camera *camera, t_hit_record *rec,
 		if (isnan(rec->t))
 			return (0);
 		rec->p = ft_ray_at(ray, rec->t);
-		rec->normal = ft_vec3d_negative(cylinder->orientation_vector);
+		rec->normal = cylinder->orientation_vector;
+		rec->normal = ft_init_vec3d(1,0,0);
+		return (1);
 	}
 	else if (intersect > len_h)
 	{
@@ -162,12 +178,15 @@ int	ft_hit_cylinder(t_ray *ray, t_camera *camera, t_hit_record *rec,
 		if (isnan(rec->t))
 			return (0);
 		rec->p = ft_ray_at(ray, rec->t);
-		rec->normal = cylinder->orientation_vector;
+		//rec->normal = cylinder->orientation_vector;
+		rec->normal = ft_init_vec3d(0,0,1);
+		return (1);
 	}
-	else if (0 <= intersect && intersect <= len_h)
+	else if (0.0 <= intersect && intersect <= len_h)
 	{
 		/*intersection on the cylinder surface*/
 		rec->normal = cylinder->orientation_vector;
+		return (1);
 	}
-	return (1);
+	return (0);
 }
