@@ -6,7 +6,7 @@
 /*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 18:04:11 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/06 17:48:11 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/06/16 07:55:28 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -24,6 +24,7 @@ void	ft_img(t_data *img, const int image_width, const double aspect_ratio)
 			&img->line_length, &img->endian);
 	mlx_key_hook(img->mlx_win, key_hook, img);
 	mlx_hook(img->mlx_win, 17, 0, hook_close, img);
+	mlx_mouse_hook(img->mlx_win, hook_mouse, img);
 	img->image_width = image_width;
 	img->image_height = image_height;
 	img->aspect_ratio = aspect_ratio;

@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:49:59 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/12 18:02:26 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/06/16 08:23:03 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINIRT_H
@@ -42,6 +42,10 @@
 #  define B 98
 /* Print values camera */
 #  define P 112
+/* Print ray values of hit */
+#  define L_CLICK 1
+/* switch antialiasing */
+#  define N1 49
 # endif
 /*WIN SIZE*/
 # define ASPECT_RATIO 1.7777777777777777 // 16.0 / 9.0
@@ -70,8 +74,6 @@ typedef struct s_vec3d
 	double	y;
 	double	z;
 }	t_vec3d;
-
-typedef struct s_data t_data;
 
 typedef struct s_camera
 {
@@ -145,6 +147,14 @@ typedef struct s_element
 }	t_element;
 /*Horizontalfield of view in degrees 0-180*/
 
+typedef struct	s_mouse
+{
+	int	x;
+	int	y;
+}	t_mouse; 
+
+typedef struct s_data t_data;
+
 typedef struct s_data
 {
 	void		*mlx;
@@ -162,6 +172,7 @@ typedef struct s_data
 	t_element	ambient_light;
 	double		aspect_ratio;
 	double		max_depth;
+	t_mouse		mouse;
 	void		(*ft_draw)(t_data *);
 }	t_data;
 
@@ -173,6 +184,7 @@ double			unnormalize_coord(double n_coord, double max_coord,
 /*hooks.c*/
 int				key_hook(int keycode, t_data *img);
 int				hook_close(void);
+int				hook_mouse(int button, int x,  int y, void *param);
 /*draw.c*/
 void			ft_draw_without_antialiasing(t_data *img);
 void			my_mlx_pixel_put(t_data *data, int x, int y, int color);
@@ -238,8 +250,7 @@ void			ft_img(t_data *img, const int image_width,
 t_camera		ft_init_camera(t_vec3d lookfrom, const double aspect_ratio,
 					const double fov, t_vec3d lookat);
 /*sphere.c*/
-double			ft_hit_sphere(t_vec3d *center, double diameter, t_ray *ray);
-int				ft_hit_sphere_v2(t_ray *ray, t_camera *camera,
+int				ft_hit_sphere(t_ray *ray, t_camera *camera,
 					t_hit_record *rec, t_element *sphere);
 /*hit.c*/
 void			ft_hit_face(t_ray *ray, t_hit_record *rec);

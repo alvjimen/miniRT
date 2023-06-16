@@ -6,7 +6,7 @@
 /*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:16:42 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/10 15:39:14 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/06/16 07:11:14 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -18,9 +18,9 @@ static int	ft_color_double_to_int(double c)
 
 static int	ft_color_vector_to_int(t_vec3d v)
 {
-	return (ft_color_double_to_int(clamp(v.x, 0.0, 0.999)) << 16
-		| ft_color_double_to_int(clamp(v.y, 0.0, 0.999)) << 8
-		| ft_color_double_to_int(clamp(v.z, 0.0, 0.999)));
+	return (ft_color_double_to_int(clamp(v.x, 0.0, 0.999999999)) << 16
+		| ft_color_double_to_int(clamp(v.y, 0.0, 0.999999999)) << 8
+		| ft_color_double_to_int(clamp(v.z, 0.0, 0.999999999)));
 }
 
 t_vec3d	ft_colour_to_vec3d(t_colour colour)
