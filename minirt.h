@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:49:59 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/16 08:23:03 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/06/17 15:40:24 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINIRT_H
@@ -174,6 +174,7 @@ typedef struct s_data
 	double		max_depth;
 	t_mouse		mouse;
 	void		(*ft_draw)(t_data *);
+	t_element	*element;
 }	t_data;
 
 /*normalize.c*/
@@ -255,6 +256,8 @@ int				ft_hit_sphere(t_ray *ray, t_camera *camera,
 /*hit.c*/
 void			ft_hit_face(t_ray *ray, t_hit_record *rec);
 int				ft_hittable(t_ray *ray, t_camera *camera, t_hit_record *rec,
+					t_list *world);
+t_element		*ft_hittable_element(t_ray *ray, t_camera *camera, t_hit_record *rec,
 					t_list *world);
 /*world.c*/
 int			ft_world(t_data *img);

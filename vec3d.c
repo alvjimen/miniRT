@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 18:07:32 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/05/30 18:33:01 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/06/17 18:40:06 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -19,15 +19,6 @@ t_vec3d	ft_init_vec3d(double x, double y, double z)
 	ptr.y = y;
 	ptr.z = z;
 	return (ptr);
-}
-
-void	ft_set_vec3d(t_vec3d *ptr, double x, double y, double z)
-{
-	if (!ptr)
-		return ;
-	ptr->x = x;
-	ptr->y = y;
-	ptr->z = z;
 }
 
 /*this is the same to x^2 + y^2 + z^2 */

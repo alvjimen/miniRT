@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 18:32:16 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/05/30 18:47:25 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/06/17 19:32:32 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -50,49 +50,7 @@ h^ = ft_vec3d_unit_lenght(cylinder->orientation_vector);
 a = ft_vec3d_dot(v, v) - pow(ft_vec3d_dot(v, h^), 2);
 b = 2 * (ft_vec3d_dot(v, w) - ft_vec3d_dot(v, h^) * ft_vec3d_dot(w, h^));
 c = ft_vec3d_dot(w, w) - pow(ft_vec3d_dot(w, h), 2) - pow(r, 2);
-	i 0, 1, 2
-abc { a, b, c }
 */
-
-static double	ft_check_discriminant(double abc[3], t_camera *camera, t_ray * ray, t_vec3d h)
-{
-	double	discriminant;
-	double	sqrtd;
-	double	t;
-
-	discriminant = abc[1] * abc[1] - 4 * abc[0] * abc[2];
-	if (discriminant < 0)
-		return (NAN);
-	if (discriminant == 0 && ft_vec3d_dot(ray->origin, h) != 1)
-		return (-abc[1] / (2 * abc[0]));
-	sqrtd = sqrt(discriminant);
-	t = (-abc[1] - sqrtd) / (2 * abc[0]);
-	if (t < camera->t_min || camera->t_max < t)
-	{
-		t = (-abc[1] + sqrtd) / (2 * abc[0]);
-		if (t < camera->t_min || camera->t_max < t)
-			return (NAN);
-	}
-	return (t);
-}
-
-static double	ft_calculate_coefficients(t_ray *ray, t_element *cylinder,
-		t_camera *camera, t_vec3d vector)
-{
-	t_vec3d	h;
-	t_vec3d	w;
-	double	abc[3];
-	double	r;
-
-	w = ft_vec3d_minus_vec3d(ray->origin, cylinder->coords);
-	r = cylinder->diameter / 2;
-	h = ft_vec3d_unit_lenght(vector);
-	abc[0] = ft_vec3d_dot(ray->direction, ray->direction) - pow(ft_vec3d_dot(ray->direction, h), 2);
-	abc[1] = 2 * (ft_vec3d_dot(ray->direction, w)
-			- ft_vec3d_dot(ray->direction, h) * ft_vec3d_dot(w, h));
-	abc[2] = ft_vec3d_dot(w, w) - pow(ft_vec3d_dot(w, h), 2) - r * r;
-	return (ft_check_discriminant(abc, camera, ray, h));
-}
 
 double	ft_hit_surface_base(t_ray *ray, t_camera *camera, t_element *cylinder, t_hit_record *rec)
 {
@@ -102,19 +60,18 @@ double	ft_hit_surface_base(t_ray *ray, t_camera *camera, t_element *cylinder, t_
 	t_vec3d	p;
 
 	denom = ft_vec3d_dot(ft_vec3d_negative(cylinder->orientation_vector), ray->direction);
-	t = ft_vec3d_dot(ft_vec3d_negative(cylinder->orientation_vector),
-				ft_vec3d_minus_vec3d(cylinder->coords, ray->origin)) / denom;
-	if (t < 0 || isnan(t))
+	if (ft_dabs(denom) <= 0.001)
 		return (NAN);
-	if (rec && camera)
+	t = ft_vec3d_dot(ft_vec3d_negative(cylinder->orientation_vector),
+			ft_vec3d_minus_vec3d(cylinder->coords, ray->origin)) / denom;
+	if (t < camera->t_min || t > camera->t_max || isnan(t))
+		return (NAN);
+	p = ft_ray_at(ray, t);
+	p_c = ft_vec3d_minus_vec3d(p, cylinder->coords);
+	if (ft_vec3d_len(p_c) <= cylinder->radius)
 	{
-		p = ft_ray_at(ray, t);
-		p_c = ft_vec3d_minus_vec3d(p, cylinder->coords);
-		if (ft_vec3d_len(p_c) <= cylinder->diameter / 2)
-		{
-			rec->p = p;
-			return (t);
-		}
+		rec->p = p;
+		return (t);
 	}
 	return (NAN);
 }
@@ -127,21 +84,80 @@ double	ft_hit_surface_top(t_ray *ray, t_camera *camera, t_element *cylinder, t_h
 	t_vec3d	p;
 
 	denom = ft_vec3d_dot(cylinder->orientation_vector, ray->direction);
-	t = ft_vec3d_dot(cylinder->orientation_vector,
-				ft_vec3d_minus_vec3d(rec->p, ray->origin)) / denom;
-	if (t < 0 || isnan(t))
+	if (ft_dabs(denom) <= 0.001)
 		return (NAN);
-	if (rec && camera)
-	{
-	}
+	t = ft_vec3d_dot(cylinder->orientation_vector,
+			ft_vec3d_minus_vec3d(rec->p, ray->origin)) / denom;
+	if (t < camera->t_min || t > camera->t_max || isnan(t))
+		return (NAN);
 	p = ft_ray_at(ray, t);
 	p_c = ft_vec3d_minus_vec3d(p, rec->p);
-	if (ft_vec3d_len(p_c) <= cylinder->diameter / 2)
+	if (ft_vec3d_len(p_c) <= cylinder->radius)
 	{
 		rec->p = p;
 		return (t);
 	}
 	return (NAN);
+}
+
+/*
+   h = h^
+   i 0, 1, 2
+   abc { a, b, c }
+ */
+static double	ft_check_discriminant(double abc[3], t_camera *camera, t_ray * ray, t_vec3d h)
+{
+	double	discriminant;
+	double	sqrtd;
+	double	t;
+	double	t_v2;
+					/* b^2 - 4ac*/
+	discriminant = abc[1] * abc[1] - 4 * abc[0] * abc[2];
+	if (discriminant < 0)
+		return (NAN);		/* v^ · h^ != 1*/
+	if (discriminant == 0 && ft_vec3d_dot(ft_vec3d_unit_lenght(ray->direction), h) != 1)
+		/* -b / 2a */
+		return (-abc[1] / (2 * abc[0]));
+	sqrtd = sqrt(discriminant);
+	/*(-b - sqrtd) / 2a*/
+	t = (-abc[1] - sqrtd) / (2 * abc[0]);
+	if (t < camera->t_min || camera->t_max < t)
+	{
+		/*(-b + sqrtd) / 2a*/
+		t = (-abc[1] + sqrtd) / (2 * abc[0]);
+		if (t < camera->t_min || camera->t_max < t)
+			return (NAN);
+	}
+	else
+	{
+		t_v2 = (-abc[1] + sqrtd) / (2 * abc[0]);
+		if (t_v2 > camera->t_min && camera->t_max > t_v2 && t > t_v2)
+			return (t_v2);
+	}
+	return (t);
+}
+
+/*vector = H*/
+/*v = ray->direction*/
+static double	ft_calculate_coefficients(t_ray *ray, t_element *cylinder,
+		t_camera *camera, t_vec3d vector)
+{
+	t_vec3d	h;
+	t_vec3d	w;
+	double	abc[3];
+
+	w = ft_vec3d_minus_vec3d(ray->origin, cylinder->coords);
+	/* h = H - C; h = h^*/
+	h = ft_vec3d_unit_lenght(ft_vec3d_minus_vec3d(vector, cylinder->coords));
+	/* a = v · v - (v · h^)^2*/
+	abc[0] = ft_vec3d_dot(ray->direction, ray->direction) - pow(ft_vec3d_dot(ray->direction, h), 2);
+	/* b = (v · w) - v · h^ * w · h^ */
+	abc[1] = 2 * (ft_vec3d_dot(ray->direction, w)
+			- ft_vec3d_dot(ray->direction, h) * ft_vec3d_dot(w, h));
+	/* c = w · w - (w · h^)^2 - r^2*/
+	abc[2] = ft_vec3d_dot(w, w) - pow(ft_vec3d_dot(w, h), 2) -
+		(cylinder->radius * cylinder->radius);
+	return (ft_check_discriminant(abc, camera, ray, h));
 }
 
 int	ft_hit_cylinder(t_ray *ray, t_camera *camera, t_hit_record *rec,
@@ -151,12 +167,16 @@ int	ft_hit_cylinder(t_ray *ray, t_camera *camera, t_hit_record *rec,
 	double	len_h;
 	t_vec3d	h;
 
+	/* h = H */
 	h = ft_vec3d_plus_vec3d(cylinder->coords,
-			ft_vec3d_pro_double(cylinder->orientation_vector, cylinder->height));
+			ft_vec3d_pro_double(ft_vec3d_unit_lenght(cylinder->orientation_vector), cylinder->height));
 	rec->t = ft_calculate_coefficients(ray, cylinder, camera, h);
 	if (isnan(rec->t))
 		return (0);
 	rec->p = ft_ray_at(ray, rec->t);
+	/* h = h */
+	h = ft_vec3d_minus_vec3d(h, cylinder->coords);
+	/* intersect = (Lint - C) · h -> rec->p - cylinder->coords · h*/
 	intersect = ft_vec3d_dot(ft_vec3d_minus_vec3d(rec->p, cylinder->coords), h);
 	len_h = ft_vec3d_len(h);
 	if (intersect < 0)
@@ -173,7 +193,7 @@ int	ft_hit_cylinder(t_ray *ray, t_camera *camera, t_hit_record *rec,
 	else if (intersect > len_h)
 	{
 		/*cylinder surface above test for top of the cylinder*/
-		rec->p = h;
+		rec->p = ft_vec3d_plus_vec3d(h, cylinder->coords);
 		rec->t = ft_hit_surface_top(ray, camera, cylinder, rec);
 		if (isnan(rec->t))
 			return (0);

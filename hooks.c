@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:56:57 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/16 08:37:51 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/06/17 18:51:46 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -15,6 +15,9 @@ void	ft_print_vector(const char *str, t_vec3d vector)
 {
 	printf("%s: x: %f, y: %f, z: %f\n",
 			str, vector.x, vector.y, vector.z);
+}
+void	debug(void)
+{
 }
 
 int	key_hook(int keycode, t_data *img)
@@ -29,7 +32,6 @@ int	key_hook(int keycode, t_data *img)
 				img->camera.fov, img->camera.lookat);
 		img->ft_draw(img);
 		mlx_put_image_to_window(img->mlx, img->mlx_win, img->img, 0, 0);
-		printf("End of redraw\n");
 	}
 	else if (keycode == P)
 		(ft_print_vector("lookfrom", img->camera.lookfrom), ft_print_vector("lookat", img->camera.lookat));
@@ -76,9 +78,10 @@ int	hook_close(void)
 
 int	hook_mouse(int button, int x,  int y, void *param)
 {
-	t_data	*img;
-	t_vec3d	vector;
-	t_ray	ray;
+	t_data			*img;
+	t_vec3d			vector;
+	t_ray			ray;
+	t_hit_record	rec;
 
 	img = param;
 	img->mouse.x = x;
@@ -89,6 +92,8 @@ int	hook_mouse(int button, int x,  int y, void *param)
 					/ (img->image_width - 1)), ((double)(img->image_height
 						- (y + 1)) / (img->image_height - 1)));
 		ray = ft_init_ray(img->camera.origin, vector);
+		debug();
+		img->element = ft_hittable_element(&ray, &img->camera, &rec, img->world); 
 		ft_print_vector("color", ft_ray_color(&ray, img));
 	}
 	return  (0);
