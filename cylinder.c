@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 18:32:16 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/18 17:52:02 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/06/18 18:00:57 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -162,7 +162,7 @@ static double	ft_check_discriminant(double abc[3], t_camera *camera, t_ray * ray
 	else
 	{
 		t_v2 = (-abc[1] + sqrtd) / (2 * abc[0]);
-		if (t_v2 > camera->t_min && camera->t_max > t_v2 && t > t_v2)
+		if (t_v2 >= camera->t_min && camera->t_max >= t_v2 && t > t_v2)
 			return (t_v2);
 	}
 	return (t);

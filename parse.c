@@ -6,7 +6,7 @@
 /*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 17:02:41 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/18 16:23:35 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/06/18 18:12:14 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -180,7 +180,7 @@ int	ft_parse_cone(char *str, size_t pos, t_data *img)
 		return (-1);
 	if (ft_parse_colour(str, &pos, &colour))
 		return (-1);
-	node = ft_lstnew(cylinder(coords, normalized_orientation_vector, param, colour));
+	node = ft_lstnew(cone(coords, normalized_orientation_vector, param, colour));
 	ft_lstadd_back(&img->world, node);
 	if (node && node->content && !ft_parse_end(str, pos))
 		return (0);

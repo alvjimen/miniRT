@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:49:59 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/18 16:46:00 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/06/18 19:40:05 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINIRT_H
@@ -301,6 +301,7 @@ int				ft_hit_plane(t_ray *ray, t_camera *camera, t_hit_record *rec,
 /*cylinder.c*/
 int				ft_hit_cylinder(t_ray *ray, t_camera *camera, t_hit_record *rec,
 						t_element *cylinder);
+double	ft_hit_surface_base(t_ray *ray, t_camera *camera, t_element *cylinder, t_hit_record *rec);
 /*cone*/
 int				ft_hit_cone(t_ray *ray, t_camera *camera, t_hit_record *rec,
 						t_element *cylinder);
