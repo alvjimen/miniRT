@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 18:32:16 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/18 10:04:00 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/06/18 11:40:19 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -100,6 +100,37 @@ double	ft_hit_surface_top(t_ray *ray, t_camera *camera, t_element *cylinder, t_h
 	return (NAN);
 }
 
+int	ft_base_of_the_cylinder(t_ray *ray, t_camera *camera, t_hit_record *rec,
+		t_element *cylinder)
+{
+	double	t;
+	double	t_2;
+	t_vec3d	h;
+
+	h = ft_vec3d_plus_vec3d(cylinder->coords,
+			ft_vec3d_pro_double(ft_vec3d_unit_lenght(
+			cylinder->orientation_vector), cylinder->height));
+	t = ft_hit_surface_base(ray, camera, cylinder, rec);
+	rec->p = h;
+	t_2 = ft_hit_surface_top(ray, camera, cylinder, rec);
+	if (isnan(t) && isnan(t_2))
+		return (0);
+	else
+	{
+		if (isnan(t) || (!isnan(t_2) && t >= t_2))
+		{
+			rec->t = t_2;
+			rec->normal = cylinder->orientation_vector;
+		}
+		else if (isnan(t_2) || (!isnan(t) && t < t_2))
+		{
+			rec->t = t;
+			rec->normal = ft_vec3d_negative(cylinder->orientation_vector);
+		}
+	}
+	rec->p = ft_ray_at(ray, rec->t);
+	return (1);
+}
 /*
    h = h^
    i 0, 1, 2
@@ -165,8 +196,7 @@ int	ft_hit_cylinder(t_ray *ray, t_camera *camera, t_hit_record *rec,
 {
 	double	intersect;
 	double	len_h;
-	double	t;
-	double	t_2;
+	double	q;
 	t_vec3d	h;
 
 	/* h = H */
@@ -184,68 +214,16 @@ int	ft_hit_cylinder(t_ray *ray, t_camera *camera, t_hit_record *rec,
 	if (0.0 <= intersect && intersect <= len_h)
 	{
 		/*intersection on the cylinder surface*/
-		rec->normal = cylinder->orientation_vector;
+		q = sqrt(cylinder->radius *  cylinder->radius +
+		ft_vec3d_squared_len(ft_vec3d_minus_vec3d(cylinder->coords, rec->p))); 
+		h = ft_vec3d_plus_vec3d(cylinder->coords, ft_vec3d_pro_double(
+					ft_vec3d_unit_lenght(cylinder->orientation_vector),
+					q));
+		rec->normal = ft_vec3d_minus_vec3d(rec->p, h);
+		rec->normal = ft_vec3d_minus_vec3d(rec->p, h);
+		//rec->normal = cylinder->orientation_vector;
 		return (1);
 	}
 	else
-	{
-		//first check base surface
-		t = ft_hit_surface_base(ray, camera, cylinder, rec);
-		rec->p = ft_vec3d_plus_vec3d(h, cylinder->coords);
-		t_2 = ft_hit_surface_top(ray, camera, cylinder, rec);
-		if (isnan(t) && isnan(t_2))
-				return (0);
-		else
-		{
-			if (isnan(t))
-			{
-				rec->t = t_2;
-				rec->normal = cylinder->orientation_vector;
-			}
-			else if (isnan(t_2))
-			{
-				rec->t = t;
-				rec->normal = ft_vec3d_negative(cylinder->orientation_vector);
-			}
-			else if (t < t_2)
-			{
-				rec->t = t;
-				rec->normal = ft_vec3d_negative(cylinder->orientation_vector);
-			}
-			else
-			{
-				rec->t = t_2;
-				rec->normal = cylinder->orientation_vector;
-			}
-		}
-		rec->p = ft_ray_at(ray, rec->t);
-		return (1);
-	}
-	return (0);
-	/*
-	else if (intersect < 0)
-	{
-		//cylinder surface below test for base cap
-		rec->t = ft_hit_surface_base(ray, camera, cylinder, rec);
-		if (isnan(rec->t))
-			return (0);
-		rec->p = ft_ray_at(ray, rec->t);
-		rec->normal = cylinder->orientation_vector;
-		rec->normal = ft_init_vec3d(1,0,0);
-		return (1);
-	}
-	else if (intersect > len_h)
-	{
-		//cylinder surface above test for top of the cylinder
-		rec->p = ft_vec3d_plus_vec3d(h, cylinder->coords);
-		rec->t = ft_hit_surface_top(ray, camera, cylinder, rec);
-		if (isnan(rec->t))
-			return (0);
-		rec->p = ft_ray_at(ray, rec->t);
-		//rec->normal = cylinder->orientation_vector;
-		rec->normal = ft_init_vec3d(0,0,1);
-		return (1);
-	}
-	*/
-	return (0);
+		return (ft_base_of_the_cylinder(ray, camera, rec, cylinder));
 }

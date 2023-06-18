@@ -6,7 +6,7 @@
 /*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 18:04:11 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/16 07:55:28 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/06/18 11:41:14 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -61,7 +61,7 @@ t_camera	ft_init_camera(t_vec3d lookfrom, const double aspect_ratio,
 			ft_vec3d_plus_vec3d(ft_vec3d_div_double(ptr.horizontal, 2.0),
 				ft_vec3d_plus_vec3d(ft_vec3d_div_double(
 						ptr.vertical, 2.0), w)));
-	ptr.t_min = 0.0;
+	ptr.t_min = 0.0;//0.2
 	ptr.t_max = INFINITY;
 	return (ptr);
 }
