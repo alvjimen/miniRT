@@ -54,6 +54,7 @@ SRC					=	main.c\
 						parse_utils.c\
 						plane.c\
 						cylinder.c\
+						cone.c\
 						#diffuse_materials.c\
 						perspective.c\
 						rotations.c\

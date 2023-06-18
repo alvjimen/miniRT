@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:49:59 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/17 15:40:24 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/06/18 16:46:00 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINIRT_H
@@ -212,6 +212,8 @@ t_element	*plane(t_vec3d coords, t_vec3d normalized_orientation_vector,
 		t_colour colour);
 t_element	*cylinder(t_vec3d coords, t_vec3d normalized_orientation_vector,
 		double param[2], t_colour colour);
+t_element	*cone(t_vec3d coords, t_vec3d normalized_orientation_vector,
+		double param[2], t_colour colour);
 /*matrix.c*/
 /*
 * void			matrixmultiplication(t_vec4d *origin, t_vec4d *destiny,
@@ -298,5 +300,8 @@ int				ft_hit_plane(t_ray *ray, t_camera *camera, t_hit_record *rec,
 						t_element *plane);
 /*cylinder.c*/
 int				ft_hit_cylinder(t_ray *ray, t_camera *camera, t_hit_record *rec,
+						t_element *cylinder);
+/*cone*/
+int				ft_hit_cone(t_ray *ray, t_camera *camera, t_hit_record *rec,
 						t_element *cylinder);
 #endif

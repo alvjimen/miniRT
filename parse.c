@@ -6,7 +6,7 @@
 /*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 17:02:41 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/12 18:31:27 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/06/18 16:23:35 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -159,6 +159,35 @@ int	ft_parse_cylinder(char *str, size_t pos, t_data *img)
 	return (1);
 }
 
+int	ft_parse_cone(char *str, size_t pos, t_data *img)
+{
+	t_list		*node;
+	t_vec3d		normalized_orientation_vector;
+	t_vec3d		coords;
+	double		param[2];
+	t_colour	colour;
+
+	if (str[pos] != 'c' || str[pos + 1] != 'o')
+		return (-1);
+	pos += 2;
+	if (ft_parse_vec3d(str, &pos, &coords))
+		return (-1);
+	if (ft_parse_vec3d(str, &pos, &normalized_orientation_vector))
+		return (-1);
+	if (ft_parse_double(str, &pos, &param[0]))
+		return (-1);
+	if (ft_parse_double(str, &pos, &param[1]))
+		return (-1);
+	if (ft_parse_colour(str, &pos, &colour))
+		return (-1);
+	node = ft_lstnew(cylinder(coords, normalized_orientation_vector, param, colour));
+	ft_lstadd_back(&img->world, node);
+	if (node && node->content && !ft_parse_end(str, pos))
+		return (0);
+	ft_lstclear(&img->world, free);
+	return (1);
+}
+
 int	ft_parse_line(char *str, t_data *img)
 {
 	size_t	pos;
@@ -179,6 +208,8 @@ int	ft_parse_line(char *str, t_data *img)
 		return (ft_parse_plane(str, pos, img));
 	else if (str[pos] == 'c' && str[pos + 1] == 'y')
 		return (ft_parse_cylinder(str, pos, img));
+	else if (str[pos] == 'c' && str[pos + 1] == 'o')
+		return (ft_parse_cone(str, pos, img));
 	return (-1);
 }
 

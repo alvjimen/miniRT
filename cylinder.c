@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 18:32:16 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/18 11:40:19 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/06/18 17:52:02 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -198,6 +198,7 @@ int	ft_hit_cylinder(t_ray *ray, t_camera *camera, t_hit_record *rec,
 	double	len_h;
 	double	q;
 	t_vec3d	h;
+	double	t;
 
 	/* h = H */
 	h = ft_vec3d_plus_vec3d(cylinder->coords,
@@ -213,7 +214,13 @@ int	ft_hit_cylinder(t_ray *ray, t_camera *camera, t_hit_record *rec,
 	len_h = ft_vec3d_len(h);
 	if (0.0 <= intersect && intersect <= len_h)
 	{
-		/*intersection on the cylinder surface*/
+		t = rec->t;
+		ft_base_of_the_cylinder(ray, camera, rec, cylinder);
+		if (t > rec->t)
+			return (1);
+		rec->t = t;
+		rec->p = ft_ray_at(ray, rec->t);
+		/*calculating the normal*/
 		q = sqrt(cylinder->radius *  cylinder->radius +
 		ft_vec3d_squared_len(ft_vec3d_minus_vec3d(cylinder->coords, rec->p))); 
 		h = ft_vec3d_plus_vec3d(cylinder->coords, ft_vec3d_pro_double(
