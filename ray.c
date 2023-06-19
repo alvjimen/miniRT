@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 18:56:49 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/17 15:41:13 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/06/19 17:33:28 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -46,7 +46,8 @@ t_vec3d	ft_ray_color(t_ray *ray, t_data *img)
 	double			t;
 
 	if (ft_hittable(ray, &img->camera, &rec, img->world))
-		return (rec.normal);
+		return (ft_vec3d_pro_double(ft_vec3d_plus_vec3d(
+						ft_init_vec3d(1, 1, 1), rec.normal), 0.5));
 	t = 0.5 * (ray->unit_direction.y + 1.0);
 	return (ft_init_vec3d((1.0 - t) + t * 0.5, (1.0 - t) + t * 0.7, 1.0));
 }
