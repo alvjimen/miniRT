@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:56:57 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/17 18:51:46 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/06/19 12:38:20 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -22,9 +22,9 @@ void	debug(void)
 
 int	key_hook(int keycode, t_data *img)
 {
-	if (keycode == ESC)
+	if (keycode == ESC && img)
 		exit(0);
-	else if (keycode == F2)
+	if (keycode == F2)
 		ft_prt_ppm_file_from_img(img, img->image_width, img->image_height, 2);
 	else if (keycode == F1)
 	{
@@ -32,7 +32,7 @@ int	key_hook(int keycode, t_data *img)
 				img->camera.fov, img->camera.lookat);
 		img->ft_draw(img);
 		mlx_put_image_to_window(img->mlx, img->mlx_win, img->img, 0, 0);
-	}
+		}
 	else if (keycode == P)
 		(ft_print_vector("lookfrom", img->camera.lookfrom), ft_print_vector("lookat", img->camera.lookat));
 	else if (keycode == W)

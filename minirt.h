@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:49:59 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/18 19:40:05 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/06/19 12:38:07 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINIRT_H
@@ -14,7 +14,25 @@
 /*KEYBOARD BINDING*/
 # ifdef	__APPLE__
 #  define ESC 53
+#  define Q 12
+#  define W 13
+#  define E 14
+#  define A 0
 #  define S 1
+#  define D 2
+#  define U 32
+#  define I 34
+#  define O 31
+#  define J 38
+#  define K 40
+#  define L 37
+#  define N1 18
+#  define O 31
+#  define P 35
+#  define F1 122
+#  define F2 120
+
+#  define L_CLICK 1
 # else
 #  define ESC 65307
 /* REDRAW */
