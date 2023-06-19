@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 16:20:39 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/18 19:42:21 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/06/19 19:08:12 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -34,27 +34,27 @@ int	ft_hit_cone(t_ray *ray, t_camera *camera, t_hit_record *rec,
 	double	cos_a;
 
 	uh = ft_vec3d_unit_lenght(cone->orientation_vector);
+	uv = ft_vec3d_unit_lenght(ray->direction);
 	h = ft_vec3d_pro_double(uh, cone->height);
 	len_h =  ft_vec3d_len(h);
 	ph = ft_vec3d_plus_vec3d(cone->coords, h);
 	m = (cone->radius * cone->radius) / ft_vec3d_squared_len(h);
 	w = ft_vec3d_minus_vec3d(ray->origin, ph);
-	a = ft_vec3d_dot(ray->direction, ray->direction) - (m + 1) *
-		pow(ft_vec3d_dot(ray->direction, uh), 2);
-	b = ft_vec3d_dot(ray->direction, w) - (m + 1) *
-		(ft_vec3d_dot(ray->direction, uh) * ft_vec3d_dot(w, uh));
-	c = ft_vec3d_dot(w, w) - (m + 1) * pow(ft_vec3d_dot(w, uh), 2);
+	a = ft_vec3d_dot(ray->direction, ray->direction) - ((m + 1) *
+		pow(ft_vec3d_dot(ray->direction, uh), 2));
+	b = ft_vec3d_dot(ray->direction, w) - ((m + 1) *
+		(ft_vec3d_dot(ray->direction, uh) * ft_vec3d_dot(w, uh)));
+	c = ft_vec3d_dot(w, w) - ((m + 1) * pow(ft_vec3d_dot(w, uh), 2));
 	discriminant = (b * b) - 4 * a * c;
 	if (discriminant < 0)
 		return (0);
-	else if (discriminant ==  0)
+	else if (discriminant == 0)
 	{
 		cos_a = len_h / sqrt(len_h * len_h + cone->radius * cone->radius);
-		uv = ft_vec3d_unit_lenght(ray->direction);
 		if (ft_vec3d_dot(uv, uh) != cos_a)
 		{
 			t = -b / (2 * a);
-			if (t >= camera->t_min && t <= camera->t_max)
+			if (camera->t_min >= t && t <= camera->t_max)
 			{
 				rec->p = ft_ray_at(ray, t);
 				rec->normal = ft_init_vec3d(1, 0, 0);
@@ -88,9 +88,9 @@ int	ft_hit_cone(t_ray *ray, t_camera *camera, t_hit_record *rec,
 				return (0);
 			rec->t = t;
 			rec->p = ft_ray_at(ray, t);
-			*/
 			rec->normal = ft_init_vec3d(0, 0, 1);
 			return (1);
+			*/
 		}
 	}
 	return (0);
