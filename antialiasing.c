@@ -6,7 +6,7 @@
 /*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 12:42:49 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/06 16:13:31 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/06/20 14:40:04 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -22,9 +22,7 @@ static int	ft_antialiasing(t_data *img, int x, int y)
 	ft_bzero(&acum, sizeof(acum));
 	while (samples++ < img->samplex_per_pixel)
 	{
-		vector = ft_ray_direction(img, (x + pseudo_random())
-				/ (img->image_width - 1), (img->image_height - (y + 1)
-					+ pseudo_random()) / (img->image_height - 1));
+		vector = ft_ray_direction(img, x, y, 1);
 		ray = ft_init_ray(img->camera.origin, vector);
 		acum = ft_vec3d_plus_vec3d(acum, ft_ray_color(&ray, img));
 	}

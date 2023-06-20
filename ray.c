@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 18:56:49 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/19 17:33:28 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/06/20 14:38:29 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -31,8 +31,22 @@ t_vec3d	ft_ray_at(t_ray *ray, double t)
 }
 
 /*camera get_ray*/
-t_vec3d	ft_ray_direction(t_data *img, double s, double t)
+t_vec3d	ft_ray_direction(t_data *img, int x, int y, int flag)
 {
+	double	s;
+	double	t;
+
+	if (!flag)
+	{
+		s = ((double)(x) / (img->image_width - 1));
+		t = ((double)(img->image_height - (y + 1)) / (img->image_height - 1));
+	}
+	else
+	{
+		s = (x + pseudo_random()) / (img->image_width - 1);
+		t = (img->image_height - (y + 1) + pseudo_random())
+				/ (img->image_height - 1);
+	}
 	return (ft_vec3d_minus_vec3d(ft_vec3d_plus_vec3d(
 				img->camera.lower_left_corner, ft_vec3d_plus_vec3d(
 					ft_vec3d_pro_double(img->camera.horizontal, s),

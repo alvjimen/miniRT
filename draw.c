@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 13:03:13 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/06 16:05:30 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/06/20 14:39:24 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -25,9 +25,7 @@ void	ft_draw_without_antialiasing(t_data *img)
 		x = 0;
 		while (x < img->image_width)
 		{
-			vector = ft_ray_direction(img, ((double)(x)
-						/ (img->image_width - 1)), ((double)(img->image_height
-							- (y + 1)) / (img->image_height - 1)));
+			vector = ft_ray_direction(img, x, y, 0);
 			ray = ft_init_ray(img->camera.origin, vector);
 			colour = ft_ray_color(&ray, img);
 			my_mlx_pixel_put(img, x, y, ft_write_color(colour, 1));

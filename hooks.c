@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:56:57 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/19 12:38:20 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/06/20 14:42:35 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -88,9 +88,7 @@ int	hook_mouse(int button, int x,  int y, void *param)
 	img->mouse.y = y;
 	if (button == L_CLICK)
 	{
-		vector = ft_ray_direction(img, ((double)(x)
-					/ (img->image_width - 1)), ((double)(img->image_height
-						- (y + 1)) / (img->image_height - 1)));
+		vector = ft_ray_direction(img, x, y, 0);
 		ray = ft_init_ray(img->camera.origin, vector);
 		debug();
 		img->element = ft_hittable_element(&ray, &img->camera, &rec, img->world); 

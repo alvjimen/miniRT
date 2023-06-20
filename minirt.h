@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:49:59 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/19 12:38:07 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/06/20 14:40:37 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINIRT_H
@@ -258,7 +258,7 @@ t_vec4d			*ft_vec4d_init(double x, double y, double z, double w);
 t_ray			ft_init_ray(t_vec3d origin, t_vec3d direction);
 t_vec3d			ft_ray_at(t_ray *ray, double t);
 t_vec3d			ft_ray_color(t_ray *ray, t_data *img);
-t_vec3d			ft_ray_direction(t_data *img, double s, double t);
+t_vec3d			ft_ray_direction(t_data *img, int x, int y, int flag);
 /*ppm.c*/
 void			ft_draw_ppm_header(int width, int height, int fd);
 void			ft_draw_ppm_pixel(int colour, int fd);
