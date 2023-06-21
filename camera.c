@@ -30,6 +30,7 @@ void	ft_img(t_data *img, const int image_width, const double aspect_ratio)
 	img->aspect_ratio = aspect_ratio;
 	img->samplex_per_pixel = 100;
 	img->ft_draw = ft_draw_without_antialiasing;
+	img->modifier = 0.1;
 }
 
 t_camera	ft_init_camera(t_vec3d lookfrom, const double aspect_ratio,

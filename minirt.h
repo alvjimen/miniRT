@@ -14,12 +14,15 @@
 /*KEYBOARD BINDING*/
 # ifdef	__APPLE__
 #  define ESC 53
+/* Modified lookfrom */
 #  define Q 12
 #  define W 13
 #  define E 14
+/* Modified lookat */
 #  define A 0
 #  define S 1
 #  define D 2
+/* undefined */
 #  define U 32
 #  define I 34
 #  define O 31
@@ -39,31 +42,43 @@
 #  define F1 65470
 #  define F2 65471
 /* Camera Origin */
-#  define S 115
-#  define A 97
-#  define D 100
+#  define Q 113
 #  define W 119
 #  define E 101
-#  define Q 113
 /* Camera Lookat */
-#  define J 106
+#  define A 97
+#  define S 115
+#  define D 100
+/* Elements mod */
 #  define L 108
+#  define H 104
+//#  define C 99
+/* Print values camera */
+#  define P 112
+/* Set the var of vector */
+#  define X 120
+#  define Y 121
+#  define Z 122
+/* Rotation */
+#  define R 114
+/* Translation */
+#  define T 116
+/* switch antialiasing */
+#  define N1 49
+/* Switch sign of var */
+#  define N2 50
+/* value * 2 */
+#  define N3 51
+/* value / 2 */
+#  define N4 52
+/* Select element to modify later */
+#  define L_CLICK 1
+/* Undefined */
+#  define J 106
 #  define I 105
 #  define K 107
 #  define O 111
 #  define U 117
-/* Elements mod */
-#  define V 118
-#  define R 114
-#  define H 104
-#  define C 99
-#  define B 98
-/* Print values camera */
-#  define P 112
-/* Print ray values of hit */
-#  define L_CLICK 1
-/* switch antialiasing */
-#  define N1 49
 # endif
 /*WIN SIZE*/
 # define ASPECT_RATIO 1.7777777777777777 // 16.0 / 9.0
@@ -83,7 +98,8 @@ typedef enum e_type
 	LIGHT,
 	SPHERE,
 	PLANE,
-	CYLINDER
+	CYLINDER,
+	CONE
 }	t_type;
 
 typedef struct s_vec3d
@@ -193,6 +209,8 @@ typedef struct s_data
 	t_mouse		mouse;
 	void		(*ft_draw)(t_data *);
 	t_element	*element;
+	t_vec3d		vector;
+	double		modifier;
 }	t_data;
 
 /*normalize.c*/

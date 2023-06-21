@@ -23,10 +23,12 @@ void	debug(void)
 
 int	key_hook(int keycode, t_data *img)
 {
-	if (keycode == ESC && img)
+	if (keycode == ESC)
 		exit(0);
+	/* Draw a picture of what u see on the window */
 	if (keycode == F2)
 		ft_prt_ppm_file_from_img(img, img->image_width, img->image_height, 2);
+	/* Redraw on the window */
 	else if (keycode == F1)
 	{
 		img->camera = ft_init_camera(img->camera.lookfrom, ASPECT_RATIO,
@@ -34,39 +36,91 @@ int	key_hook(int keycode, t_data *img)
 		img->ft_draw(img);
 		mlx_put_image_to_window(img->mlx, img->mlx_win, img->img, 0, 0);
 	}
+	/* Printing debugin info*/
 	else if (keycode == P)
-		(ft_print_vector("lookfrom", img->camera.lookfrom),
-			ft_print_vector("lookat", img->camera.lookat));
-	else if (keycode == W)
-		img->camera.lookfrom.z -= 0.1;
-	else if (keycode == S)
-		img->camera.lookfrom.z += 0.1;
-	else if (keycode == A)
-		img->camera.lookfrom.x -= 0.1;
-	else if (keycode == D)
-		img->camera.lookfrom.x += 0.1;
+	{
+		ft_print_vector("lookfrom", img->camera.lookfrom);
+		ft_print_vector("lookat", img->camera.lookat);
+		printf("modifier value: %f\n", img->modifier);
+		if (img->element)
+		{
+			printf("element selected: ");
+			if (img->element->type == SPHERE)
+				printf("SPHERE\n");
+			else if (img->element->type == PLANE)
+				printf("PLANE\n");
+			else if (img->element->type == CYLINDER)
+				printf("CYLINDER\n");
+			else if (img->element->type == CONE)
+				printf("CONE\n");
+			printf("diameter: %f\nheight: %f\n", img->element->diameter, img->element->height);
+		}
+		ft_print_vector("vector", img->vector);
+	}
+	/* Modify lookfrom */
 	else if (keycode == Q)
-		img->camera.lookfrom.y -= 0.1;
+		img->camera.lookfrom.x += img->modifier;
+	else if (keycode == W)
+		img->camera.lookfrom.y += img->modifier;
 	else if (keycode == E)
-		img->camera.lookfrom.y += 0.1;
-	else if (keycode == J)
-		img->camera.lookat.x -= 0.1;
-	else if (keycode == L)
-		img->camera.lookat.x += 0.1;
-	else if (keycode == I)
-		img->camera.lookat.z -= 0.1;
-	else if (keycode == K)
-		img->camera.lookat.z += 0.1;
-	else if (keycode == O)
-		img->camera.lookat.y -= 0.1;
-	else if (keycode == U)
-		img->camera.lookat.y += 0.1;
+		img->camera.lookfrom.z += img->modifier;
+	/* Modify lookat */
+	else if (keycode == A)
+		img->camera.lookat.x += img->modifier;
+	else if (keycode == S)
+		img->camera.lookat.y += img->modifier;
+	else if (keycode == D)
+		img->camera.lookat.z += img->modifier;
+	/*change the pointer to f from antialiasing to not antialiasing and reverse */
 	else if (keycode == N1)
 	{
 		if (img->ft_draw == ft_draw_without_antialiasing)
 			img->ft_draw = ft_draw_antialiasing;
 		else
 			img->ft_draw = ft_draw_without_antialiasing;
+	}
+	/* modify the modifier */
+	else if (keycode == N2)
+		img->modifier = -img->modifier;
+	else if (keycode == N3)
+		img->modifier *= 2;
+	else if (keycode == N4)
+		img->modifier /= 2;
+	else if (keycode == L)
+	{
+		if (img->element)
+		{
+			img->element->diameter += img->modifier;
+			img->element->radius = img->element->diameter / 2;
+		}
+	}
+	else if (keycode == H)
+	{
+		if (img->element)
+		{
+			img->element->height += img->modifier;
+		}
+	}
+	else if (keycode == X)
+		img->vector.x += img->modifier;
+	else if (keycode == Y)
+		img->vector.y += img->modifier;
+	else if (keycode == Z)
+		img->vector.z += img->modifier;
+	/* Rotate modify the vector */
+	else if (keycode == R)
+	{
+		if (img->element)
+		{
+		}
+	}
+	/* move the point of reference */
+	else if (keycode == T)
+	{
+		if (img->element)
+		{
+			img->element->coords = img->vector;
+		}
 	}
 	else
 		printf("Keycode: %d\n", keycode);
