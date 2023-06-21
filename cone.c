@@ -81,11 +81,7 @@ int	ft_base_of_the_cone(t_ray *ray, t_camera *camera, t_hit_record *rec,
 		t_element *cylinder)
 {
 	double	t;
-	t_vec3d	h;
 
-	h = ft_vec3d_plus_vec3d(cylinder->coords,
-			ft_vec3d_pro_double(ft_vec3d_unit_lenght(
-			cylinder->orientation_vector), cylinder->height));
 	t = ft_hit_surface_base(ray, camera, cylinder, rec);
 	if (isnan(t))
 		return (0);
@@ -115,6 +111,7 @@ static double	ft_check_discriminant(double abc[3], t_camera *camera, t_ray * ray
 	sqrtd = sqrt(discriminant);
 	/*(-b - sqrtd) / 2a*/
 	t = (-abc[1] - sqrtd) / (2 * abc[0]);
+	/*this is for take the closest t*/
 	if (t < camera->t_min || camera->t_max < t)
 	{
 		/*(-b + sqrtd) / 2a*/
@@ -143,7 +140,7 @@ static double	ft_calculate_coefficients(t_ray *ray, t_element *cylinder,
 
 	w = ft_vec3d_minus_vec3d(ray->origin, ph);
 	/* h = H - C; h = h^*/
-	uh = ft_vec3d_unit_lenght(ft_vec3d_minus_vec3d(cylinder->coords, ph));
+	uh = ft_vec3d_unit_lenght(ft_vec3d_minus_vec3d(ph, cylinder->coords));
 	/* a = v · v - (v · h^)^2*/
 	m = (cylinder->radius * cylinder->radius) / ft_vec3d_squared_len(ft_vec3d_minus_vec3d(ph, cylinder->coords));
 	abc[0] = ft_vec3d_dot(ray->direction, ray->direction) - (m + 1) * pow(ft_vec3d_dot(ray->direction, uh), 2);
@@ -151,8 +148,7 @@ static double	ft_calculate_coefficients(t_ray *ray, t_element *cylinder,
 	abc[1] = 2 * (ft_vec3d_dot(ray->direction, w)
 			- (m + 1) * (ft_vec3d_dot(ray->direction, uh) * ft_vec3d_dot(w, uh)));
 	/* c = w · w - (w · h^)^2 - r^2*/
-	abc[2] = ft_vec3d_dot(w, w) - (m + 1) * pow(ft_vec3d_dot(w, uh), 2) -
-		(cylinder->radius * cylinder->radius);
+	abc[2] = ft_vec3d_dot(w, w) - (m + 1) * pow(ft_vec3d_dot(w, uh), 2);
 	return (ft_check_discriminant(abc, camera, ray, uh));
 }
 
