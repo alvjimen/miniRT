@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:49:59 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/20 14:40:37 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/06/21 08:39:57 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINIRT_H
@@ -165,13 +165,13 @@ typedef struct s_element
 }	t_element;
 /*Horizontalfield of view in degrees 0-180*/
 
-typedef struct	s_mouse
+typedef struct s_mouse
 {
 	int	x;
 	int	y;
-}	t_mouse; 
+}	t_mouse;
 
-typedef struct s_data t_data;
+typedef struct s_data	t_data;
 
 typedef struct s_data
 {
@@ -203,7 +203,7 @@ double			unnormalize_coord(double n_coord, double max_coord,
 /*hooks.c*/
 int				key_hook(int keycode, t_data *img);
 int				hook_close(void);
-int				hook_mouse(int button, int x,  int y, void *param);
+int				hook_mouse(int button, int x, int y, void *param);
 /*draw.c*/
 void			ft_draw_without_antialiasing(t_data *img);
 void			my_mlx_pixel_put(t_data *data, int x, int y, int color);
@@ -224,14 +224,14 @@ void			*ft_get_matrix_projection(double fovangle);
 /*init_figures.c*/
 t_element		*sphere(t_vec3d coord, double diameter,
 					t_colour colour);
-t_element	ambient_light(double intensity, t_colour colour);
-t_element	*light(t_vec3d origin, double brightness, t_colour colour);
-t_element	*plane(t_vec3d coords, t_vec3d normalized_orientation_vector,
-		t_colour colour);
-t_element	*cylinder(t_vec3d coords, t_vec3d normalized_orientation_vector,
-		double param[2], t_colour colour);
-t_element	*cone(t_vec3d coords, t_vec3d normalized_orientation_vector,
-		double param[2], t_colour colour);
+t_element		ambient_light(double intensity, t_colour colour);
+t_element		*light(t_vec3d origin, double brightness, t_colour colour);
+t_element		*plane(t_vec3d coords, t_vec3d normalized_orientation_vector,
+					t_colour colour);
+t_element		*cylinder(t_vec3d coords, t_vec3d normalized_orientation_vector,
+					double param[2], t_colour colour);
+t_element		*cone(t_vec3d coords, t_vec3d normalized_orientation_vector,
+					double param[2], t_colour colour);
 /*matrix.c*/
 /*
 * void			matrixmultiplication(t_vec4d *origin, t_vec4d *destiny,
@@ -277,10 +277,10 @@ int				ft_hit_sphere(t_ray *ray, t_camera *camera,
 void			ft_hit_face(t_ray *ray, t_hit_record *rec);
 int				ft_hittable(t_ray *ray, t_camera *camera, t_hit_record *rec,
 					t_list *world);
-t_element		*ft_hittable_element(t_ray *ray, t_camera *camera, t_hit_record *rec,
-					t_list *world);
+t_element		*ft_hittable_element(t_ray *ray, t_camera *camera,
+					t_hit_record *rec, t_list *world);
 /*world.c*/
-int			ft_world(t_data *img);
+int				ft_world(t_data *img);
 /*random_number.c*/
 unsigned int	uint_random_nbr(void);
 double			pseudo_random(void);
@@ -299,12 +299,13 @@ double			ft_quadratic_equation(double a, double b, double c,
 void			ft_run_is_space(char *str, size_t *pos);
 int				ft_parse_file(char *file, t_data *img);
 /*ft_is_space.c*/
-int	ft_is_space(char chr);
+int				ft_is_space(char chr);
 /*ft_atof.c*/
 double			ft_atof(char	*str);
 /*parse_utils.c*/
 int				ft_parse_double(char *str, size_t *pos, double *value);
-int				ft_parse_unsigned_char(char *str, size_t *pos, unsigned char *value);
+int				ft_parse_unsigned_char(char *str, size_t *pos,
+					unsigned char *value);
 int				ft_parse_comma(char *str, size_t *pos);
 int				ft_parse_end(char *str, size_t pos);
 int				ft_parse_vec3d(char *str, size_t *pos, t_vec3d *vector);
@@ -315,12 +316,13 @@ int				ft_run_atof(char *str, size_t *pos);
 int				ft_run_atoi(char *str, size_t *pos);
 /*plane.c*/
 int				ft_hit_plane(t_ray *ray, t_camera *camera, t_hit_record *rec,
-						t_element *plane);
+					t_element *plane);
 /*cylinder.c*/
 int				ft_hit_cylinder(t_ray *ray, t_camera *camera, t_hit_record *rec,
-						t_element *cylinder);
-double	ft_hit_surface_base(t_ray *ray, t_camera *camera, t_element *cylinder, t_hit_record *rec);
+					t_element *cylinder);
+double			ft_hit_surface_base(t_ray *ray, t_camera *camera,
+					t_element *cylinder, t_hit_record *rec);
 /*cone*/
 int				ft_hit_cone(t_ray *ray, t_camera *camera, t_hit_record *rec,
-						t_element *cylinder);
+					t_element *cylinder);
 #endif

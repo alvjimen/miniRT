@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 09:14:56 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/18 17:57:33 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/06/21 08:40:37 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -34,7 +34,7 @@ t_element	ambient_light(double intensity, t_colour colour)
 	t_element	ptr;
 
 	ptr.light_ratio = intensity;
-	ptr.colour = colour; 
+	ptr.colour = colour;
 	return (ptr);
 }
 

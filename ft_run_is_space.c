@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_run_is_space.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/21 08:45:16 by alvjimen          #+#    #+#             */
+/*   Updated: 2023/06/21 08:45:33 by alvjimen         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "minirt.h"
 
 void	ft_run_is_space(char *str, size_t *pos)
@@ -19,7 +30,7 @@ int	ft_run_atof(char *str, size_t *pos)
 	return (0);
 }
 
-int ft_run_atoi(char *str, size_t *pos)
+int	ft_run_atoi(char *str, size_t *pos)
 {
 	if (ft_is_plus_or_minus(str[*pos], str[*pos]))
 		pos[0]++;

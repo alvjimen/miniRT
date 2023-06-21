@@ -6,7 +6,7 @@
 /*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:16:42 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/16 07:11:14 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/06/21 08:36:38 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -25,7 +25,8 @@ static int	ft_color_vector_to_int(t_vec3d v)
 
 t_vec3d	ft_colour_to_vec3d(t_colour colour)
 {
-	return (ft_vec3d_div_double(ft_init_vec3d(colour.red, colour.green, colour.blue), 255));
+	return (ft_vec3d_div_double(ft_init_vec3d(colour.red, colour.green,
+				colour.blue), 255));
 }
 
 int	ft_write_color(t_vec3d vector, int samplex_per_pixel)

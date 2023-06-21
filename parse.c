@@ -6,7 +6,7 @@
 /*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 17:02:41 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/18 18:12:14 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/06/21 08:43:17 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -42,7 +42,7 @@ int	ft_parse_camera(char *str, size_t pos, t_data *img)
 {
 	t_vec3d	viewpoint;
 	t_vec3d	normalized_orientation_vector;
-	double		fov;
+	double	fov;
 
 	if (str[pos] != 'C')
 		return (-1);
@@ -111,7 +111,7 @@ int	ft_parse_plane(char *str, size_t pos, t_data *img)
 	t_vec3d		coords;
 	t_colour	colour;
 
-	if (str[pos] != 'p' || ( str[pos] && str[pos + 1] != 'l'))
+	if (str[pos] != 'p' || (str[pos] && str[pos + 1] != 'l'))
 		return (-1);
 	pos += 2;
 	if (ft_parse_vec3d(str, &pos, &coords))
@@ -151,7 +151,8 @@ int	ft_parse_cylinder(char *str, size_t pos, t_data *img)
 		return (-1);
 	if (ft_parse_colour(str, &pos, &colour))
 		return (-1);
-	node = ft_lstnew(cylinder(coords, normalized_orientation_vector, param, colour));
+	node = ft_lstnew(cylinder(coords, normalized_orientation_vector, param,
+				colour));
 	ft_lstadd_back(&img->world, node);
 	if (node && node->content && !ft_parse_end(str, pos))
 		return (0);
@@ -180,7 +181,8 @@ int	ft_parse_cone(char *str, size_t pos, t_data *img)
 		return (-1);
 	if (ft_parse_colour(str, &pos, &colour))
 		return (-1);
-	node = ft_lstnew(cone(coords, normalized_orientation_vector, param, colour));
+	node = ft_lstnew(cone(coords, normalized_orientation_vector, param,
+				colour));
 	ft_lstadd_back(&img->world, node);
 	if (node && node->content && !ft_parse_end(str, pos))
 		return (0);

@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 14:17:03 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/17 15:41:31 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/06/21 08:46:04 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -43,12 +43,11 @@ int	ft_hittable(t_ray *ray, t_camera *camera, t_hit_record *rec,
 		}
 	}
 	camera->t_max = bk_tmax;
-
 	return (hit_anything);
 }
 
-t_element	*ft_hittable_element(t_ray *ray, t_camera *camera, t_hit_record *rec,
-		t_list *world)
+t_element	*ft_hittable_element(t_ray *ray, t_camera *camera,
+		t_hit_record *rec, t_list *world)
 {
 	void			*hit_anything;
 	t_hit_record	tmp_rec;

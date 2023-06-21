@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:56:57 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/20 14:42:35 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/06/21 08:50:19 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -14,8 +14,9 @@
 void	ft_print_vector(const char *str, t_vec3d vector)
 {
 	printf("%s: x: %f, y: %f, z: %f\n",
-			str, vector.x, vector.y, vector.z);
+		str, vector.x, vector.y, vector.z);
 }
+
 void	debug(void)
 {
 }
@@ -32,9 +33,10 @@ int	key_hook(int keycode, t_data *img)
 				img->camera.fov, img->camera.lookat);
 		img->ft_draw(img);
 		mlx_put_image_to_window(img->mlx, img->mlx_win, img->img, 0, 0);
-		}
+	}
 	else if (keycode == P)
-		(ft_print_vector("lookfrom", img->camera.lookfrom), ft_print_vector("lookat", img->camera.lookat));
+		(ft_print_vector("lookfrom", img->camera.lookfrom),
+			ft_print_vector("lookat", img->camera.lookat));
 	else if (keycode == W)
 		img->camera.lookfrom.z -= 0.1;
 	else if (keycode == S)
@@ -76,7 +78,7 @@ int	hook_close(void)
 	exit(0);
 }
 
-int	hook_mouse(int button, int x,  int y, void *param)
+int	hook_mouse(int button, int x, int y, void *param)
 {
 	t_data			*img;
 	t_vec3d			vector;
@@ -91,8 +93,9 @@ int	hook_mouse(int button, int x,  int y, void *param)
 		vector = ft_ray_direction(img, x, y, 0);
 		ray = ft_init_ray(img->camera.origin, vector);
 		debug();
-		img->element = ft_hittable_element(&ray, &img->camera, &rec, img->world); 
+		img->element = ft_hittable_element(&ray, &img->camera,
+				&rec, img->world);
 		ft_print_vector("color", ft_ray_color(&ray, img));
 	}
-	return  (0);
+	return (0);
 }

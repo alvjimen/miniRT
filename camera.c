@@ -6,7 +6,7 @@
 /*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 18:04:11 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/20 14:32:04 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/06/21 08:35:06 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -46,7 +46,7 @@ t_camera	ft_init_camera(t_vec3d lookfrom, const double aspect_ratio,
 	ptr.lookat = lookat;
 	/* End */
 	ptr.aspect_ratio = aspect_ratio;
-	ptr.fov	= fov;
+	ptr.fov = fov;
 	ptr.origin = lookfrom;
 	ptr.theta = ft_degree_to_radians(fov);
 	ptr.h = tan(ptr.theta / 2);
