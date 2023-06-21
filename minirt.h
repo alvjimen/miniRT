@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:49:59 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/21 08:39:57 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/06/21 19:14:40 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINIRT_H
@@ -30,6 +30,15 @@
 #  define K 40
 #  define L 37
 #  define N1 18
+#  define N2 19
+#  define N3 20
+#  define N4 21
+#  define L 37
+#  define H 4
+#  define R 15
+#  define T 17
+
+
 #  define O 31
 #  define P 35
 #  define F1 122
@@ -143,6 +152,11 @@ typedef struct s_vec4d
 	double	z;
 	double	w;
 }	t_vec4d;
+
+typedef struct s_m3x3
+{
+	t_vec3d	r[3];
+}
 
 typedef struct s_m4x4
 {

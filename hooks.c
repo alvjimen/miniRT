@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:56:57 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/21 08:50:19 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/06/21 18:56:23 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -71,7 +71,8 @@ int	key_hook(int keycode, t_data *img)
 		img->camera.lookat.y += img->modifier;
 	else if (keycode == D)
 		img->camera.lookat.z += img->modifier;
-	/*change the pointer to f from antialiasing to not antialiasing and reverse */
+	/*change the pointer to f from antialiasing
+	 * to not antialiasing and reverse */
 	else if (keycode == N1)
 	{
 		if (img->ft_draw == ft_draw_without_antialiasing)
@@ -86,6 +87,7 @@ int	key_hook(int keycode, t_data *img)
 		img->modifier *= 2;
 	else if (keycode == N4)
 		img->modifier /= 2;
+	/*
 	else if (keycode == L)
 	{
 		if (img->element)
@@ -107,14 +109,18 @@ int	key_hook(int keycode, t_data *img)
 		img->vector.y += img->modifier;
 	else if (keycode == Z)
 		img->vector.z += img->modifier;
+		*/
 	/* Rotate modify the vector */
+	/*
 	else if (keycode == R)
 	{
 		if (img->element)
 		{
 		}
 	}
+	*/
 	/* move the point of reference */
+	/*
 	else if (keycode == T)
 	{
 		if (img->element)
@@ -122,6 +128,7 @@ int	key_hook(int keycode, t_data *img)
 			img->element->coords = img->vector;
 		}
 	}
+	*/
 	else
 		printf("Keycode: %d\n", keycode);
 	return (0);
