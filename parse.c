@@ -6,7 +6,7 @@
 /*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 17:02:41 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/21 08:43:17 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/06/22 19:01:39 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -77,7 +77,6 @@ int	ft_parse_ambient_light(char *str, size_t pos, t_data *img)
 	img->ambient_light = ambient_light(intensity, colour);
 	return (0);
 }
-
 int	ft_parse_light(char *str, size_t pos, t_data *img)
 {
 	t_list		*node;

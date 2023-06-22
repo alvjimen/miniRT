@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 18:56:49 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/21 08:48:18 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/06/22 19:19:12 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -58,10 +58,29 @@ t_vec3d	ft_ray_color(t_ray *ray, t_data *img)
 {
 	t_hit_record	rec;
 	double			t;
+	t_vec3d			p;
+	t_list			*light;
+	t_element		*element;
+	t_vec3d			vector;
+	t_ray			shadow_ray;
 
 	if (ft_hittable(ray, &img->camera, &rec, img->world))
-		return (ft_vec3d_pro_double(ft_vec3d_plus_vec3d(
-					ft_init_vec3d(1, 1, 1), rec.normal), 0.5));
+	{
+		p = ft_vec3d_plus_vec3d(rec.p, ft_vec3d_pro_double(rec.normal, 0.1));
+		light = ft_search_list(img->world, ft_find_light);
+		if (!light)
+			return (ft_init_vec3d(0, 0, 0));
+		element = light->content;
+		vector = ft_vec3d_minus_vec3d(p, element->coords);
+		shadow_ray = ft_init_ray(p, vector);
+		if (!ft_hittable(&shadow_ray, &img->camera, &rec, img->world))
+			return (ft_vec3d_pro_double(ft_vec3d_plus_vec3d(
+							ft_init_vec3d(1, 1, 1), rec.normal), 0.1));
+		return (ft_vec3d_pro_double(ft_vec3d_pro_double(ft_vec3d_plus_vec3d(
+					ft_init_vec3d(1, 1, 1), rec.normal), 0.5), 0.2));
+	}
+
 	t = 0.5 * (ray->unit_direction.y + 1.0);
+	return (ft_init_vec3d(0, 0, 0));
 	return (ft_init_vec3d((1.0 - t) + t * 0.5, (1.0 - t) + t * 0.7, 1.0));
 }

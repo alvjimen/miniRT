@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:49:59 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/21 19:14:40 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/06/22 18:57:51 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINIRT_H
@@ -34,6 +34,10 @@
 #  define H 4
 #  define R 15
 #  define T 17
+/* Set the var of vector */
+#  define X 7
+#  define Y 16
+#  define Z 6
 
 /* Printing info */
 #  define P 35
@@ -178,10 +182,12 @@ typedef struct s_ray
 
 typedef struct s_hit_record
 {
-	t_vec3d	p;
-	t_vec3d	normal;
-	double	t;
-	int		front_face;
+	t_vec3d		p;
+	t_vec3d		normal;
+	double		t;
+	int			front_face;
+	t_colour	colour;
+	double		attenuation;
 }	t_hit_record;
 
 typedef struct s_element
@@ -234,20 +240,20 @@ typedef struct s_data
 	double		angle;
 }	t_data;
 
-/*normalize.c*/
+/* normalize.c */
 double			normalize_coord(double coord, double max_coord,
 					double min_coord);
 double			unnormalize_coord(double n_coord, double max_coord,
 					double min_coord);
-/*hooks.c*/
+/* hooks.c */
 int				key_hook(int keycode, t_data *img);
 int				hook_close(void);
 int				hook_mouse(int button, int x, int y, void *param);
 void	ft_print_vector(const char *str, t_vec3d vector);
-/*draw.c*/
+/* draw.c */
 void			ft_draw_without_antialiasing(t_data *img);
 void			my_mlx_pixel_put(t_data *data, int x, int y, int color);
-/*rotations.c*/
+/* rotations.c */
 t_vec3d			ft_rotate_x(t_vec3d vector, double angle);
 t_vec3d			ft_rotate_y(t_vec3d vector, double angle);
 t_vec3d			ft_rotate_z(t_vec3d vector, double angle);
@@ -258,14 +264,14 @@ void			rotation_y(double angle, t_vec4d *v);
 void			rotation_z(double angle, t_vec4d *v);
 void			ft_rotate_elements(t_list *lst, void (f)(double, t_vec4d *));
 */
-/*angle.c*/
+/* angle.c */
 double			ft_degree_to_radians(double degree);
 double			ft_radians_to_degree(double radians);
 /*projection.c*/
 /*
 void			*ft_get_matrix_projection(double fovangle);
 */
-/*init_figures.c*/
+/* init_figures.c */
 t_element		*sphere(t_vec3d coord, double diameter,
 					t_colour colour);
 t_element		ambient_light(double intensity, t_colour colour);
@@ -276,78 +282,78 @@ t_element		*cylinder(t_vec3d coords, t_vec3d normalized_orientation_vector,
 					double param[2], t_colour colour);
 t_element		*cone(t_vec3d coords, t_vec3d normalized_orientation_vector,
 					double param[2], t_colour colour);
-/*matrix.c*/
+/* matrix.c */
 /*
 * void			matrixmultiplication(t_vec4d *origin, t_vec4d *destiny,
 					t_m4x4 *matrix);
 */
-/*vec3d.c*/
+/* vec3d.c */
 t_vec3d			ft_init_vec3d(double x, double y, double z);
 double			ft_vec3d_len(t_vec3d o1);
 double			ft_vec3d_squared_len(t_vec3d o1);
 t_vec3d			ft_vec3d_unit_lenght(t_vec3d o1);
 int				ft_vec3d_eq(t_vec3d v1, t_vec3d v2);
 t_vec3d			ft_vec3d_negative(t_vec3d ptr);
-/*vec3d_math_vec3d.c*/
+/* vec3d_math_vec3d.c */
 t_vec3d			ft_vec3d_plus_vec3d(t_vec3d o1, t_vec3d o2);
 t_vec3d			ft_vec3d_minus_vec3d(t_vec3d o1, t_vec3d o2);
 t_vec3d			ft_vec3d_pro_vec3d(t_vec3d o1, t_vec3d o2);
 double			ft_vec3d_dot(t_vec3d o1, t_vec3d o2);
 t_vec3d			ft_vec3d_cross(t_vec3d o1, t_vec3d o2);
-/*vec3d_math_double.c*/
+/* vec3d_math_double.c */
 t_vec3d			ft_vec3d_pro_double(t_vec3d o1, double o2);
 t_vec3d			ft_vec3d_div_double(t_vec3d o1, double o2);
-/*vector4d.c*/
+/* vector4d.c */
 t_vec4d			*ft_vec4d_init(double x, double y, double z, double w);
-/*ray.c*/
+/* ray.c */
 t_ray			ft_init_ray(t_vec3d origin, t_vec3d direction);
 t_vec3d			ft_ray_at(t_ray *ray, double t);
 t_vec3d			ft_ray_color(t_ray *ray, t_data *img);
 t_vec3d			ft_ray_direction(t_data *img, int x, int y, int flag);
-/*ppm.c*/
+/* ppm.c */
 void			ft_draw_ppm_header(int width, int height, int fd);
 void			ft_draw_ppm_pixel(int colour, int fd);
 int				get_mlx_pixel_colour(t_data *img, int x, int y);
 void			ft_prt_ppm_file_from_img(t_data *img, int width, int height,
 					int fd);
-/*camera.c*/
+/* camera.c */
 void			ft_img(t_data *img, const int image_width,
 					const double aspect_ratio);
 t_camera		ft_init_camera(t_vec3d lookfrom, const double aspect_ratio,
 					const double fov, t_vec3d lookat);
-/*sphere.c*/
+/* sphere.c */
 int				ft_hit_sphere(t_ray *ray, t_camera *camera,
 					t_hit_record *rec, t_element *sphere);
-/*hit.c*/
+/* hit.c */
 void			ft_hit_face(t_ray *ray, t_hit_record *rec);
 int				ft_hittable(t_ray *ray, t_camera *camera, t_hit_record *rec,
 					t_list *world);
 t_element		*ft_hittable_element(t_ray *ray, t_camera *camera,
 					t_hit_record *rec, t_list *world);
-/*world.c*/
+/* world.c */
 int				ft_world(t_data *img);
-/*random_number.c*/
+/* random_number.c */
 unsigned int	uint_random_nbr(void);
 double			pseudo_random(void);
 double			random_double(double min, double max);
-/*antialiasing.c*/
+/* antialiasing.c */
 void			ft_draw_antialiasing(t_data *img);
-/*color.c*/
+/* color.c */
 int				ft_write_color(t_vec3d vector, int samplex_per_pixel);
 t_vec3d			ft_colour_to_vec3d(t_colour colour);
-/*number.c*/
+/* number.c */
 double			clamp(double x, double min, double max);
 double			ft_dabs(double num);
 double			ft_quadratic_equation(double a, double b, double c,
 					t_camera *camera);
-/*parse.c*/
+/* parse.c */
 void			ft_run_is_space(char *str, size_t *pos);
 int				ft_parse_file(char *file, t_data *img);
-/*ft_is_space.c*/
+/* ft_is_space.c */
 int				ft_is_space(char chr);
-/*ft_atof.c*/
+/* ft_atof.c */
 double			ft_atof(char	*str);
-/*parse_utils.c*/
+/* parse_utils.c */
 int				ft_parse_double(char *str, size_t *pos, double *value);
 int				ft_parse_unsigned_char(char *str, size_t *pos,
 					unsigned char *value);
@@ -355,19 +361,22 @@ int				ft_parse_comma(char *str, size_t *pos);
 int				ft_parse_end(char *str, size_t pos);
 int				ft_parse_vec3d(char *str, size_t *pos, t_vec3d *vector);
 int				ft_parse_colour(char *str, size_t *pos, t_colour *colour);
-/*ft_run.c*/
+/* ft_run.c */
 void			ft_run_is_space(char *str, size_t *pos);
 int				ft_run_atof(char *str, size_t *pos);
 int				ft_run_atoi(char *str, size_t *pos);
-/*plane.c*/
+/* plane.c */
 int				ft_hit_plane(t_ray *ray, t_camera *camera, t_hit_record *rec,
 					t_element *plane);
-/*cylinder.c*/
+/* cylinder.c */
 int				ft_hit_cylinder(t_ray *ray, t_camera *camera, t_hit_record *rec,
 					t_element *cylinder);
 double			ft_hit_surface_base(t_ray *ray, t_camera *camera,
 					t_element *cylinder, t_hit_record *rec);
-/*cone*/
+/* cone.c */
 int				ft_hit_cone(t_ray *ray, t_camera *camera, t_hit_record *rec,
 					t_element *cylinder);
+/* light.c */
+int				ft_find_light(void *node);
+
 #endif

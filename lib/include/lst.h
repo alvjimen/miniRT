@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 17:51:51 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/01/30 17:51:53 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/06/22 18:44:10 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,6 @@ void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 void	ft_lstnodeiteri(t_list *node, void (*n)(t_list *node));
 void	*ft_get_last_content(t_list *node);
+t_list	*ft_search_list(t_list *lst, int (*f)(void *));
+t_list	*ft_split_list(t_list **lst, int (*f)(void *));
 #endif

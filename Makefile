@@ -56,6 +56,7 @@ SRC					=	main.c\
 						cylinder.c\
 						cone.c\
 						rotations.c\
+						light.c\
 						#diffuse_materials.c\
 						perspective.c\
 						normalize.c\

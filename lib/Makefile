@@ -6,7 +6,7 @@
 #    By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/20 17:19:14 by alvjimen          #+#    #+#              #
-#    Updated: 2023/05/11 09:13:04 by alvjimen         ###   ########.fr        #
+#    Updated: 2023/06/22 18:44:01 by alvjimen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -134,6 +134,8 @@ LST-SRC					:=	ft_lstnew_bonus\
 							ft_lstmap_bonus\
 							ft_lstnodeiteri\
 							ft_lst_get_last_content\
+							ft_search_list\
+							ft_split_list\
 
 LST-SRC					:=	$(LST-SRC:%=$(LST-DIR)%)
 
