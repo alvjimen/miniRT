@@ -168,7 +168,7 @@ int	ft_hit_cone(t_ray *ray, t_camera *camera, t_hit_record *rec,
 	t_vec3d	h;
 	double	t;
 
-	/* h = H */
+	/* h = ph */
 	h = ft_vec3d_plus_vec3d(cylinder->coords, ft_vec3d_pro_double(
 				ft_vec3d_unit_lenght(cylinder->orientation_vector),
 				cylinder->height));
@@ -189,13 +189,20 @@ int	ft_hit_cone(t_ray *ray, t_camera *camera, t_hit_record *rec,
 			return (1);
 		rec->t = t;
 		rec->p = ft_ray_at(ray, rec->t);
-		/*calculating the normal*/
+		/* calculating the normal */
+		/* calculating the height on the axis */
 		q = sqrt(cylinder->radius * cylinder->radius + ft_vec3d_squared_len(
 					ft_vec3d_minus_vec3d(cylinder->coords, rec->p)));
+		/* calculating the point of the axis */
 		h = ft_vec3d_plus_vec3d(cylinder->coords, ft_vec3d_pro_double(
 					ft_vec3d_unit_lenght(cylinder->orientation_vector),
 					q));
 		rec->normal = ft_vec3d_minus_vec3d(rec->p, h);
+		if (ft_vec3d_eq(rec->normal, ft_init_vec3d(0, 0, 0)))
+		{
+			ft_print_vector("Top cone",rec->p);
+			ft_print_vector("Top cone normal",rec->normal);
+		}
 		rec->normal = ft_vec3d_minus_vec3d(rec->p, h);
 		//rec->normal = cylinder->orientation_vector;
 		return (1);

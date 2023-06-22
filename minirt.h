@@ -22,28 +22,31 @@
 #  define A 0
 #  define S 1
 #  define D 2
+/* change ft_draw */
+#  define N1 18
+/* modify var to other step*/
+#  define N2 19
+#  define N3 20
+#  define N4 21
+#  define N5 22
+/* Modify elements */
+#  define L 37
+#  define H 4
+#  define R 15
+#  define T 17
+
+/* Printing info */
+#  define P 35
+/* REDRAW */
+#  define F1 122
+/* Make a picture */
+#  define F2 120
 /* undefined */
 #  define U 32
 #  define I 34
 #  define O 31
 #  define J 38
 #  define K 40
-#  define L 37
-#  define N1 18
-#  define N2 19
-#  define N3 20
-#  define N4 21
-#  define L 37
-#  define H 4
-#  define R 15
-#  define T 17
-
-
-#  define O 31
-#  define P 35
-#  define F1 122
-#  define F2 120
-
 #  define L_CLICK 1
 # else
 #  define ESC 65307
@@ -80,6 +83,8 @@
 #  define N3 51
 /* value / 2 */
 #  define N4 52
+/* modify the angle */
+#  define N5 53
 /* Select element to modify later */
 #  define L_CLICK 1
 /* Undefined */
@@ -156,8 +161,9 @@ typedef struct s_vec4d
 typedef struct s_m3x3
 {
 	t_vec3d	r[3];
-}
+}	t_m3x3;
 
+/* w = 0 if vector w = 1 if point */
 typedef struct s_m4x4
 {
 	t_vec4d	r[4];
@@ -225,6 +231,7 @@ typedef struct s_data
 	t_element	*element;
 	t_vec3d		vector;
 	double		modifier;
+	double		angle;
 }	t_data;
 
 /*normalize.c*/
@@ -236,10 +243,15 @@ double			unnormalize_coord(double n_coord, double max_coord,
 int				key_hook(int keycode, t_data *img);
 int				hook_close(void);
 int				hook_mouse(int button, int x, int y, void *param);
+void	ft_print_vector(const char *str, t_vec3d vector);
 /*draw.c*/
 void			ft_draw_without_antialiasing(t_data *img);
 void			my_mlx_pixel_put(t_data *data, int x, int y, int color);
 /*rotations.c*/
+t_vec3d			ft_rotate_x(t_vec3d vector, double angle);
+t_vec3d			ft_rotate_y(t_vec3d vector, double angle);
+t_vec3d			ft_rotate_z(t_vec3d vector, double angle);
+t_vec3d			ft_vec3d_pro_matrix(t_vec3d vector, t_m3x3 matrix);
 /*
 void			rotation_x(double angle, t_vec4d *v);
 void			rotation_y(double angle, t_vec4d *v);
@@ -274,6 +286,7 @@ t_vec3d			ft_init_vec3d(double x, double y, double z);
 double			ft_vec3d_len(t_vec3d o1);
 double			ft_vec3d_squared_len(t_vec3d o1);
 t_vec3d			ft_vec3d_unit_lenght(t_vec3d o1);
+int				ft_vec3d_eq(t_vec3d v1, t_vec3d v2);
 t_vec3d			ft_vec3d_negative(t_vec3d ptr);
 /*vec3d_math_vec3d.c*/
 t_vec3d			ft_vec3d_plus_vec3d(t_vec3d o1, t_vec3d o2);

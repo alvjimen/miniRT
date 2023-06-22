@@ -53,9 +53,14 @@ int	key_hook(int keycode, t_data *img)
 				printf("CYLINDER\n");
 			else if (img->element->type == CONE)
 				printf("CONE\n");
-			printf("diameter: %f\nheight: %f\n", img->element->diameter, img->element->height);
+			ft_print_vector("point", img->element->coords);
+			ft_print_vector("orientation vector", img->element->orientation_vector);
+			printf("diameter: %f\nheight: %f\n",
+					img->element->diameter, img->element->height);
 		}
 		ft_print_vector("vector", img->vector);
+		printf("angle in radians: %f\nangle in degree: %f\n",
+				img->angle, ft_radians_to_degree(img->angle));
 	}
 	/* Modify lookfrom */
 	else if (keycode == Q)
@@ -87,7 +92,8 @@ int	key_hook(int keycode, t_data *img)
 		img->modifier *= 2;
 	else if (keycode == N4)
 		img->modifier /= 2;
-	/*
+	else if (keycode == N5)
+		img->angle += ft_degree_to_radians(img->modifier);
 	else if (keycode == L)
 	{
 		if (img->element)
@@ -109,18 +115,16 @@ int	key_hook(int keycode, t_data *img)
 		img->vector.y += img->modifier;
 	else if (keycode == Z)
 		img->vector.z += img->modifier;
-		*/
 	/* Rotate modify the vector */
-	/*
 	else if (keycode == R)
 	{
 		if (img->element)
 		{
+			img->element->orientation_vector =
+				ft_rotate_x(img->element->orientation_vector, img->angle);
 		}
 	}
-	*/
 	/* move the point of reference */
-	/*
 	else if (keycode == T)
 	{
 		if (img->element)
@@ -128,7 +132,6 @@ int	key_hook(int keycode, t_data *img)
 			img->element->coords = img->vector;
 		}
 	}
-	*/
 	else
 		printf("Keycode: %d\n", keycode);
 	return (0);

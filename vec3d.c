@@ -36,3 +36,8 @@ t_vec3d	ft_vec3d_unit_lenght(t_vec3d o1)
 {
 	return (ft_vec3d_div_double(o1, ft_vec3d_len(o1)));
 }
+
+int	ft_vec3d_eq(t_vec3d v1, t_vec3d v2)
+{
+	return (v1.x == v2.x && v1.y == v2.y && v1.z == v2.z);
+}
