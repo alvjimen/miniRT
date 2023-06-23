@@ -58,29 +58,33 @@ t_vec3d	ft_ray_color(t_ray *ray, t_data *img)
 {
 	t_hit_record	rec;
 	double			t;
-	t_vec3d			p;
 	t_list			*light;
 	t_element		*element;
 	t_vec3d			vector;
 	t_ray			shadow_ray;
 
+	ft_bzero(&rec, sizeof(rec));
 	if (ft_hittable(ray, &img->camera, &rec, img->world))
 	{
-		p = ft_vec3d_plus_vec3d(rec.p, ft_vec3d_pro_double(rec.normal, 0.1));
+		/*Light*/
+		/* Search for the light */
 		light = ft_search_list(img->world, ft_find_light);
 		if (!light)
-			return (ft_init_vec3d(0, 0, 0));
+			return (ft_vec3d_pro_double(ft_colour_to_vec3d(rec.colour),
+						0.5 * img->ambient_light.light_ratio));
 		element = light->content;
-		vector = ft_vec3d_minus_vec3d(p, element->coords);
-		shadow_ray = ft_init_ray(p, vector);
+		/* Detect the direction for the light in the not in surface point*/
+		vector = ft_vec3d_minus_vec3d(element->coords, rec.p);
+		/* Create the ray */
+		shadow_ray = ft_init_ray(rec.p, vector);
 		if (!ft_hittable(&shadow_ray, &img->camera, &rec, img->world))
 			return (ft_vec3d_pro_double(ft_vec3d_plus_vec3d(
-							ft_init_vec3d(1, 1, 1), rec.normal), 0.1));
-		return (ft_vec3d_pro_double(ft_vec3d_pro_double(ft_vec3d_plus_vec3d(
-					ft_init_vec3d(1, 1, 1), rec.normal), 0.5), 0.2));
+								ft_init_vec3d(1, 1, 1), ft_colour_to_vec3d(rec.colour)),
+							0.5 * element->light_ratio));
+		return (ft_vec3d_pro_double(ft_colour_to_vec3d(rec.colour),
+					0.5 * img->ambient_light.light_ratio));
 	}
 
 	t = 0.5 * (ray->unit_direction.y + 1.0);
-	return (ft_init_vec3d(0, 0, 0));
 	return (ft_init_vec3d((1.0 - t) + t * 0.5, (1.0 - t) + t * 0.7, 1.0));
 }

@@ -68,7 +68,7 @@ t_camera	ft_init_camera(t_vec3d lookfrom, const double aspect_ratio,
 				ft_vec3d_plus_vec3d(ft_vec3d_div_double(
 						ptr.vertical, 2.0), w)));
 	/*End*/
-	ptr.t_min = 0.0;//0.2
+	ptr.t_min = 0.00001;//0.2
 	ptr.t_max = INFINITY;
 	return (ptr);
 }

@@ -11,76 +11,8 @@
 /* ************************************************************************** */
 #include "minirt.h"
 
-/* Q = point of the center */
-/* P = point of the surface cylinder */
-/* C = point at the center top base */
-/* H = point at the center base */
-/* r = radius */
-/* L0 = point of the line*/
-/* v = vector that defines line direction */
-/* h = (H - C) */
-/* || = len*/
-/* h^ = h / ||h||*/
-/* Intersection calculation */
-/* Point cylinder satisfied */
-/* ||P - C|| = sqrt(||Q -C||^2 + r^2) */
-/* ||P - C|| ^2 = ||Q -C||^2 + r^2 */
-/* || ^ 2 == · */
-
-/* (P - C) · (P - C) = ||Q - C|| + r^2 */
-/* ||Q - C|| = (P - C) · h^ */
-/* (P - C) · (P - C) = [(P - C) · h^]^2 + r^2 */
-/* ||P - C|| - [(P - C) · h^]^2 = r^2 */
-/* Substitute P with line equation */
-/* L(t) == P = L0 + tv */
-/* ||L0 + tv - C||^2 - [(Lo + tv - C) · h^]^2 = r^2*/
-/* w = L0 - C */
-/* ||w + tv||^2 - [(w + tv) · h^]^2 = r^2*/
-/* (w + tv) · (w + tv) - [(w · h^) + (v · h^)t]^2 = r^2*/
-/* a = (v · v) - (v · h^)^2*/
-/* b = 2[(v · w) - (v · h^)(w · h^)*/
-/* c = 2[(w · w) - (w · h^)^2 - r^2*/
-/* solve for t = at^2 + bt + c = 0*/
-/*
-v = ray->direction;
-w = ray->origin - cylinder->coords
-h^ = ft_vec3d_unit_lenght(cylinder->orientation_vector);
-*/
-/*
-a = ft_vec3d_dot(v, v) - pow(ft_vec3d_dot(v, h^), 2);
-b = 2 * (ft_vec3d_dot(v, w) - ft_vec3d_dot(v, h^) * ft_vec3d_dot(w, h^));
-c = ft_vec3d_dot(w, w) - pow(ft_vec3d_dot(w, h), 2) - pow(r, 2);
-*/
-
-/*double	ft_hit_surface_base(t_ray *ray, t_camera *camera,
-  t_element *cylinder, t_hit_record *rec)
-{
-	double	denom;
-	double	t;
-	t_vec3d	p_c;
-	t_vec3d	p;
-
-	denom = ft_vec3d_dot(ft_vec3d_negative(cylinder->orientation_vector),
-	ray->direction);
-	if (ft_dabs(denom) <= 0.001)
-		return (NAN);
-	t = ft_vec3d_dot(ft_vec3d_negative(cylinder->orientation_vector),
-			ft_vec3d_minus_vec3d(cylinder->coords, ray->origin)) / denom;
-	if (t < camera->t_min || t > camera->t_max || isnan(t))
-		return (NAN);
-	p = ft_ray_at(ray, t);
-	p_c = ft_vec3d_minus_vec3d(p, cylinder->coords);
-	if (ft_vec3d_len(p_c) <= cylinder->radius)
-	{
-		rec->p = p;
-		return (t);
-	}
-	return (NAN);
-}
-*/
-
-int	ft_base_of_the_cone(t_ray *ray, t_camera *camera, t_hit_record *rec,
-		t_element *cylinder)
+int	ft_base_of_the_cone(t_ray *ray, t_camera *camera,
+		t_hit_record *rec, t_element *cylinder)
 {
 	double	t;
 
@@ -198,13 +130,6 @@ int	ft_hit_cone(t_ray *ray, t_camera *camera, t_hit_record *rec,
 					ft_vec3d_unit_lenght(cylinder->orientation_vector),
 					q));
 		rec->normal = ft_vec3d_minus_vec3d(rec->p, h);
-		if (ft_vec3d_eq(rec->normal, ft_init_vec3d(0, 0, 0)))
-		{
-			ft_print_vector("Top cone",rec->p);
-			ft_print_vector("Top cone normal",rec->normal);
-		}
-		rec->normal = ft_vec3d_minus_vec3d(rec->p, h);
-		//rec->normal = cylinder->orientation_vector;
 		return (1);
 	}
 	else

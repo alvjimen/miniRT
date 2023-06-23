@@ -18,8 +18,8 @@ void	ft_hit_face(t_ray *ray, t_hit_record *rec)
 		rec->normal = ft_vec3d_negative(rec->normal);
 }
 
-int	ft_hittable(t_ray *ray, t_camera *camera, t_hit_record *rec,
-		t_list *world)
+int	ft_hittable(t_ray *ray, t_camera *camera,
+		t_hit_record *rec, t_list *world)
 {
 	int				hit_anything;
 	t_hit_record	tmp_rec;
@@ -40,7 +40,7 @@ int	ft_hittable(t_ray *ray, t_camera *camera, t_hit_record *rec,
 			camera->t_max = tmp_rec.t;
 			tmp_rec.colour = element->colour;
 			*rec = tmp_rec;
-			//rec->normal = ft_colour_to_vec3d(element->colour);
+			rec->colour = element->colour;
 		}
 	}
 	camera->t_max = bk_tmax;
@@ -67,8 +67,8 @@ t_element	*ft_hittable_element(t_ray *ray, t_camera *camera,
 		{
 			hit_anything = element;
 			camera->t_max = tmp_rec.t;
+			tmp_rec.colour = element->colour;
 			*rec = tmp_rec;
-			//rec->normal = ft_colour_to_vec3d(element->colour);
 		}
 	}
 	camera->t_max = bk_tmax;

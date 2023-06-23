@@ -13,11 +13,8 @@
 
 t_list	*ft_search_list(t_list *lst, int (*f)(void *))
 {
-	t_list	*node;
-
 	if (!lst)
 		return (NULL);
-	node = lst;
 	while (lst)
 	{
 		if (!f(lst->content))
