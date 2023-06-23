@@ -20,3 +20,9 @@ int	ft_find_light(void *node)
 		return (0);
 	return (1);
 }
+
+t_vec3d	ft_reflect(t_vec3d direction, t_vec3d normal)
+{
+	return (ft_vec3d_minus_vec3d(direction, ft_vec3d_pro_double(direction,
+					2 * ft_vec3d_dot(direction, normal))));
+}

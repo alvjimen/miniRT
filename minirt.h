@@ -378,5 +378,6 @@ int				ft_hit_cone(t_ray *ray, t_camera *camera, t_hit_record *rec,
 					t_element *cylinder);
 /* light.c */
 int				ft_find_light(void *node);
+t_vec3d			ft_reflect(t_vec3d direction, t_vec3d normal);
 
 #endif
