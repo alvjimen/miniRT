@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 18:56:49 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/22 19:19:12 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/06/25 19:00:56 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -57,38 +57,14 @@ t_vec3d	ft_ray_direction(t_data *img, int x, int y, int flag)
 t_vec3d	ft_ray_color(t_ray *ray, t_data *img)
 {
 	t_hit_record	rec;
-	double			t;
-	t_list			*light;
-	t_element		*element;
-	t_vec3d			vector;
-	t_ray			shadow_ray;
+	int				depth;
 
+	depth = 1;
+	if (depth <= 0)
+		return (ft_init_vec3d(0, 0, 0));
 	ft_bzero(&rec, sizeof(rec));
-	if (ft_hittable(ray, &img->camera, &rec, img->world))
-	{
-		/*Light*/
-		/* Search for the light */
-		light = ft_search_list(img->world, ft_find_light);
-		if (!light)
-			return (ft_vec3d_pro_double(ft_colour_to_vec3d(rec.colour),
-					 img->ambient_light.light_ratio));
-		element = light->content;
-		/* Detect the direction for the light in the not in surface point*/
-		vector = ft_vec3d_minus_vec3d(element->coords, rec.p);
-		/* Create the ray */
-		shadow_ray = ft_init_ray(rec.p, vector);
-		if (!ft_hittable(&shadow_ray, &img->camera, &rec, img->world))
-			return (ft_vec3d_pro_double(ft_colour_to_vec3d(rec.colour),
-					element->light_ratio));
-		/* Specular reflection */
-		if (!ft_vec3d_eq(ray->unit_direction, ft_reflect(
-						shadow_ray.unit_direction, rec.normal)))
-			return (ft_colour_to_vec3d(element->colour));
-		/* Diffuse reflection */
-		return (ft_vec3d_pro_double(ft_colour_to_vec3d(rec.colour),
-					img->ambient_light.light_ratio));
-	}
-
-	t = 0.5 * (ray->unit_direction.y + 1.0);
-	return (ft_init_vec3d((1.0 - t) + t * 0.5, (1.0 - t) + t * 0.7, 1.0));
+	if (!ft_hittable(ray, &img->camera, &rec, img->world))
+		return (ft_init_vec3d(0, 0, 0));
+	return ((ft_vec3d_pro_double(ft_colour_to_vec3d(rec.colour),
+					(ft_calculate_lights(&rec, ray, img, ft_diffuse_light) + ft_calculate_lights(&rec, ray, img, ft_specular_light) + ft_ambient_light(img)))));
 }
