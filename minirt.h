@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:49:59 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/22 18:57:51 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/06/25 19:01:20 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINIRT_H
@@ -188,6 +188,7 @@ typedef struct s_hit_record
 	int			front_face;
 	t_colour	colour;
 	double		attenuation;
+	double		brightess_light;
 }	t_hit_record;
 
 typedef struct s_element
@@ -378,6 +379,12 @@ int				ft_hit_cone(t_ray *ray, t_camera *camera, t_hit_record *rec,
 					t_element *cylinder);
 /* light.c */
 int				ft_find_light(void *node);
-t_vec3d			ft_reflect(t_vec3d direction, t_vec3d normal);
-
+t_vec3d			ft_specular_reflection(t_vec3d direction, t_vec3d normal);
+double			ft_diffuse_light(t_hit_record *rec, t_ray *ray, t_data *img,
+					t_element *light);
+double			ft_calculate_lights(t_hit_record *rec, t_ray *ray, t_data *img,
+					double (*f)(t_hit_record *, t_ray *, t_data *, t_element *));
+double			ft_specular_light(t_hit_record *rec, t_ray *ray, t_data *img,
+					t_element *light);
+double	ft_ambient_light(t_data *img);
 #endif
