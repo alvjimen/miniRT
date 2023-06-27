@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:49:59 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/27 17:32:53 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/06/27 19:48:28 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINIRT_H
@@ -110,6 +110,10 @@
 # include <fcntl.h>
 # include "mlx.h"
 # include "libft.h"
+
+# define AMBIANCE 1
+# define DIFFUSE 2
+# define SPECULAR 4
 
 typedef enum e_type
 {
@@ -241,6 +245,8 @@ typedef struct s_data
 	t_vec3d		vector;
 	double		modifier;
 	double		angle;
+	t_vec3d		(*ft_color)(t_hit_record *, t_ray *, t_data *);
+	int			value_color;
 }	t_data;
 
 /* normalize.c */
@@ -389,4 +395,7 @@ t_vec3d			ft_diffuse_light(t_hit_record *rec, t_ray *ray, t_data *img,
 t_vec3d			ft_specular_light(t_hit_record *rec, t_ray *ray, t_data *img,
 					t_element *light);
 t_vec3d			ft_ambient_light(t_hit_record *rec, t_data *img);
+void			ft_img_color(t_data *img);
+t_vec3d			ft_color_diffuse_specular_ambiance_light(t_hit_record *rec,
+					t_ray *ray, t_data *img);
 #endif

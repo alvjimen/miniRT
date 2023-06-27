@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:56:57 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/27 17:18:41 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/06/27 19:42:57 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -125,6 +125,21 @@ int	key_hook(int keycode, t_data *img)
 		{
 			img->element->coords = img->vector;
 		}
+	}
+	else if (keycode == A)
+	{
+		img->value_color ^= AMBIANCE;
+		ft_img_color(img);
+	}
+	else if (keycode == D)
+	{
+		img->value_color ^= DIFFUSE;
+		ft_img_color(img);
+	}
+	else if (keycode == S)
+	{
+		img->value_color ^= SPECULAR;
+		ft_img_color(img);
 	}
 	else
 		printf("Keycode: %d\n", keycode);
