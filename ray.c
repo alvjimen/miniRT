@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 18:56:49 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/26 18:49:03 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/06/27 17:44:58 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -65,7 +65,10 @@ t_vec3d	ft_ray_color(t_ray *ray, t_data *img)
 	ft_bzero(&rec, sizeof(rec));
 	if (!ft_hittable(ray, &img->camera, &rec, img->world))
 		return (ft_init_vec3d(0, 0, 0));
-	return (ft_vec3d_div_double(ft_vec3d_plus_vec3d(ft_vec3d_plus_vec3d(ft_vec3d_plus_vec3d(ft_colour_to_vec3d(rec.colour),
+	/* rec.colour + specular + diffuse + ambient*/
+	/* specular + diffuse + ambient */
+	return (ft_vec3d_div_double(ft_vec3d_plus_vec3d(ft_vec3d_plus_vec3d(
+						ft_vec3d_plus_vec3d(ft_colour_to_vec3d(rec.colour),
 					ft_calculate_lights(&rec, ray, img, ft_specular_light)),
 					ft_calculate_lights(&rec, ray, img, ft_diffuse_light)),
 					ft_ambient_light(img)), 2));

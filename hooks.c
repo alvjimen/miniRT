@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:56:57 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/26 18:07:17 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/06/27 17:18:41 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -63,19 +63,11 @@ int	key_hook(int keycode, t_data *img)
 				img->angle, ft_radians_to_degree(img->angle));
 	}
 	/* Modify lookfrom */
-	else if (keycode == Q)
-		img->camera.lookfrom.x += img->modifier;
-	else if (keycode == W)
-		img->camera.lookfrom.y += img->modifier;
-	else if (keycode == E)
-		img->camera.lookfrom.z += img->modifier;
+	else if (keycode == C)
+		img->camera.lookfrom= ft_vec3d_plus_vec3d(img->camera.lookfrom, img->vector);
 	/* Modify lookat */
-	else if (keycode == A)
-		img->camera.lookat.x += img->modifier;
-	else if (keycode == S)
-		img->camera.lookat.y += img->modifier;
-	else if (keycode == D)
-		img->camera.lookat.z += img->modifier;
+	else if (keycode == L)
+		img->camera.lookat = ft_vec3d_plus_vec3d(img->camera.lookat, img->vector);
 	/*change the pointer to f from antialiasing
 	 * to not antialiasing and reverse */
 	else if (keycode == N1)
@@ -94,7 +86,8 @@ int	key_hook(int keycode, t_data *img)
 		img->modifier /= 2;
 	else if (keycode == N5)
 		img->angle += ft_degree_to_radians(img->modifier);
-	else if (keycode == L)
+	/* modify primitives */
+	else if (keycode == W)
 	{
 		if (img->element)
 		{
@@ -109,6 +102,7 @@ int	key_hook(int keycode, t_data *img)
 			img->element->height += img->modifier;
 		}
 	}
+	/* modify vector */
 	else if (keycode == X)
 		img->vector.x += img->modifier;
 	else if (keycode == Y)

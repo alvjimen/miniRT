@@ -6,7 +6,7 @@
 /*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 17:02:41 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/22 19:01:39 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/06/27 17:24:46 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -56,7 +56,7 @@ int	ft_parse_camera(char *str, size_t pos, t_data *img)
 	if (ft_parse_end(str, pos))
 		return (-1);
 	img->camera = ft_init_camera(viewpoint, ASPECT_RATIO, fov,
-			normalized_orientation_vector);
+			ft_vec3d_plus_vec3d(viewpoint, normalized_orientation_vector));
 	return (0);
 }
 

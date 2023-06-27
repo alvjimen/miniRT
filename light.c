@@ -6,7 +6,7 @@
 /*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 18:57:34 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/26 18:49:33 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/06/27 17:44:34 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 //https://www.cs.cornell.edu/courses/cs4620/2017sp/slides/05rt-shading.pdf
@@ -125,8 +125,52 @@ t_vec3d	ft_specular_light(t_hit_record *rec, t_ray *ray, t_data *img,
 	return (ft_vec3d_pro_double(ft_colour_to_vec3d(light->colour), result));
 }
 
-t_vec3d	ft_ambient_light(t_data *img)
+t_vec3d	ft_ambient_light(t_hit_record *rec, t_data *img)
 {
-	return (ft_vec3d_pro_double(ft_colour_to_vec3d(img->ambient_light.colour),
+	t_vec3d	colour;
+	t_vec3d	try;
+	
+	colour = ft_colour_to_vec3d(img->ambient_light.colour);
+	try = ft_vec3d_pro_vec3d(colour, ft_colour_to_vec3d(rec->colour));
+	return (ft_vec3d_pro_double(try,
 				0.2 * img->ambient_light.light_ratio));
+}
+
+t_vec3d	ft_diffuse_light_v2(t_hit_record *rec, t_ray *ray, t_data *img,
+		t_element *light)
+{
+	t_vec3d		v;
+	t_vec3d		r;
+	double		n_l;
+	double		i_r2;
+	double		result;
+
+//	v = -ray->unit_direction;
+	result = 0;
+	if (!ft_shadow_ray(rec, img, light))
+		return (ft_vec3d_pro_double(ft_colour_to_vec3d(rec->colour), result));
+	r = ft_vec3d_minus_vec3d(light->coords, rec->p);
+	i_r2 = light->light_ratio / ft_vec3d_squared_len(r);
+	n_l = ft_vec3d_dot(rec->normal, ft_vec3d_unit_lenght(r));
+	result += 0.4 * i_r2 * ft_max(0, n_l);
+	v = ft_vec3d_pro_vec3d(ft_colour_to_vec3d(rec->colour), light->colour);
+	if (ray)
+		return (ft_vec3d_pro_double(v, result));
+	return (ft_vec3d_pro_double(v, result));
+}
+
+t_vec3d	ft_ray_color_ambient(t_ray *ray, t_data *img)
+{
+	t_hit_record	rec;
+	int				depth;
+
+	depth = 1;
+	if (depth <= 0)
+		return (ft_init_vec3d(0, 0, 0));
+	ft_bzero(&rec, sizeof(rec));
+	if (!ft_hittable(ray, &img->camera, &rec, img->world))
+		return (ft_init_vec3d(0, 0, 0));
+	/* rec.colour + specular + diffuse + ambient*/
+	/* specular + diffuse + ambient */
+	return (ft_ambient_light(&rec, img));
 }

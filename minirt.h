@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:49:59 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/26 18:48:47 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/06/27 17:32:53 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINIRT_H
@@ -15,6 +15,7 @@
 # ifdef	__APPLE__
 #  define ESC 53
 /* Modified lookfrom */
+#  define C 8
 #  define Q 12
 #  define W 13
 #  define E 14
@@ -46,6 +47,7 @@
 /* Make a picture */
 #  define F2 120
 /* undefined */
+/* Put or quit shadow/light effects */
 #  define U 32
 #  define I 34
 #  define O 31
@@ -62,13 +64,13 @@
 #  define W 119
 #  define E 101
 /* Camera Lookat */
+#  define C 99
 #  define A 97
 #  define S 115
 #  define D 100
 /* Elements mod */
 #  define L 108
 #  define H 104
-//#  define C 99
 /* Print values camera */
 #  define P 112
 /* Set the var of vector */
@@ -386,5 +388,5 @@ t_vec3d			ft_diffuse_light(t_hit_record *rec, t_ray *ray, t_data *img,
 					t_element *light);
 t_vec3d			ft_specular_light(t_hit_record *rec, t_ray *ray, t_data *img,
 					t_element *light);
-t_vec3d			ft_ambient_light(t_data *img);
+t_vec3d			ft_ambient_light(t_hit_record *rec, t_data *img);
 #endif
