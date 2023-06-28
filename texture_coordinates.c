@@ -32,6 +32,8 @@ double	ft_perlin_noise(t_hit_record *rec, t_data *img)
 	int j;
 	int k;
 
+	if (!img->perlin_init)
+		ft_perlin_init(img);
 	i = (int)(4 * rec->p.x) & 0xff;
 	j = (int)(4 * rec->p.y) & 0xff;
 	k = (int)(4 * rec->p.z) & 0xff;
@@ -99,8 +101,10 @@ void	ft_checker_texture_image(t_hit_record *rec, t_element *sphere, t_data *img)
 		i = img->xpm_width - 1;
 	if (j >= img->xpm_height)
 		j = img->xpm_height - 1;
-	if (!(i % 5) &&  j % 5)
+	/* a bad bump_mapping
+	if ((!(i % 15) &&  j % 5) || !(j % 60))
 		rec->normal = ft_vec3d_div_double(rec->normal, 2);
+	*/
 	pixel = &img->xpm_address[j * img->xpm_line_length + i * (img->xpm_bits_per_pixel / 8)];
 	rec->colour.alpha = pixel[0];
 	rec->colour.red = pixel[1];
@@ -108,3 +112,13 @@ void	ft_checker_texture_image(t_hit_record *rec, t_element *sphere, t_data *img)
 	rec->colour.blue = pixel[3];
 	//mlx_put_image_to_window(img->mlx, img->mlx_win, img->xpm, 0, 0);
 }
+
+/*
+p' = p + (f(u,v)*N) / ||N||
+*/
+/*
+void	ft_checker_bump_mapping(t_hit_record *rec, t_element *sphere, t_data *img)
+{
+
+}
+*/
