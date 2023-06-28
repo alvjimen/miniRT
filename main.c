@@ -22,7 +22,6 @@ int	main(int argc, char	*argv[])
 		exit (-1);
 	img.value_color = AMBIANCE | DIFFUSE | SPECULAR;
 	ft_img_color(&img);
-	//img.ft_color = ft_color_diffuse_specular_ambiance_light;
 	ft_draw_without_antialiasing(&img);
 	mlx_put_image_to_window(img.mlx, img.mlx_win, img.img, 0, 0);
 	mlx_loop(img.mlx);

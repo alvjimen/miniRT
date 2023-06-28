@@ -24,7 +24,41 @@ void	ft_sphere_uv(t_hit_record *rec, t_element *sphere)
 	rec->v = theta / M_PI;
 }
 
+void	ft_cylinder_uv(t_hit_record *rec, t_element *cylinder)
+{
+	t_vec3d	p;
+	double	phi;
+	double	zmin;
+	double	zmax;
 
+//phit = rec->p -> p;
+	
+	//p = ft_vec3d_unit_lenght(ft_vec3d_minus_vec3d(sphere->coords, rec->p));
+	p = ft_vec3d_unit_lenght(rec->normal);
+	//p.x *= cylinder->radius / hitrad;
+	//p.y *= cylinder->radius / hitrad;
+	phi = atan2(p.y, p.x);
+	if (phi < 0)
+		phi += 2 * M_PI;
+	rec->u = phi / (2 * M_PI);
+	zmin = cylinder->coords.z - cylinder->radius;
+	zmax = cylinder->coords.z + cylinder->radius;
+	rec->v = p.z - zmin / (zmax - zmin);
+}
+
+void	ft_cone_uv(t_hit_record *rec, t_element *cone)
+{
+	double	phi;
+	t_vec3d	p;
+
+	//p = ft_vec3d_unit_lenght(rec->normal);
+	p = rec->p;
+	phi = atan2(p.y, p.x);
+	if (phi < 0)
+		phi += 2 * M_PI;
+	rec->u = phi / (2 * M_PI);
+	rec->v = rec->p.z / cone->height;
+}
 
 double	ft_perlin_noise(t_hit_record *rec, t_data *img)
 {
@@ -73,6 +107,20 @@ u = i / (Nx - 1);
 v = j / (Ny - 1);
 */
 
+void	ft_checkerboard(t_hit_record *rec, t_element *element, t_data *img)
+{
+	t_vec3d	p;
+	double	sines;
+
+	p = ft_vec3d_unit_lenght(rec->normal);
+	sines = sin(p.x * 10) * sin(p.y * 10) * sin(p.z * 10);
+	if (sines < 0)
+		ft_bzero(&rec->colour, sizeof(rec->colour));
+	else
+		rec->colour.red = 255;
+	if (element || img)
+		return ;
+}
 void	ft_checker_texture_image(t_hit_record *rec, t_element *sphere, t_data *img)
 {
 	int		i;

@@ -12,16 +12,17 @@
 #include "minirt.h"
 
 int	ft_base_of_the_cone(t_ray *ray, t_camera *camera,
-		t_hit_record *rec, t_element *cylinder)
+		t_hit_record *rec, t_element *cone)
 {
 	double	t;
 
-	t = ft_hit_surface_base(ray, camera, cylinder, rec);
+	t = ft_hit_surface_base(ray, camera, cone, rec);
 	if (isnan(t))
 		return (0);
 	rec->t = t;
-	rec->normal = ft_vec3d_negative(cylinder->orientation_vector);
+	rec->normal = ft_vec3d_negative(cone->orientation_vector);
 	rec->p = ft_ray_at(ray, rec->t);
+	ft_cone_uv(rec, cone);
 	return (1);
 }
 
@@ -130,6 +131,7 @@ int	ft_hit_cone(t_ray *ray, t_camera *camera, t_hit_record *rec,
 					ft_vec3d_unit_lenght(cylinder->orientation_vector),
 					q));
 		rec->normal = ft_vec3d_unit_lenght(ft_vec3d_minus_vec3d(rec->p, h));
+		ft_cone_uv(rec, cylinder);
 		return (1);
 	}
 	else

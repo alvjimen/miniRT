@@ -416,4 +416,9 @@ t_vec3d			ft_color_diffuse_specular_ambiance_light(t_hit_record *rec,
 void			ft_sphere_uv(t_hit_record *rec, t_element *sphere);
 void			ft_checker_texture(t_hit_record *rec, t_element *sphere, t_data *img);
 void			ft_checker_texture_image(t_hit_record *rec, t_element *sphere, t_data *img);
+double			ft_perlin_noise(t_hit_record *rec, t_data *img);
+void			ft_perlin_init(t_data *img);
+void			ft_checkerboard(t_hit_record *rec, t_element *element, t_data *img);
+void			ft_cone_uv(t_hit_record *rec, t_element *cone);
+void			ft_cylinder_uv(t_hit_record *rec, t_element *cylinder);
 #endif

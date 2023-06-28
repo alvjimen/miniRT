@@ -194,9 +194,7 @@ void	ft_bump_map_test(t_hit_record *rec)
 	int		i;
 	int		j;
 
-	rec->u = clamp(rec->u, 0.0, 0.99);
 	/*This becouse we start on the left_bottom corner*/
-	rec->v = clamp(rec->v, 0.0, 0.99);
 	i = rec->u * WIN_W;
 	j = rec->v * WIN_W * ASPECT_RATIO;
 	
@@ -223,7 +221,7 @@ t_vec3d	ft_ray_color/*_specular*/(t_ray *ray, t_data *img)
 	Pseudo bump mapping
 		rec.normal = ft_vec3d_plus_vec3d(rec.normal, ft_init_vec3d(ft_perlin_noise(&rec, img), ft_perlin_noise(&rec, img), ft_perlin_noise(&rec, img)));
 	*/
-	ft_bump_map_test(&rec);
+//	ft_bump_map_test(&rec);
 	/**/
 	return (img->ft_color(&rec, ray, img));
 	/*return (ft_vec3d_plus_vec3d(
