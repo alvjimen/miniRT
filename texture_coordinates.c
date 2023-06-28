@@ -92,13 +92,15 @@ void	ft_checker_texture_image(t_hit_record *rec, t_element *sphere, t_data *img)
 	}
 	rec->u = clamp(rec->u, 0.0, 1.0);
 	/*This becouse we start on the left_bottom corner*/
-	rec->v = 1 - clamp(rec->v, 0.0, 1.0);
+	rec->v = clamp(rec->v, 0.0, 1.0);
 	i = rec->u * img->xpm_width;
 	j = rec->v * img->xpm_height;
 	if (i >= img->xpm_width)
 		i = img->xpm_width - 1;
 	if (j >= img->xpm_height)
 		j = img->xpm_height - 1;
+	if (!(i % 5) &&  j % 5)
+		rec->normal = ft_vec3d_div_double(rec->normal, 2);
 	pixel = &img->xpm_address[j * img->xpm_line_length + i * (img->xpm_bits_per_pixel / 8)];
 	rec->colour.alpha = pixel[0];
 	rec->colour.red = pixel[1];

@@ -147,7 +147,10 @@ int	key_hook(int keycode, t_data *img)
 	{
 		if (img->element)
 		{
-			img->element->textured = 1;
+			if (img->element->textured)
+				img->element->textured = 0;
+			else
+				img->element->textured = 1;
 			img->element->ft_texture = ft_checker_texture_image;
 		}
 
