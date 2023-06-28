@@ -58,5 +58,6 @@ int	ft_hit_sphere(t_ray *ray, t_camera *camera, t_hit_record *rec,
 	rec->normal = ft_vec3d_div_double(ft_vec3d_minus_vec3d(rec->p,
 				sphere->coords), sphere->radius);
 	ft_hit_face(ray, rec);
+	ft_sphere_uv(rec, sphere);
 	return (1);
 }

@@ -104,6 +104,7 @@
 # define ASPECT_RATIO 1.7777777777777777 // 16.0 / 9.0
 # define WIN_W 640.0
 # define NEAR_ZERO 1e-8;
+# define XPM_PATH	"./earthmap.xpm"
 # include <stdio.h>
 # include <stdlib.h>
 # include <math.h>
@@ -191,11 +192,15 @@ typedef struct s_hit_record
 	t_vec3d		p;
 	t_vec3d		normal;
 	double		t;
+	double		u;
+	double		v;
 	int			front_face;
 	t_colour	colour;
 	double		attenuation;
 	double		brightess_light;
 }	t_hit_record;
+
+typedef struct s_data	t_data;
 
 typedef struct s_element
 {
@@ -211,6 +216,8 @@ typedef struct s_element
 	int			hittable;
 	int			(*ft_hit)(t_ray *, t_camera *, t_hit_record *,
 			struct s_element *);
+	int			textured;
+	void		(*ft_texture)(t_hit_record *, struct s_element *, t_data *);
 }	t_element;
 /*Horizontalfield of view in degrees 0-180*/
 
@@ -219,8 +226,6 @@ typedef struct s_mouse
 	int	x;
 	int	y;
 }	t_mouse;
-
-typedef struct s_data	t_data;
 
 typedef struct s_data
 {
@@ -247,6 +252,16 @@ typedef struct s_data
 	double		angle;
 	t_vec3d		(*ft_color)(t_hit_record *, t_ray *, t_data *);
 	int			value_color;
+	t_vec3d		perlin;
+	double		perlin_ranfloat[256];
+	int			perlin_init;
+	void		*xpm;
+	char		*xpm_address;
+	int			xpm_width;
+	int			xpm_height;
+	int			xpm_bits_per_pixel;
+	int			xpm_line_length;
+	int			xpm_endian;
 }	t_data;
 
 /* normalize.c */
@@ -335,8 +350,7 @@ int				ft_hit_sphere(t_ray *ray, t_camera *camera,
 					t_hit_record *rec, t_element *sphere);
 /* hit.c */
 void			ft_hit_face(t_ray *ray, t_hit_record *rec);
-int				ft_hittable(t_ray *ray, t_camera *camera, t_hit_record *rec,
-					t_list *world);
+int				ft_hittable(t_ray *ray, t_data *img, t_hit_record *rec);
 t_element		*ft_hittable_element(t_ray *ray, t_camera *camera,
 					t_hit_record *rec, t_list *world);
 /* world.c */
@@ -398,4 +412,8 @@ t_vec3d			ft_ambient_light(t_hit_record *rec, t_data *img);
 void			ft_img_color(t_data *img);
 t_vec3d			ft_color_diffuse_specular_ambiance_light(t_hit_record *rec,
 					t_ray *ray, t_data *img);
+/* texture_coordinates.c  */
+void			ft_sphere_uv(t_hit_record *rec, t_element *sphere);
+void			ft_checker_texture(t_hit_record *rec, t_element *sphere, t_data *img);
+void			ft_checker_texture_image(t_hit_record *rec, t_element *sphere, t_data *img);
 #endif

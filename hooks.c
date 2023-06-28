@@ -126,6 +126,7 @@ int	key_hook(int keycode, t_data *img)
 			img->element->coords = img->vector;
 		}
 	}
+	/* color change */
 	else if (keycode == A)
 	{
 		img->value_color ^= AMBIANCE;
@@ -140,6 +141,16 @@ int	key_hook(int keycode, t_data *img)
 	{
 		img->value_color ^= SPECULAR;
 		ft_img_color(img);
+	}
+	/* adding texture */
+	else if (keycode == J)
+	{
+		if (img->element)
+		{
+			img->element->textured = 1;
+			img->element->ft_texture = ft_checker_texture_image;
+		}
+
 	}
 	else
 		printf("Keycode: %d\n", keycode);

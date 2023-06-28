@@ -79,7 +79,7 @@ double	ft_shadow_ray(t_hit_record *rec, t_data *img, t_element *light)
 	bk_tmin = img->camera.t_min;
 	img->camera.t_min = 0.00001;
 	shadow = ft_init_ray(rec->p, ft_vec3d_minus_vec3d(light->coords, rec->p));
-	result = !ft_hittable(&shadow, &img->camera, &tmp_rec, img->world);
+	result = !ft_hittable(&shadow, img, &tmp_rec);
 	img->camera.t_min = bk_tmin;
 	return (result);
 }
@@ -179,7 +179,7 @@ t_vec3d	ft_specular_light_v2(t_hit_record *rec, t_ray *ray, t_data *img,
 	h  = ft_vec3d_unit_lenght(ft_vec3d_plus_vec3d(ft_vec3d_negative(
 					ray->direction), r));
 	result = 0.5 * i_r2 * pow(ft_max(0, ft_vec3d_dot(rec->normal,
-					h)), 64);
+					h)), 1024);
 	try = ft_vec3d_pro_vec3d(ft_colour_to_vec3d(rec->colour),
 			ft_colour_to_vec3d(light->colour));
 	return (ft_vec3d_pro_double(try, result));
@@ -194,7 +194,7 @@ t_vec3d	ft_ray_color/*_specular*/(t_ray *ray, t_data *img)
 	if (depth <= 0)
 		return (ft_init_vec3d(0, 0, 0));
 	ft_bzero(&rec, sizeof(rec));
-	if (!ft_hittable(ray, &img->camera, &rec, img->world))
+	if (!ft_hittable(ray, img, &rec))
 		return (ft_init_vec3d(0, 0, 0));
 	return (img->ft_color(&rec, ray, img));
 	
