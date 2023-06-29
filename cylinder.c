@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 18:32:16 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/21 08:58:22 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/06/29 21:01:55 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -234,8 +234,10 @@ int	ft_hit_cylinder(t_ray *ray, t_camera *camera, t_hit_record *rec,
 		h = ft_vec3d_plus_vec3d(cylinder->coords, ft_vec3d_pro_double(
 					ft_vec3d_unit_lenght(cylinder->orientation_vector),
 					q));
+		rec->h = h;
 		rec->normal = ft_vec3d_minus_vec3d(rec->p, h);
 		rec->normal = ft_vec3d_minus_vec3d(rec->p, h);
+		ft_cylinder_uv(rec, cylinder);
 		//rec->normal = cylinder->orientation_vector;
 		return (1);
 	}
