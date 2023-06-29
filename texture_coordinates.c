@@ -86,26 +86,33 @@ void	ft_perlin_init(t_data *img)
 
 void	ft_checker_texture(t_hit_record *rec, t_element *sphere, t_data *img)
 {
-	//t_vec3d	p;
-//	double	sines;
-
-	//p = ft_vec3d_unit_lenght(ft_vec3d_minus_vec3d(sphere->coords, rec->p));
-	//sines = sin(p.x * 10) * sin(p.y * 10) * sin(p.z * 10); 
 	if (sphere)
 		ft_perlin_init(img);
 	else
 		ft_perlin_init(img);
 	ft_bzero(&rec->colour, sizeof(rec->colour));
-	//if (sines < 0)
 		rec->colour.red =  ft_perlin_noise(rec, img) * 255;
 		rec->colour.green =  ft_perlin_noise(rec, img) * 255;
 		rec->colour.blue =  ft_perlin_noise(rec, img) * 255;
-	//else
 }
 /*
 u = i / (Nx - 1);
 v = j / (Ny - 1);
 */
+void	ft_checkerboard_v2(t_hit_record *rec, t_element *element, t_data *img)
+{
+
+	if ((fmod(rec->v, 0.05) < 0.025 && fmod(rec->u, 0.05) < 0.025) || ((!(fmod(rec->v, 0.05) < 0.025) && !(fmod(rec->u, 0.05) < 0.025))))
+		ft_bzero(&rec->colour, sizeof(rec->colour));
+	else
+	{
+		rec->colour.red = 255;
+		rec->colour.green = 255;
+		rec->colour.blue = 255;
+	}
+	if (element || img)
+		return ;
+}
 
 void	ft_checkerboard(t_hit_record *rec, t_element *element, t_data *img)
 {

@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:49:59 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/27 19:48:28 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/06/29 18:16:22 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINIRT_H
@@ -421,4 +421,6 @@ void			ft_perlin_init(t_data *img);
 void			ft_checkerboard(t_hit_record *rec, t_element *element, t_data *img);
 void			ft_cone_uv(t_hit_record *rec, t_element *cone);
 void			ft_cylinder_uv(t_hit_record *rec, t_element *cylinder);
+void			ft_checkerboard_v2(t_hit_record *rec, t_element *element,
+					t_data *img);
 #endif
