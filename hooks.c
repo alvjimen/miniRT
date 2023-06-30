@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:56:57 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/29 18:16:01 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/06/30 18:07:59 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -151,10 +151,10 @@ int	key_hook(int keycode, t_data *img)
 				img->element->textured = 0;
 			else
 				img->element->textured = 1;
-			//img->element->ft_texture = ft_checker_texture_image;
+			img->element->ft_texture = ft_checker_texture_image;
 			//img->element->ft_texture = ft_checkerboard;
 			//img->element->ft_texture = ft_checker_texture;
-			img->element->ft_texture = ft_checkerboard_v2;
+			//img->element->ft_texture = ft_checkerboard_v2;
 		}
 
 	}

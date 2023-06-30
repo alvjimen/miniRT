@@ -153,10 +153,9 @@ void	ft_checker_texture_image(t_hit_record *rec, t_element *sphere, t_data *img)
 		i = img->xpm_width - 1;
 	if (j >= img->xpm_height)
 		j = img->xpm_height - 1;
-	/* a bad bump_mapping
+	// a bad bump_mapping
 	if ((!(i % 15) &&  j % 5) || !(j % 60))
 		rec->normal = ft_vec3d_div_double(rec->normal, 2);
-	*/
 	pixel = &img->xpm_address[j * img->xpm_line_length + i * (img->xpm_bits_per_pixel / 8)];
 	rec->colour.alpha = pixel[0];
 	rec->colour.red = pixel[1];

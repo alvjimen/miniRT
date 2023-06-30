@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 16:20:39 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/25 14:16:29 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/06/30 18:06:28 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -22,7 +22,8 @@ int	ft_base_of_the_cone(t_ray *ray, t_camera *camera,
 	rec->t = t;
 	rec->normal = ft_vec3d_negative(cone->orientation_vector);
 	rec->p = ft_ray_at(ray, rec->t);
-	ft_cone_uv(rec, cone);
+	ft_cylinder_uv(rec, cone);
+//	ft_cone_uv(rec, cone);
 	return (1);
 }
 
@@ -130,8 +131,9 @@ int	ft_hit_cone(t_ray *ray, t_camera *camera, t_hit_record *rec,
 		h = ft_vec3d_plus_vec3d(cylinder->coords, ft_vec3d_pro_double(
 					ft_vec3d_unit_lenght(cylinder->orientation_vector),
 					q));
+		rec->h = h;
 		rec->normal = ft_vec3d_unit_lenght(ft_vec3d_minus_vec3d(rec->p, h));
-		ft_cone_uv(rec, cylinder);
+		ft_cylinder_uv(rec, cylinder);
 		return (1);
 	}
 	else
