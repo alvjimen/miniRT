@@ -125,6 +125,7 @@ void	ft_checkerboard(t_hit_record *rec, t_element *element, t_data *img)
 	if (element || img)
 		return ;
 }
+
 void	ft_checker_texture_image(t_hit_record *rec, t_element *sphere, t_data *img)
 {
 	int		i;
@@ -144,6 +145,17 @@ void	ft_checker_texture_image(t_hit_record *rec, t_element *sphere, t_data *img)
 		if (!img->xpm_address)
 			exit (1);
 	}
+	if (!img->xpm_bump)
+	{
+		img->xpm_bump = mlx_xpm_file_to_image(img->mlx, XPM_BUMP_PATH,
+				&img->xpm_bump_width, &img->xpm_bump_height);
+		if (!img->xpm_bump)
+			exit (1);
+		img->xpm_bump_address = mlx_get_data_addr(img->xpm_bump, &img->xpm_bump_bits_per_pixel, 
+				&img->xpm_bump_line_length, &img->xpm_bump_endian);
+		if (!img->xpm_bump_address)
+			exit (1);
+	}
 	rec->u = clamp(rec->u, 0.0, 1.0);
 	/*This becouse we start on the left_bottom corner*/
 	rec->v = clamp(rec->v, 0.0, 1.0);
@@ -154,8 +166,8 @@ void	ft_checker_texture_image(t_hit_record *rec, t_element *sphere, t_data *img)
 	if (j >= img->xpm_height)
 		j = img->xpm_height - 1;
 	// a bad bump_mapping
-	if ((!(i % 15) &&  j % 5) || !(j % 60))
-		rec->normal = ft_vec3d_div_double(rec->normal, 2);
+	//if ((!(i % 15) &&  j % 5) || !(j % 60))
+	//	rec->normal = ft_vec3d_div_double(rec->normal, 2);
 	pixel = &img->xpm_address[j * img->xpm_line_length + i * (img->xpm_bits_per_pixel / 8)];
 	rec->colour.alpha = pixel[0];
 	rec->colour.red = pixel[1];
@@ -164,6 +176,68 @@ void	ft_checker_texture_image(t_hit_record *rec, t_element *sphere, t_data *img)
 	//mlx_put_image_to_window(img->mlx, img->mlx_win, img->xpm, 0, 0);
 }
 
+void	ft_checker_bump_image(t_hit_record *rec, t_element *sphere, t_data *img)
+{
+	int		i;
+	int		j;
+	char	*pixel;
+	t_vec3d	bump_vector1;
+	t_vec3d	bump_vector2;
+	t_vec3d	bump_normal;
+	t_vec3d	new_normal_bumped;
+
+	if (!sphere && !rec)
+		return ;
+	if (!img->xpm)
+	{
+		img->xpm = mlx_xpm_file_to_image(img->mlx, XPM_PATH,
+				&img->xpm_width, &img->xpm_height);
+		if (!img->xpm)
+			exit (1);
+		img->xpm_address = mlx_get_data_addr(img->xpm, &img->xpm_bits_per_pixel, 
+				&img->xpm_line_length, &img->xpm_endian);
+		if (!img->xpm_address)
+			exit (1);
+	}
+	if (!img->xpm_bump)
+	{
+		img->xpm_bump = mlx_xpm_file_to_image(img->mlx, XPM_BUMP_PATH,
+				&img->xpm_bump_width, &img->xpm_bump_height);
+		if (!img->xpm_bump)
+			exit (1);
+		img->xpm_bump_address = mlx_get_data_addr(img->xpm_bump, &img->xpm_bump_bits_per_pixel, 
+				&img->xpm_bump_line_length, &img->xpm_bump_endian);
+		if (!img->xpm_bump_address)
+			exit (1);
+	}
+	rec->u = clamp(rec->u, 0.0, 1.0);
+	rec->v = clamp(rec->v, 0.0, 1.0);
+	i = rec->u * img->xpm_bump_width;
+	j = rec->v * img->xpm_bump_height;
+	if (i >= img->xpm_bump_width)
+		i = img->xpm_bump_width - 1;
+	if (j >= img->xpm_bump_height)
+		j = img->xpm_bump_height - 1;
+	pixel = &img->xpm_bump_address[(j + 1 % img->xpm_bump_width) * img->xpm_bump_line_length + i * (img->xpm_bump_bits_per_pixel / 8)];
+	bump_vector1 = ft_init_vec3d(pixel[1], 0, 0/*pixel[2], pixel[3]*/);
+	pixel = &img->xpm_bump_address[(j - 1) * img->xpm_bump_line_length + i * (img->xpm_bump_bits_per_pixel / 8)];
+	bump_vector1 = ft_vec3d_minus_vec3d(bump_vector1, ft_init_vec3d(pixel[1], 0, 0/*pixel[2], pixel[3]*/));
+	pixel = &img->xpm_bump_address[j * img->xpm_bump_line_length + (i + 1) * (img->xpm_bump_bits_per_pixel / 8)];
+	bump_vector2 = ft_init_vec3d(/*pixel[1]*/ 0, pixel[2], 0/* pixel[3]*/);
+	pixel = &img->xpm_bump_address[j * img->xpm_bump_line_length + (i - 1) * (img->xpm_bump_bits_per_pixel / 8)];
+	bump_vector2 = ft_vec3d_minus_vec3d(bump_vector1, ft_init_vec3d(/*pixel[1]*/0, pixel[2], 0/*pixel[3]*/));
+	bump_normal = ft_vec3d_pro_vec3d(ft_vec3d_cross(bump_vector1, bump_vector2), rec->normal);
+	new_normal_bumped = ft_vec3d_plus_vec3d(bump_normal, rec->normal);
+//	new_normal_bumped = bump_normal;
+	if (ft_vec3d_squared_len(new_normal_bumped) != 0.0)
+		new_normal_bumped = ft_vec3d_unit_lenght(new_normal_bumped);
+	rec->normal = new_normal_bumped;
+	pixel = &img->xpm_address[j * img->xpm_line_length + i * (img->xpm_bits_per_pixel / 8)];
+	rec->colour.alpha = pixel[0];
+	rec->colour.red = pixel[1];
+	rec->colour.green = pixel[2];
+	rec->colour.blue = pixel[3];
+}
 /*
 p' = p + (f(u,v)*N) / ||N||
 */

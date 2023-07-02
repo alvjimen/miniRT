@@ -104,6 +104,7 @@
 # define ASPECT_RATIO 1.7777777777777777 // 16.0 / 9.0
 # define WIN_W 640.0
 # define NEAR_ZERO 1e-8;
+# define XPM_BUMP_PATH	"./earthmap_bump.xpm"
 # define XPM_PATH	"./earthmap.xpm"
 # include <stdio.h>
 # include <stdlib.h>
@@ -263,6 +264,14 @@ typedef struct s_data
 	int			xpm_bits_per_pixel;
 	int			xpm_line_length;
 	int			xpm_endian;
+	void		*xpm_bump;
+	char		*xpm_bump_address;
+	int			xpm_bump_width;
+	int			xpm_bump_height;
+	int			xpm_bump_bits_per_pixel;
+	int			xpm_bump_line_length;
+	int			xpm_bump_endian;
+
 }	t_data;
 
 /* normalize.c */
@@ -423,5 +432,7 @@ void			ft_checkerboard(t_hit_record *rec, t_element *element, t_data *img);
 void			ft_cone_uv(t_hit_record *rec, t_element *cone);
 void			ft_cylinder_uv(t_hit_record *rec, t_element *cylinder);
 void			ft_checkerboard_v2(t_hit_record *rec, t_element *element,
+					t_data *img);
+void			ft_checker_bump_image(t_hit_record *rec, t_element *sphere,
 					t_data *img);
 #endif
