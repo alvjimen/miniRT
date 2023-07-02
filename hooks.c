@@ -151,7 +151,7 @@ int	key_hook(int keycode, t_data *img)
 				img->element->textured = 0;
 			else
 				img->element->textured = 1;
-			img->element->ft_texture = ft_checker_texture_image;
+//			img->element->ft_texture = ft_checker_texture_image;
 			img->element->ft_texture = ft_checker_bump_image;
 			//img->element->ft_texture = ft_checkerboard;
 			//img->element->ft_texture = ft_checker_texture;

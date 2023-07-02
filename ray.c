@@ -54,27 +54,12 @@ t_vec3d	ft_ray_direction(t_data *img, int x, int y, int flag)
 			img->camera.origin));
 }
 
-/*t_vec3d	ft_ray_color(t_ray *ray, t_data *img)
+t_vec3d	ft_ray_color(t_ray *ray, t_data *img)
 {
 	t_hit_record	rec;
-	int				depth;
 
-	depth = 1;
-	if (depth <= 0)
-		return (ft_init_vec3d(0, 0, 0));
 	ft_bzero(&rec, sizeof(rec));
-	if (!ft_hittable(ray, &img->camera, &rec, img->world))
+	if (!ft_hittable(ray, img, &rec))
 		return (ft_init_vec3d(0, 0, 0));
-	*/
-	/* rec.colour + specular + diffuse + ambient*/
-	/* specular + diffuse + ambient */
-	/*
-	return (ft_vec3d_div_double(ft_vec3d_plus_vec3d(
-						ft_vec3d_plus_vec3d(ft_colour_to_vec3d(rec.colour),
-					ft_calculate_lights(&rec, ray, img, ft_specular_light)),
-					ft_calculate_lights(&rec, ray, img, ft_diffuse_light)),
-					//ft_ambient_light(img)
-					3));
-					*/
-			/* ft_calculate_lights(&rec, ray, img, ft_specular_light) + ft_ambient_light(img))));*/
-//}
+	return (img->ft_color(&rec, ray, img));
+}

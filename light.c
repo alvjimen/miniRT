@@ -185,54 +185,6 @@ t_vec3d	ft_specular_light_v2(t_hit_record *rec, t_ray *ray, t_data *img,
 	return (ft_vec3d_pro_double(try, result));
 }
 
-void	ft_bump_map_test(t_hit_record *rec)
-{
-//	t_vec3d	pu;
-//	t_vec3d	pv;
-	t_vec3d	gradient_x;
-	t_vec3d	gradient_y;
-	int		i;
-	int		j;
-
-	/*This becouse we start on the left_bottom corner*/
-	i = rec->u * WIN_W;
-	j = rec->v * WIN_W * ASPECT_RATIO;
-	
-	gradient_x = ft_vec3d_pro_double(ft_vec3d_minus_vec3d(ft_init_vec3d(i-1, 0.0, 0), ft_init_vec3d(i+1, 0, 0)), rec->u);
-	gradient_y = ft_vec3d_pro_double(ft_vec3d_minus_vec3d(ft_init_vec3d(0, j-1, 0), ft_init_vec3d(0, j + 1, 0)), rec->v);
-//	rec->u = clamp(rec->u, 0.0, 1.0);
-//	rec->v = clamp(rec->v, 0.0, 1.0);
-	rec->normal = ft_vec3d_unit_lenght(ft_vec3d_plus_vec3d(rec->normal, ft_vec3d_plus_vec3d(
-				gradient_x, gradient_y)));
-}
-
-t_vec3d	ft_ray_color/*_specular*/(t_ray *ray, t_data *img)
-{
-	t_hit_record	rec;
-	int				depth;
-
-	depth = 1;
-	if (depth <= 0)
-		return (ft_init_vec3d(0, 0, 0));
-	ft_bzero(&rec, sizeof(rec));
-	if (!ft_hittable(ray, img, &rec))
-		return (ft_init_vec3d(0, 0, 0));
-	/*
-	Pseudo bump mapping
-		rec.normal = ft_vec3d_plus_vec3d(rec.normal, ft_init_vec3d(ft_perlin_noise(&rec, img), ft_perlin_noise(&rec, img), ft_perlin_noise(&rec, img)));
-	*/
-//	ft_bump_map_test(&rec);
-	/**/
-	return (img->ft_color(&rec, ray, img));
-	/*return (ft_vec3d_plus_vec3d(
-				ft_vec3d_plus_vec3d(ft_calculate_lights(&rec, ray, img,
-					ft_specular_light_v2), ft_ambient_light(&rec, img)),
-				ft_calculate_lights(&rec, ray, img, ft_diffuse_light_v2)));
-				*/
-}
-
-
-
 t_vec3d	ft_color_ambient_light(t_hit_record *rec, t_ray *ray, t_data *img)
 {
 	if (rec && ray && img)

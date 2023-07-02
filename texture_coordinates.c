@@ -176,18 +176,8 @@ void	ft_checker_texture_image(t_hit_record *rec, t_element *sphere, t_data *img)
 	//mlx_put_image_to_window(img->mlx, img->mlx_win, img->xpm, 0, 0);
 }
 
-void	ft_checker_bump_image(t_hit_record *rec, t_element *sphere, t_data *img)
+void	ft_load_img(t_data *img)
 {
-	int		i;
-	int		j;
-	char	*pixel;
-	t_vec3d	bump_vector1;
-	t_vec3d	bump_vector2;
-	t_vec3d	bump_normal;
-	t_vec3d	new_normal_bumped;
-
-	if (!sphere && !rec)
-		return ;
 	if (!img->xpm)
 	{
 		img->xpm = mlx_xpm_file_to_image(img->mlx, XPM_PATH,
@@ -201,7 +191,7 @@ void	ft_checker_bump_image(t_hit_record *rec, t_element *sphere, t_data *img)
 	}
 	if (!img->xpm_bump)
 	{
-		img->xpm_bump = mlx_xpm_file_to_image(img->mlx, XPM_BUMP_PATH,
+		img->xpm_bump = mlx_xpm_file_to_image(img->mlx, XPM_BUMP_PATH,//"./brick wall.xpm",
 				&img->xpm_bump_width, &img->xpm_bump_height);
 		if (!img->xpm_bump)
 			exit (1);
@@ -210,6 +200,58 @@ void	ft_checker_bump_image(t_hit_record *rec, t_element *sphere, t_data *img)
 		if (!img->xpm_bump_address)
 			exit (1);
 	}
+}
+
+char	*ft_bump_pixel(int x, int y, t_data *img)
+{
+	return (&img->xpm_bump_address[y * img->xpm_bump_line_length +
+			x * (img->xpm_bump_bits_per_pixel / 8)]);
+}
+
+void	ft_finite_difference(t_hit_record *rec, t_data *img, t_vec3d *bump_vector1, t_vec3d *bump_vector2)
+{
+	char	*pixel;
+	int		i;
+	int		j;
+
+	i = rec->u * img->xpm_bump_width;
+	j = rec->v * img->xpm_bump_height;
+	if (i >= img->xpm_bump_width)
+		i = img->xpm_bump_width - 1;
+	if (j >= img->xpm_bump_height)
+		j = img->xpm_bump_height - 1;
+	
+	pixel = ft_bump_pixel(i + 1 % img->xpm_bump_width, j, img);
+	*bump_vector1 = ft_init_vec3d(pixel[1], 0, 0);
+	if (j - 1 < 0)
+		pixel = ft_bump_pixel(img->xpm_bump_width - 1, j, img);
+	else
+		pixel = ft_bump_pixel(i - 1, j, img);
+	*bump_vector1 = ft_vec3d_minus_vec3d(*bump_vector1, ft_init_vec3d(pixel[1], 0, 0));
+	/*second vector*/
+	pixel = ft_bump_pixel(i, j + 1 % img->xpm_bump_height, img);
+	*bump_vector2 = ft_init_vec3d(0, pixel[1], 0);
+	if (j - 1 < 0)
+		pixel = ft_bump_pixel(img->xpm_bump_height - 1, j, img);
+	else
+		pixel = ft_bump_pixel(i - 1, j, img);
+	*bump_vector2 = ft_vec3d_minus_vec3d(*bump_vector2, ft_init_vec3d(0, pixel[1], 0));
+}
+
+void	ft_checker_bump_image(t_hit_record *rec, t_element *sphere, t_data *img)
+{
+	int		i;
+	int		j;
+	char	*pixel;
+	t_vec3d	bump_vector1;
+	t_vec3d	bump_vector2;
+	t_vec3d	bump_normal;
+	t_vec3d	new_normal_bumped;
+
+	if (!sphere && !rec)
+		return ;
+	/*ft load img*/
+	ft_load_img(img);
 	rec->u = clamp(rec->u, 0.0, 1.0);
 	rec->v = clamp(rec->v, 0.0, 1.0);
 	i = rec->u * img->xpm_bump_width;
@@ -218,25 +260,18 @@ void	ft_checker_bump_image(t_hit_record *rec, t_element *sphere, t_data *img)
 		i = img->xpm_bump_width - 1;
 	if (j >= img->xpm_bump_height)
 		j = img->xpm_bump_height - 1;
-	pixel = &img->xpm_bump_address[(j + 1 % img->xpm_bump_width) * img->xpm_bump_line_length + i * (img->xpm_bump_bits_per_pixel / 8)];
-	bump_vector1 = ft_init_vec3d(pixel[1], 0, 0/*pixel[2], pixel[3]*/);
-	pixel = &img->xpm_bump_address[(j - 1) * img->xpm_bump_line_length + i * (img->xpm_bump_bits_per_pixel / 8)];
-	bump_vector1 = ft_vec3d_minus_vec3d(bump_vector1, ft_init_vec3d(pixel[1], 0, 0/*pixel[2], pixel[3]*/));
-	pixel = &img->xpm_bump_address[j * img->xpm_bump_line_length + (i + 1) * (img->xpm_bump_bits_per_pixel / 8)];
-	bump_vector2 = ft_init_vec3d(/*pixel[1]*/ 0, pixel[2], 0/* pixel[3]*/);
-	pixel = &img->xpm_bump_address[j * img->xpm_bump_line_length + (i - 1) * (img->xpm_bump_bits_per_pixel / 8)];
-	bump_vector2 = ft_vec3d_minus_vec3d(bump_vector1, ft_init_vec3d(/*pixel[1]*/0, pixel[2], 0/*pixel[3]*/));
+	ft_finite_difference(rec, img, &bump_vector1, &bump_vector2);
 	bump_normal = ft_vec3d_pro_vec3d(ft_vec3d_cross(bump_vector1, bump_vector2), rec->normal);
 	new_normal_bumped = ft_vec3d_plus_vec3d(bump_normal, rec->normal);
 //	new_normal_bumped = bump_normal;
-	if (ft_vec3d_squared_len(new_normal_bumped) != 0.0)
+	if (ft_vec3d_squared_len(new_normal_bumped) != 1.0)
 		new_normal_bumped = ft_vec3d_unit_lenght(new_normal_bumped);
 	rec->normal = new_normal_bumped;
 	pixel = &img->xpm_address[j * img->xpm_line_length + i * (img->xpm_bits_per_pixel / 8)];
 	rec->colour.alpha = pixel[0];
-	rec->colour.red = pixel[1];
-	rec->colour.green = pixel[2];
-	rec->colour.blue = pixel[3];
+//	rec->colour.red = pixel[1];
+//	rec->colour.green = pixel[2];
+//	rec->colour.blue = pixel[3];
 }
 /*
 p' = p + (f(u,v)*N) / ||N||
