@@ -29,15 +29,6 @@ void	ft_sphere_uv(t_hit_record *rec, t_element *sphere)
  */
 void	ft_cylinder_uv(t_hit_record *rec, t_element *cylinder)
 {
-//	t_vec3d	p;
-//	double	phi;
-	//double	zmin;
-	//double	zmax;
-
-//	p = ft_vec3d_unit_lenght(rec->normal);
-//	phi = atan2(p.y, p.x);
-//	if (phi < 0)
-//		phi += 2 * M_PI;
 	rec->u = 0.5 + atan2(rec->normal.x / cylinder->radius, rec->normal.z / cylinder->radius) / (2 * M_PI);
 	rec->v = ft_vec3d_len(ft_vec3d_minus_vec3d(cylinder->coords, rec->h)) / cylinder->height;
 }
@@ -84,8 +75,7 @@ v = j / (Ny - 1);
 void	ft_checkerboard_v2(t_hit_record *rec, t_element *element, t_data *img)
 {
 
-	if ((fmod(rec->v, 0.05) < 0.025 && fmod(rec->u, 0.05) < 0.025) || ((!(fmod(rec->v, 0.05) < 0.025) && !(fmod(rec->u, 0.05) < 0.025))))
-//	if ((fmod(rec->u, 0.05) < 0.025 /*&& fmod(rec->u, 0.05) < 0.025) || ((!(fmod(rec->v, 0.05) < 0.025) && !(fmod(rec->u, 0.05) < 0.025)))*/))
+	if (((fmod(rec->v, 0.05) < 0.025) == (fmod(rec->u, 0.05) < 0.025)))
 		ft_bzero(&rec->colour, sizeof(rec->colour));
 	else
 	{
@@ -211,7 +201,6 @@ void	ft_checker_bump_image(t_hit_record *rec, t_element *sphere, t_data *img)
 {
 	int		i;
 	int		j;
-	char	*pixel;
 	t_vec3d	bu;
 	t_vec3d	bv;
 	t_vec3d	bump_normal;

@@ -429,8 +429,8 @@ void			ft_checker_texture_image(t_hit_record *rec, t_element *sphere, t_data *im
 double			ft_perlin_noise(t_hit_record *rec, t_data *img);
 void			ft_perlin_init(t_data *img);
 void			ft_checkerboard(t_hit_record *rec, t_element *element, t_data *img);
-void			ft_cone_uv(t_hit_record *rec, t_element *cone);
 void			ft_cylinder_uv(t_hit_record *rec, t_element *cylinder);
+void			ft_plane_uv(t_hit_record *rec, t_element *plane);
 void			ft_checkerboard_v2(t_hit_record *rec, t_element *element,
 					t_data *img);
 void			ft_checker_bump_image(t_hit_record *rec, t_element *sphere,

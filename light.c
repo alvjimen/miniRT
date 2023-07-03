@@ -83,49 +83,6 @@ double	ft_shadow_ray(t_hit_record *rec, t_data *img, t_element *light)
 	img->camera.t_min = bk_tmin;
 	return (result);
 }
-/*
-t_vec3d	ft_diffuse_light(t_hit_record *rec, t_ray *ray, t_data *img,
-		t_element *light)
-{
-//	t_vec3d		v;
-	t_vec3d		r;
-	double		n_l;
-	double		i_r2;
-	double		result;
-
-//	v = -ray->unit_direction;
-	result = 0;
-	if (!ft_shadow_ray(rec, img, light))
-		return (ft_vec3d_pro_double(ft_colour_to_vec3d(rec->colour), result));
-	r = ft_vec3d_minus_vec3d(light->coords, rec->p);
-	i_r2 = light->light_ratio / ft_vec3d_squared_len(r);
-	n_l = ft_vec3d_dot(rec->normal, ft_vec3d_unit_lenght(r));
-	result += 0.4 * i_r2 * ft_max(0, n_l);
-	if (ray)
-		return (ft_vec3d_pro_double(ft_colour_to_vec3d(rec->colour), result));
-	return (ft_vec3d_pro_double(ft_colour_to_vec3d(rec->colour), result));
-}
-
-t_vec3d	ft_specular_light(t_hit_record *rec, t_ray *ray, t_data *img,
-		t_element *light)
-{
-	double		result;
-	t_vec3d		h;
-	t_vec3d		r;
-	double		i_r2;
-
-	result = 0;
-	if (!ft_shadow_ray(rec, img, light))
-		return (ft_vec3d_pro_double(ft_colour_to_vec3d(light->colour), result));
-	r = ft_vec3d_minus_vec3d(light->coords, rec->p);
-	i_r2 = light->light_ratio / ft_vec3d_squared_len(r);
-	h  = ft_vec3d_unit_lenght(ft_vec3d_plus_vec3d(ft_vec3d_negative(
-					ray->direction), r));
-	result = 0.5 * i_r2 * pow(ft_max(0, ft_vec3d_dot(rec->normal,
-					h)), 64);
-	return (ft_vec3d_pro_double(ft_colour_to_vec3d(light->colour), result));
-}
-*/
 
 t_vec3d	ft_ambient_light(t_hit_record *rec, t_data *img)
 {
