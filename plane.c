@@ -32,6 +32,8 @@ void	ft_plane_uv(t_hit_record *rec, t_element *plane)
 		u = max_ab;
 	rec->v = ft_vec3d_dot(ft_vec3d_cross(rec->normal, u), rec->p);
 	rec->u = ft_vec3d_dot(u, rec->p);
+	rec->v = ft_dabs(rec->v);
+	rec->u = ft_dabs(rec->u);
 	if (plane)
 		return ;
 }
