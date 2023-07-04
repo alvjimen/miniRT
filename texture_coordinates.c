@@ -202,7 +202,20 @@ void	ft_finite_difference(t_hit_record *rec, t_data *img, t_vec3d *bu, t_vec3d *
 	*bv = ft_vec3d_unit_lenght(ft_vec3d_minus_vec3d(tmp, *bv));
 }
 */
-void	ft_checker_bump_image(t_hit_record *rec, t_element *sphere, t_data *img)
+void	ft_texture(t_data *img)
+{
+	if (img->textured == CHECKER)
+		img->ft_texture = ft_checkerboard_v2;
+	if (img->textured == IMG)
+		img->ft_texture = ft_checker_texture_image;
+	if (img->textured == BUMP)
+		img->ft_texture = ft_checker_bump;
+	if (img->textured == BUMP_IMG)
+		img->ft_texture = ft_checker_bump_image;
+}
+//https://stackoverflow.com/questions/41015574/raytracing-normal-mapping
+void	ft_checker_bump(t_hit_record *rec, t_element *sphere,
+		t_data *img)
 {
 	int				i;
 	int				j;
@@ -213,23 +226,61 @@ void	ft_checker_bump_image(t_hit_record *rec, t_element *sphere, t_data *img)
 	unsigned char	*pixel;
 
 	ft_load_img(img);
-	t = ft_vec3d_cross(rec->normal, ft_init_vec3d(0, 1, 0));
-	if (!ft_vec3d_squared_len(t))
-		t = ft_vec3d_cross(rec->normal, ft_init_vec3d(0, 0, 1));
-	t = ft_vec3d_unit_lenght(t);
-	b = ft_vec3d_unit_lenght(ft_vec3d_cross(rec->normal, t));
 	i = rec->u * img->xpm_bump_width;
 	j = rec->v * img->xpm_bump_height;
 	if (i >= img->xpm_bump_width)
 		i = img->xpm_bump_width - 1;
 	if (j >= img->xpm_bump_height)
 		j = img->xpm_bump_height - 1;
-	pixel = ft_bump_pixel(i, j, img);
+	t = ft_vec3d_cross(rec->normal, ft_init_vec3d(0, 1, 0));
+	if (!ft_vec3d_squared_len(t))
+		t = ft_vec3d_cross(rec->normal, ft_init_vec3d(0, 0, 1));
+	t = ft_vec3d_unit_lenght(t);
+	b = ft_vec3d_unit_lenght(ft_vec3d_cross(rec->normal, t));
+		pixel = ft_bump_pixel(i, j, img);
 	map = ft_init_vec3d(pixel[0], pixel[1], pixel[2]);
-	map = ft_vec3d_minus_vec3d(ft_vec3d_pro_double(ft_vec3d_div_double(map,
+	map = ft_vec3d_minus_vec3d(
+			ft_vec3d_pro_double(ft_vec3d_div_double(map,
 					255), 2), ft_init_vec3d(1, 1, 1));
 	tbn = ft_init_m3x3(t, b, rec->normal);
-	rec->normal = ft_vec3d_unit_lenght(ft_vec3d_pro_matrix(map, tbn));
+	rec->normal = ft_vec3d_unit_lenght(
+			ft_vec3d_pro_matrix(map, tbn));
+//	ft_checker_texture_image(rec, sphere, img);
+	if (sphere)
+		return ;
+}
+
+void	ft_checker_bump_image(t_hit_record *rec, t_element *sphere,
+		t_data *img)
+{
+	int				i;
+	int				j;
+	t_vec3d			t;
+	t_vec3d			b;
+	t_vec3d			map;
+	t_m3x3			tbn;
+	unsigned char	*pixel;
+
+	ft_load_img(img);
+	i = rec->u * img->xpm_bump_width;
+	j = rec->v * img->xpm_bump_height;
+	if (i >= img->xpm_bump_width)
+		i = img->xpm_bump_width - 1;
+	if (j >= img->xpm_bump_height)
+		j = img->xpm_bump_height - 1;
+	t = ft_vec3d_cross(rec->normal, ft_init_vec3d(0, 1, 0));
+	if (!ft_vec3d_squared_len(t))
+		t = ft_vec3d_cross(rec->normal, ft_init_vec3d(0, 0, 1));
+	t = ft_vec3d_unit_lenght(t);
+	b = ft_vec3d_unit_lenght(ft_vec3d_cross(rec->normal, t));
+		pixel = ft_bump_pixel(i, j, img);
+	map = ft_init_vec3d(pixel[0], pixel[1], pixel[2]);
+	map = ft_vec3d_minus_vec3d(
+			ft_vec3d_pro_double(ft_vec3d_div_double(map,
+					255), 2), ft_init_vec3d(1, 1, 1));
+	tbn = ft_init_m3x3(t, b, rec->normal);
+	rec->normal = ft_vec3d_unit_lenght(
+			ft_vec3d_pro_matrix(map, tbn));
 	ft_checker_texture_image(rec, sphere, img);
 	if (sphere)
 		return ;

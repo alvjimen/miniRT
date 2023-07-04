@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:49:59 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/07/04 15:39:38 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/07/04 17:48:50 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINIRT_H
@@ -54,6 +54,7 @@
 #  define J 38
 #  define K 40
 #  define L_CLICK 1
+#  define SHIFT 257
 # else
 #  define ESC 65307
 /* REDRAW */
@@ -99,6 +100,7 @@
 #  define K 107
 #  define O 111
 #  define U 117
+#  define SHIFT 257
 # endif
 /*WIN SIZE*/
 # define ASPECT_RATIO 1.7777777777777777 // 16.0 / 9.0
@@ -116,6 +118,10 @@
 # define AMBIANCE 1
 # define DIFFUSE 2
 # define SPECULAR 4
+# define CHECKER 1
+# define IMG 2
+# define BUMP 3
+# define BUMP_IMG 4
 
 typedef enum e_type
 {
@@ -219,7 +225,8 @@ typedef struct s_element
 	int			(*ft_hit)(t_ray *, t_camera *, t_hit_record *,
 			struct s_element *);
 	int			textured;
-	void		(*ft_texture)(t_hit_record *, struct s_element *, t_data *);
+	void		(*ft_texture)(t_hit_record *, struct s_element *,
+			t_data *);
 }	t_element;
 /*Horizontalfield of view in degrees 0-180*/
 
@@ -271,12 +278,14 @@ typedef struct s_data
 	int			xpm_bump_bits_per_pixel;
 	int			xpm_bump_line_length;
 	int			xpm_bump_endian;
-
+	int			textured;
+	void		(*ft_texture)(t_hit_record *, struct s_element *,
+			t_data *);
 }	t_data;
 
 /* normalize.c */
 double			normalize_coord(double coord, double max_coord,
-					double min_coord);
+		double min_coord);
 double			unnormalize_coord(double n_coord, double max_coord,
 					double min_coord);
 /* hooks.c */
@@ -435,6 +444,9 @@ void			ft_checkerboard_v2(t_hit_record *rec, t_element *element,
 					t_data *img);
 void			ft_checker_bump_image(t_hit_record *rec, t_element *sphere,
 					t_data *img);
+void			ft_checker_bump(t_hit_record *rec, t_element *sphere,
+					t_data *img);
+void	ft_texture(t_data *img);
 /* matrix.c */
 t_m3x3			ft_init_m3x3(t_vec3d v1, t_vec3d v2, t_vec3d v3);
 #endif

@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 14:17:03 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/22 19:10:31 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/07/04 17:01:45 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -35,7 +35,8 @@ int	ft_hittable(t_ray *ray, t_data *img, t_hit_record *rec)
 		world = world->next;
 		if (!element)
 			continue ;
-		if (element->ft_hit && element->ft_hit(ray, &img->camera, &tmp_rec, element))
+		if (element->hittable && element->ft_hit(ray, &img->camera, &tmp_rec,
+				element))
 		{
 			hit_anything = 1;
 			img->camera.t_max = tmp_rec.t;

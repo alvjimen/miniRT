@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 16:20:39 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/30 18:06:28 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/07/04 16:58:04 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -38,31 +38,26 @@ static double	ft_check_discriminant(double abc[3], t_camera *camera,
 	double	discriminant;
 	double	sqrtd;
 	double	t;
-	double	t_v2;
-					/* b^2 - 4ac*/
+
 	discriminant = abc[1] * abc[1] - 4 * abc[0] * abc[2];
 	if (discriminant < 0)
-		return (NAN);/*		 v^ · h^ != 1*/
+		return (NAN);
 	if (discriminant == 0 && ft_vec3d_dot(ft_vec3d_unit_lenght(ray->direction),
 			h) != 1)
-		/* -b / 2a */
 		return (-abc[1] / (2 * abc[0]));
 	sqrtd = sqrt(discriminant);
-	/*(-b - sqrtd) / 2a*/
 	t = (-abc[1] - sqrtd) / (2 * abc[0]);
-	/*this is for take the closest t*/
 	if (t < camera->t_min || camera->t_max < t)
 	{
-		/*(-b + sqrtd) / 2a*/
 		t = (-abc[1] + sqrtd) / (2 * abc[0]);
 		if (t < camera->t_min || camera->t_max < t)
 			return (NAN);
 	}
 	else
 	{
-		t_v2 = (-abc[1] + sqrtd) / (2 * abc[0]);
-		if (t_v2 >= camera->t_min && camera->t_max >= t_v2 && t > t_v2)
-			return (t_v2);
+		t = (-abc[1] + sqrtd) / (2 * abc[0]);
+		if (t < camera->t_min || camera->t_max < t)
+			return (NAN);
 	}
 	return (t);
 }

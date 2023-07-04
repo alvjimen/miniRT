@@ -58,10 +58,10 @@ SRC					=	main.c\
 						rotations.c\
 						light.c\
 						texture_coordinates.c\
+						matrix.c\
 						#diffuse_materials.c\
 						perspective.c\
 						normalize.c\
-						matrix.c\
 						projection.c\
 
 OBJ		=	$(SRC:.c=.o)

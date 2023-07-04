@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:56:57 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/07/04 16:19:50 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/07/04 17:51:34 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -54,20 +54,23 @@ int	key_hook(int keycode, t_data *img)
 			else if (img->element->type == CONE)
 				printf("CONE\n");
 			ft_print_vector("point", img->element->coords);
-			ft_print_vector("orientation vector", img->element->orientation_vector);
+			ft_print_vector("orientation vector",
+				img->element->orientation_vector);
 			printf("diameter: %f\nheight: %f\n",
-					img->element->diameter, img->element->height);
+				img->element->diameter, img->element->height);
 		}
 		ft_print_vector("vector", img->vector);
 		printf("angle in radians: %f\nangle in degree: %f\n",
-				img->angle, ft_radians_to_degree(img->angle));
+			img->angle, ft_radians_to_degree(img->angle));
 	}
 	/* Modify lookfrom */
 	else if (keycode == C)
-		img->camera.lookfrom= ft_vec3d_plus_vec3d(img->camera.lookfrom, img->vector);
+		img->camera.lookfrom = ft_vec3d_plus_vec3d(img->camera.lookfrom,
+				img->vector);
 	/* Modify lookat */
 	else if (keycode == L)
-		img->camera.lookat = ft_vec3d_plus_vec3d(img->camera.lookat, img->vector);
+		img->camera.lookat = ft_vec3d_plus_vec3d(img->camera.lookat,
+				img->vector);
 	/*change the pointer to f from antialiasing
 	 * to not antialiasing and reverse */
 	else if (keycode == N1)
@@ -114,8 +117,8 @@ int	key_hook(int keycode, t_data *img)
 	{
 		if (img->element)
 		{
-			img->element->orientation_vector =
-				ft_rotate_x(img->element->orientation_vector, img->angle);
+			img->element->orientation_vector = ft_rotate_x(
+					img->element->orientation_vector, img->angle);
 		}
 	}
 	/* move the point of reference */
@@ -143,19 +146,20 @@ int	key_hook(int keycode, t_data *img)
 		ft_img_color(img);
 	}
 	/* adding texture */
+	else if (keycode == SHIFT)
+	{
+		img->textured = (img->textured + 1) % (BUMP_IMG + 1);
+		ft_texture(img);
+	}
 	else if (keycode == J)
 	{
 		if (img->element)
 		{
-			if (img->element->textured)
+			if (!img->textured)
 				img->element->textured = 0;
 			else
 				img->element->textured = 1;
-			img->element->ft_texture = ft_checker_texture_image;
-		//	img->element->ft_texture = ft_checker_bump_image;
-			//img->element->ft_texture = ft_checkerboard;
-			//img->element->ft_texture = ft_checker_texture;
-	//-		img->element->ft_texture = ft_checkerboard_v2;
+			img->element->ft_texture = img->ft_texture;
 		}
 
 	}
