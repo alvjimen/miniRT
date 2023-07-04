@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 13:39:30 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/05/30 18:53:36 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/07/04 15:44:28 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -14,6 +14,15 @@
 /*i = input data*/
 /*m = matrix with i is multiplied*/
 /*o = output data*/
+t_m3x3	ft_init_m3x3(t_vec3d v1, t_vec3d v2, t_vec3d v3)
+{
+	t_m3x3	matrix;
+
+	matrix.r[0] = v1;
+	matrix.r[1] = v2;
+	matrix.r[2] = v3;
+	return (matrix);
+}
 /*
 void	multiplymatrixvector(t_vec3d &i, t_vec3d &o, t_m4x4 &m)
 {

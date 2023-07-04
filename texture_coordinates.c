@@ -87,6 +87,7 @@ void	ft_checkerboard_v2(t_hit_record *rec, t_element *element, t_data *img)
 		return ;
 }
 
+/*
 void	ft_checkerboard(t_hit_record *rec, t_element *element, t_data *img)
 {
 	t_vec3d	p;
@@ -101,6 +102,7 @@ void	ft_checkerboard(t_hit_record *rec, t_element *element, t_data *img)
 	if (element || img)
 		return ;
 }
+*/
 
 void	ft_load_img(t_data *img)
 {
@@ -121,8 +123,9 @@ void	ft_load_img(t_data *img)
 				&img->xpm_bump_width, &img->xpm_bump_height);
 		if (!img->xpm_bump)
 			exit (1);
-		img->xpm_bump_address = mlx_get_data_addr(img->xpm_bump, &img->xpm_bump_bits_per_pixel, 
-				&img->xpm_bump_line_length, &img->xpm_bump_endian);
+		img->xpm_bump_address = mlx_get_data_addr(img->xpm_bump,
+				&img->xpm_bump_bits_per_pixel, &img->xpm_bump_line_length,
+				&img->xpm_bump_endian);
 		if (!img->xpm_bump_address)
 			exit (1);
 	}
@@ -157,7 +160,7 @@ unsigned char	*ft_bump_pixel(int x, int y, t_data *img)
 	return ((void *)&img->xpm_bump_address[y * img->xpm_bump_line_length +
 			x * (img->xpm_bump_bits_per_pixel / 8)]);
 }
-
+/*
 void ft_map_value(unsigned char *pixel, t_vec3d *ptr, int coord)
 {
 	if (!coord)
@@ -165,7 +168,9 @@ void ft_map_value(unsigned char *pixel, t_vec3d *ptr, int coord)
 	else 
 		*ptr = ft_init_vec3d(0, pixel[1], 0);
 }
+*/
 
+/*
 void	ft_finite_difference(t_hit_record *rec, t_data *img, t_vec3d *bu, t_vec3d *bv)
 {
 	unsigned char	*pixel;
@@ -181,7 +186,7 @@ void	ft_finite_difference(t_hit_record *rec, t_data *img, t_vec3d *bu, t_vec3d *
 		j = img->xpm_bump_height - 1;
 	pixel = ft_bump_pixel((i + 1) % img->xpm_bump_width, j, img);
 	ft_map_value(pixel, bu, 0);
-	if (j - 1 < 0)
+	if (i - 1 < 0)
 		pixel = ft_bump_pixel(img->xpm_bump_width - 1, j, img);
 	else
 		pixel = ft_bump_pixel(i - 1, j, img);
@@ -190,13 +195,47 @@ void	ft_finite_difference(t_hit_record *rec, t_data *img, t_vec3d *bu, t_vec3d *
 	pixel = ft_bump_pixel(i, (j + 1) % img->xpm_bump_height, img);
 	ft_map_value(pixel, bv, 1);
 	if (j - 1 < 0)
-		pixel = ft_bump_pixel(img->xpm_bump_height - 1, j, img);
+		pixel = ft_bump_pixel(i, img->xpm_bump_height - 1, img);
 	else
-		pixel = ft_bump_pixel(i - 1, j, img);
+		pixel = ft_bump_pixel(i, j - 1, img);
 	ft_map_value(pixel, &tmp, 1);
 	*bv = ft_vec3d_unit_lenght(ft_vec3d_minus_vec3d(tmp, *bv));
 }
+*/
+void	ft_checker_bump_image(t_hit_record *rec, t_element *sphere, t_data *img)
+{
+	int				i;
+	int				j;
+	t_vec3d			t;
+	t_vec3d			b;
+	t_vec3d			map;
+	t_m3x3			tbn;
+	unsigned char	*pixel;
 
+	ft_load_img(img);
+	t = ft_vec3d_cross(rec->normal, ft_init_vec3d(0, 1, 0));
+	if (!ft_vec3d_squared_len(t))
+		t = ft_vec3d_cross(rec->normal, ft_init_vec3d(0, 0, 1));
+	t = ft_vec3d_unit_lenght(t);
+	b = ft_vec3d_unit_lenght(ft_vec3d_cross(rec->normal, t));
+	i = rec->u * img->xpm_bump_width;
+	j = rec->v * img->xpm_bump_height;
+	if (i >= img->xpm_bump_width)
+		i = img->xpm_bump_width - 1;
+	if (j >= img->xpm_bump_height)
+		j = img->xpm_bump_height - 1;
+	pixel = ft_bump_pixel(i, j, img);
+	map = ft_init_vec3d(pixel[0], pixel[1], pixel[2]);
+	map = ft_vec3d_minus_vec3d(ft_vec3d_pro_double(ft_vec3d_div_double(map,
+					255), 2), ft_init_vec3d(1, 1, 1));
+	tbn = ft_init_m3x3(t, b, rec->normal);
+	rec->normal = ft_vec3d_unit_lenght(ft_vec3d_pro_matrix(map, tbn));
+	ft_checker_texture_image(rec, sphere, img);
+	if (sphere)
+		return ;
+}
+
+/*
 void	ft_checker_bump_image(t_hit_record *rec, t_element *sphere, t_data *img)
 {
 	int		i;
@@ -218,9 +257,9 @@ void	ft_checker_bump_image(t_hit_record *rec, t_element *sphere, t_data *img)
 	if (j >= img->xpm_bump_height)
 		j = img->xpm_bump_height - 1;
 	ft_finite_difference(rec, img, &bu, &bv);
-	bump_normal = ft_init_vec3d(bu.x, bv.y, sqrt(1 - bu.x * bu.x - bu.y * bu.y));
-	bump_normal = ft_vec3d_div_double(ft_vec3d_plus_vec3d(bump_normal, ft_init_vec3d(1, 1, 1)), 2);
-//	bump_normal = ft_vec3d_cross(ft_vec3d_plus_vec3d(rec->normal, bu), ft_vec3d_plus_vec3d(rec->normal, bump_vector2));
+	//bump_normal = ft_init_vec3d(bu.x, bv.y, sqrt(1 - bu.x * bu.x - bu.y * bu.y));
+	//bump_normal = ft_vec3d_div_double(ft_vec3d_plus_vec3d(bump_normal, ft_init_vec3d(1, 1, 1)), 2);
+	bump_normal = ft_vec3d_cross(ft_vec3d_plus_vec3d(rec->normal, bu), ft_vec3d_plus_vec3d(rec->normal, bv));
 	new_normal_bumped = ft_vec3d_plus_vec3d(bump_normal, rec->normal);
 	//More or less the same result
 //	new_normal_bumped = bump_normal;
@@ -228,8 +267,7 @@ void	ft_checker_bump_image(t_hit_record *rec, t_element *sphere, t_data *img)
 		new_normal_bumped = ft_vec3d_unit_lenght(new_normal_bumped);
 	rec->normal = new_normal_bumped;
 	//ft_checker_bump_image(rec, sphere, img);
-}
-/*
+}*//*
 p' = p + (f(u,v)*N) / ||N||
 */
 /*

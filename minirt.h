@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:49:59 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/29 19:32:56 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/07/04 15:39:38 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINIRT_H
@@ -104,7 +104,7 @@
 # define ASPECT_RATIO 1.7777777777777777 // 16.0 / 9.0
 # define WIN_W 640.0
 # define NEAR_ZERO 1e-8;
-# define XPM_BUMP_PATH	"./earthmap_bump.xpm"
+# define XPM_BUMP_PATH	"./earthmap_normal.xpm" //"./earthmap_bump.xpm"
 # define XPM_PATH	"./earthmap.xpm"
 # include <stdio.h>
 # include <stdlib.h>
@@ -435,4 +435,6 @@ void			ft_checkerboard_v2(t_hit_record *rec, t_element *element,
 					t_data *img);
 void			ft_checker_bump_image(t_hit_record *rec, t_element *sphere,
 					t_data *img);
+/* matrix.c */
+t_m3x3			ft_init_m3x3(t_vec3d v1, t_vec3d v2, t_vec3d v3);
 #endif

@@ -6,7 +6,7 @@
 /*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 18:57:34 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/27 19:45:54 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/07/04 14:38:20 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 //https://www.cs.cornell.edu/courses/cs4620/2017sp/slides/05rt-shading.pdf
@@ -92,7 +92,7 @@ t_vec3d	ft_ambient_light(t_hit_record *rec, t_data *img)
 	colour = ft_colour_to_vec3d(img->ambient_light.colour);
 	try = ft_vec3d_pro_vec3d(colour, ft_colour_to_vec3d(rec->colour));
 	return (ft_vec3d_pro_double(try,
-				0.2 * img->ambient_light.light_ratio));
+				img->ambient_light.light_ratio));
 }
 
 t_vec3d	ft_diffuse_light_v2(t_hit_record *rec, t_ray *ray, t_data *img,
