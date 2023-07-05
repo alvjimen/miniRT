@@ -100,7 +100,7 @@
 #  define K 107
 #  define O 111
 #  define U 117
-#  define SHIFT 257
+#  define SHIFT 65505
 # endif
 /*WIN SIZE*/
 # define ASPECT_RATIO 1.7777777777777777 // 16.0 / 9.0
@@ -337,6 +337,8 @@ double			ft_vec3d_squared_len(t_vec3d o1);
 t_vec3d			ft_vec3d_unit_lenght(t_vec3d o1);
 int				ft_vec3d_eq(t_vec3d v1, t_vec3d v2);
 t_vec3d			ft_vec3d_negative(t_vec3d ptr);
+t_vec3d			ft_vec3d_xz(t_vec3d v1);
+t_vec3d			ft_vec3d_yz(t_vec3d v1);
 /* vec3d_math_vec3d.c */
 t_vec3d			ft_vec3d_plus_vec3d(t_vec3d o1, t_vec3d o2);
 t_vec3d			ft_vec3d_minus_vec3d(t_vec3d o1, t_vec3d o2);
@@ -370,8 +372,8 @@ int				ft_hit_sphere(t_ray *ray, t_camera *camera,
 /* hit.c */
 void			ft_hit_face(t_ray *ray, t_hit_record *rec);
 int				ft_hittable(t_ray *ray, t_data *img, t_hit_record *rec);
-t_element		*ft_hittable_element(t_ray *ray, t_camera *camera,
-					t_hit_record *rec, t_list *world);
+t_element		*ft_hittable_element(t_ray *ray, t_data *img,
+					t_hit_record *rec);
 /* world.c */
 int				ft_world(t_data *img);
 /* random_number.c */
@@ -449,4 +451,5 @@ void			ft_checker_bump(t_hit_record *rec, t_element *sphere,
 void	ft_texture(t_data *img);
 /* matrix.c */
 t_m3x3			ft_init_m3x3(t_vec3d v1, t_vec3d v2, t_vec3d v3);
+t_m3x3			ft_tbn(t_vec3d normal);
 #endif

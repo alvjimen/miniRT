@@ -13,6 +13,24 @@
 
 void	ft_plane_uv(t_hit_record *rec, t_element *plane)
 {
+	t_m3x3	tbn;
+	if (ft_vec3d_eq(rec->normal, ft_init_vec3d(0, 0, 1)))
+	{
+		rec->u = rec->p.x;
+		rec->v = rec->p.y;
+	}
+	else
+	{
+		rec->u = ft_vec3d_dot(ft_vec3d_xz(rec->p), ft_vec3d_xz(plane->orientation_vector));
+		rec->v = ft_vec3d_dot(ft_vec3d_yz(rec->p), ft_vec3d_yz(plane->orientation_vector));
+	}
+	tbn = ft_tbn(rec->normal);
+	rec->u = ft_vec3d_dot(ft_vec3d_pro_matrix(rec->p, tbn), ft_init_vec3d(1, 0 ,0));
+	rec->v = ft_vec3d_dot(ft_vec3d_pro_matrix(rec->p, tbn), ft_init_vec3d(0, 1 ,0));
+}
+/*
+void	ft_plane_uv(t_hit_record *rec, t_element *plane)
+{
 	t_vec3d	a;
 	t_vec3d	b;
 	t_vec3d	max_ab;
@@ -37,6 +55,7 @@ void	ft_plane_uv(t_hit_record *rec, t_element *plane)
 	if (plane)
 		return ;
 }
+*/
 /*
 void	ft_plane_uv(t_hit_record *rec, t_element *plane)
 {

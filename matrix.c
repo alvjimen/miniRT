@@ -23,6 +23,19 @@ t_m3x3	ft_init_m3x3(t_vec3d v1, t_vec3d v2, t_vec3d v3)
 	matrix.r[2] = v3;
 	return (matrix);
 }
+
+t_m3x3	ft_tbn(t_vec3d normal)
+{
+	t_vec3d	t;
+	t_vec3d	b;
+
+	t = ft_vec3d_cross(normal, ft_init_vec3d(0, 1, 0));
+	if (!ft_vec3d_squared_len(t))
+		t = ft_vec3d_cross(normal, ft_init_vec3d(0, 0, 1));
+	t = ft_vec3d_unit_lenght(t);
+	b = ft_vec3d_unit_lenght(ft_vec3d_cross(normal, t));
+	return (ft_init_m3x3(t, b, normal));
+}
 /*
 void	multiplymatrixvector(t_vec3d &i, t_vec3d &o, t_m4x4 &m)
 {

@@ -188,9 +188,9 @@ int	hook_mouse(int button, int x, int y, void *param)
 		vector = ft_ray_direction(img, x, y, 0);
 		ray = ft_init_ray(img->camera.origin, vector);
 		debug();
-		img->element = ft_hittable_element(&ray, &img->camera,
-				&rec, img->world);
-		ft_print_vector("color", ft_ray_color(&ray, img));
+		img->element = ft_hittable_element(&ray, img, &rec);
+		printf("rec->u: %f\trec->v: %f\n", rec.u, rec.v);
+		ft_print_vector("color", rec.normal);
 	}
 	return (0);
 }

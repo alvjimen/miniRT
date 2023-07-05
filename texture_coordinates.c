@@ -214,6 +214,7 @@ void	ft_texture(t_data *img)
 		img->ft_texture = ft_checker_bump_image;
 }
 //https://stackoverflow.com/questions/41015574/raytracing-normal-mapping
+
 void	ft_checker_bump(t_hit_record *rec, t_element *sphere,
 		t_data *img)
 {
@@ -237,7 +238,7 @@ void	ft_checker_bump(t_hit_record *rec, t_element *sphere,
 		t = ft_vec3d_cross(rec->normal, ft_init_vec3d(0, 0, 1));
 	t = ft_vec3d_unit_lenght(t);
 	b = ft_vec3d_unit_lenght(ft_vec3d_cross(rec->normal, t));
-		pixel = ft_bump_pixel(i, j, img);
+	pixel = ft_bump_pixel(i, j, img);
 	map = ft_init_vec3d(pixel[0], pixel[1], pixel[2]);
 	map = ft_vec3d_minus_vec3d(
 			ft_vec3d_pro_double(ft_vec3d_div_double(map,
