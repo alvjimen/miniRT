@@ -75,7 +75,7 @@ v = j / (Ny - 1);
 void	ft_checkerboard_v2(t_hit_record *rec, t_element *element, t_data *img)
 {
 
-	if (((fmod(rec->v, 0.05) < 0.025) == (fmod(rec->u, 0.05) < 0.025)))
+	if (((fmod(ft_dabs(rec->v), 0.05) < 0.025) == (fmod(ft_dabs(rec->u), 0.05) < 0.025)))
 		ft_bzero(&rec->colour, sizeof(rec->colour));
 	else
 	{
