@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:49:59 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/07/04 17:48:50 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/07/06 13:15:29 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINIRT_H
@@ -448,7 +448,8 @@ void			ft_checker_bump_image(t_hit_record *rec, t_element *sphere,
 					t_data *img);
 void			ft_checker_bump(t_hit_record *rec, t_element *sphere,
 					t_data *img);
-void	ft_texture(t_data *img);
+void			ft_texture(t_data *img);
+void			ft_load_img(t_data *img);
 /* matrix.c */
 t_m3x3			ft_init_m3x3(t_vec3d v1, t_vec3d v2, t_vec3d v3);
 t_m3x3			ft_tbn(t_vec3d normal);
