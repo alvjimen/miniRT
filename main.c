@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 13:09:45 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/07/04 17:49:03 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/07/06 13:18:17 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -17,7 +17,9 @@ int	main(int argc, char	*argv[])
 
 	if (argc < 2 && !*argv)
 		return (1);
+	ft_bzero(&img, sizeof(img));
 	ft_img(&img, WIN_W, ASPECT_RATIO);
+	ft_load_img(&img);
 	if (ft_parse_file(argv[1], &img))
 		exit (-1);
 	img.value_color = AMBIANCE | DIFFUSE | SPECULAR;

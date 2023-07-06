@@ -76,6 +76,7 @@ void	ft_checkerboard_v2(t_hit_record *rec, t_element *element, t_data *img)
 {
 
 	if (((fmod(ft_dabs(rec->v), 0.05) < 0.025) == (fmod(ft_dabs(rec->u), 0.05) < 0.025)))
+//	if ((rec->v + rec-> u) > 1)
 		ft_bzero(&rec->colour, sizeof(rec->colour));
 	else
 	{
@@ -160,48 +161,7 @@ unsigned char	*ft_bump_pixel(int x, int y, t_data *img)
 	return ((void *)&img->xpm_bump_address[y * img->xpm_bump_line_length +
 			x * (img->xpm_bump_bits_per_pixel / 8)]);
 }
-/*
-void ft_map_value(unsigned char *pixel, t_vec3d *ptr, int coord)
-{
-	if (!coord)
-		*ptr = ft_init_vec3d(pixel[1], 0, 0);
-	else 
-		*ptr = ft_init_vec3d(0, pixel[1], 0);
-}
-*/
 
-/*
-void	ft_finite_difference(t_hit_record *rec, t_data *img, t_vec3d *bu, t_vec3d *bv)
-{
-	unsigned char	*pixel;
-	int				i;
-	int				j;
-	t_vec3d			tmp;
-
-	i = rec->u * img->xpm_bump_width;
-	j = rec->v * img->xpm_bump_height;
-	if (i >= img->xpm_bump_width)
-		i = img->xpm_bump_width - 1;
-	if (j >= img->xpm_bump_height)
-		j = img->xpm_bump_height - 1;
-	pixel = ft_bump_pixel((i + 1) % img->xpm_bump_width, j, img);
-	ft_map_value(pixel, bu, 0);
-	if (i - 1 < 0)
-		pixel = ft_bump_pixel(img->xpm_bump_width - 1, j, img);
-	else
-		pixel = ft_bump_pixel(i - 1, j, img);
-	ft_map_value(pixel, &tmp, 0);
-	*bu = ft_vec3d_unit_lenght(ft_vec3d_minus_vec3d(tmp, *bu));
-	pixel = ft_bump_pixel(i, (j + 1) % img->xpm_bump_height, img);
-	ft_map_value(pixel, bv, 1);
-	if (j - 1 < 0)
-		pixel = ft_bump_pixel(i, img->xpm_bump_height - 1, img);
-	else
-		pixel = ft_bump_pixel(i, j - 1, img);
-	ft_map_value(pixel, &tmp, 1);
-	*bv = ft_vec3d_unit_lenght(ft_vec3d_minus_vec3d(tmp, *bv));
-}
-*/
 void	ft_texture(t_data *img)
 {
 	if (img->textured == CHECKER)
@@ -227,6 +187,8 @@ void	ft_checker_bump(t_hit_record *rec, t_element *sphere,
 	unsigned char	*pixel;
 
 	ft_load_img(img);
+	rec->u = clamp(rec->u, 0.0, 1.0);
+	rec->v = clamp(rec->v, 0.0, 1.0);
 	i = rec->u * img->xpm_bump_width;
 	j = rec->v * img->xpm_bump_height;
 	if (i >= img->xpm_bump_width)
@@ -263,6 +225,8 @@ void	ft_checker_bump_image(t_hit_record *rec, t_element *sphere,
 	unsigned char	*pixel;
 
 	ft_load_img(img);
+	rec->u = clamp(rec->u, 0.0, 1.0);
+	rec->v = clamp(rec->v, 0.0, 1.0);
 	i = rec->u * img->xpm_bump_width;
 	j = rec->v * img->xpm_bump_height;
 	if (i >= img->xpm_bump_width)

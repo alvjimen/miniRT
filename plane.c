@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 18:33:33 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/21 08:46:45 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/07/06 14:07:56 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -27,6 +27,14 @@ void	ft_plane_uv(t_hit_record *rec, t_element *plane)
 	tbn = ft_tbn(rec->normal);
 	rec->u = ft_vec3d_dot(ft_vec3d_pro_matrix(rec->p, tbn), ft_init_vec3d(1, 0 ,0));
 	rec->v = ft_vec3d_dot(ft_vec3d_pro_matrix(rec->p, tbn), ft_init_vec3d(0, 1 ,0));
+	rec->u = fmod(rec->u, 17.777778);
+	rec->v = fmod(rec->v, 10.0);
+	if (rec->u < 0)
+		rec->u = rec->u + 17.777778;
+	if (rec->v < 0)
+		rec->v = rec->v + 10;
+	rec->u = rec->u / 17.777778;
+	rec->v = rec->v / 10;
 }
 /*
 void	ft_plane_uv(t_hit_record *rec, t_element *plane)
