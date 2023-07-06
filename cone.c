@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 16:20:39 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/07/04 16:58:04 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/07/06 18:09:58 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -120,8 +120,10 @@ int	ft_hit_cone(t_ray *ray, t_camera *camera, t_hit_record *rec,
 		rec->p = ft_ray_at(ray, rec->t);
 		/* calculating the normal */
 		/* calculating the height on the axis */
-		q = sqrt(cylinder->radius * cylinder->radius + ft_vec3d_squared_len(
+		q = sqrt(-(cylinder->radius * cylinder->radius) + ft_vec3d_squared_len(
 					ft_vec3d_minus_vec3d(cylinder->coords, rec->p)));
+		//q = sqrt(-(cylinder->radius * cylinder->radius) + ft_vec3d_squared_len(
+		//			ft_vec3d_minus_vec3d(cylinder->coords, rec->p)));
 		/* calculating the point of the axis */
 		h = ft_vec3d_plus_vec3d(cylinder->coords, ft_vec3d_pro_double(
 					ft_vec3d_unit_lenght(cylinder->orientation_vector),
