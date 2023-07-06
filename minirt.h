@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:49:59 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/07/06 13:15:29 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/07/06 16:37:23 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINIRT_H
@@ -206,6 +206,7 @@ typedef struct s_hit_record
 	double		attenuation;
 	double		brightess_light;
 	t_vec3d		h;
+	double		q;
 }	t_hit_record;
 
 typedef struct s_data	t_data;

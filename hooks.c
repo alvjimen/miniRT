@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:56:57 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/07/04 17:51:34 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/07/06 17:36:40 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -190,7 +190,7 @@ int	hook_mouse(int button, int x, int y, void *param)
 		debug();
 		img->element = ft_hittable_element(&ray, img, &rec);
 		printf("rec->u: %f\trec->v: %f\n", rec.u, rec.v);
-		ft_print_vector("color", rec.normal);
+		ft_print_vector("normal", rec.normal);
 	}
 	return (0);
 }

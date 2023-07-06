@@ -30,7 +30,8 @@ void	ft_sphere_uv(t_hit_record *rec, t_element *sphere)
 void	ft_cylinder_uv(t_hit_record *rec, t_element *cylinder)
 {
 	rec->u = 0.5 + atan2(rec->normal.x / cylinder->radius, rec->normal.z / cylinder->radius) / (2 * M_PI);
-	rec->v = ft_vec3d_len(ft_vec3d_minus_vec3d(cylinder->coords, rec->h)) / cylinder->height;
+//	rec->v = ft_vec3d_len(ft_vec3d_minus_vec3d(cylinder->coords, rec->h)) / cylinder->height;
+	rec->v = 1 - (rec->q / cylinder->height);
 }
 
 double	ft_perlin_noise(t_hit_record *rec, t_data *img)
@@ -186,7 +187,7 @@ void	ft_checker_bump(t_hit_record *rec, t_element *sphere,
 	t_m3x3			tbn;
 	unsigned char	*pixel;
 
-	ft_load_img(img);
+//	ft_load_img(img);
 	rec->u = clamp(rec->u, 0.0, 1.0);
 	rec->v = clamp(rec->v, 0.0, 1.0);
 	i = rec->u * img->xpm_bump_width;
@@ -208,7 +209,7 @@ void	ft_checker_bump(t_hit_record *rec, t_element *sphere,
 	tbn = ft_init_m3x3(t, b, rec->normal);
 	rec->normal = ft_vec3d_unit_lenght(
 			ft_vec3d_pro_matrix(map, tbn));
-//	ft_checker_texture_image(rec, sphere, img);
+	//ft_checker_texture_image(rec, sphere, img);
 	if (sphere)
 		return ;
 }
