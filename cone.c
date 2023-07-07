@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 16:20:39 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/07/06 18:09:58 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/07/07 18:11:45 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -27,13 +27,13 @@ int	ft_base_of_the_cone_v2(t_ray *ray, t_camera *camera,
 		rec->p = ft_ray_at(ray, rec->t);
 		rec->q = 0.0;
 		rec->h = cone->coords;
-		ft_cylinder_uv(rec, cone);
+//		ft_cone_uv(rec, cone);
 	}
 	else
 	{
 		ft_normal_cone(rec, cone, ray);
 	}
-//	ft_cone_uv(rec, cone);
+	//ft_cone_uv(rec, cone);
 	return (1);
 }
 
@@ -50,8 +50,8 @@ int	ft_base_of_the_cone(t_ray *ray, t_camera *camera,
 	rec->p = ft_ray_at(ray, rec->t);
 	rec->q = 0.0;
 	rec->h = cone->coords;
-	ft_cylinder_uv(rec, cone);
-//	ft_cone_uv(rec, cone);
+//	ft_cylinder_uv(rec, cone);
+	ft_cone_uv(rec, cone);
 	return (1);
 }
 
@@ -118,27 +118,31 @@ static double	ft_calculate_coefficients(t_ray *ray, t_element *cylinder,
 
 void	ft_normal_cone(t_hit_record *rec, t_element *cylinder, t_ray *ray)
 {
-	double	q;
-	double	m;
 	t_vec3d	h;
+	t_vec3d	q1;
+	t_vec3d	t;
+	t_vec3d	ph;
+	double	hipotenusa;
+	double	hipotenusa_prima;
+	double	ratio;
 
 	h = ft_vec3d_pro_double(cylinder->orientation_vector, cylinder->height);
 	rec->p = ft_ray_at(ray, rec->t);
-	/* calculating the normal */
-	m = (cylinder->radius * cylinder->radius) / ft_vec3d_squared_len(
-			h);
 	/* calculating the height on the axis */
-	q = ft_vec3d_squared_len(ft_vec3d_minus_vec3d(cylinder->coords, rec->p));
-	q = sqrt(q - ((cylinder->radius - m) * (cylinder->radius - m)));
-//	q = sqrt(-(cylinder->radius * cylinder->radius) + ft_vec3d_squared_len(
-//				ft_vec3d_minus_vec3d(cylinder->coords, rec->p)));
+	q1 = ft_vec3d_minus_vec3d(cylinder->coords, ft_init_vec3d(cylinder->radius, 0, 0));
+	t = ft_vec3d_plus_vec3d(cylinder->coords, h);
+	hipotenusa =  ft_vec3d_len(ft_vec3d_minus_vec3d(q1, t));
+	ph = ft_vec3d_minus_vec3d(t, rec->p);
+	hipotenusa_prima =  hipotenusa - ft_vec3d_len(ph);
+	ratio = hipotenusa_prima / hipotenusa;
+	rec->q = cylinder->height * ratio;
 	/* calculating the point of the axis */
-	rec->q = q;
 	h = ft_vec3d_plus_vec3d(cylinder->coords, ft_vec3d_pro_double(
 				ft_vec3d_unit_lenght(cylinder->orientation_vector),
-				q));
+				rec->q));
 	rec->h = h;
-	if (ft_vec3d_eq(rec->p, h))
+	/* calculating the normal */
+	if (ft_vec3d_eq(rec->p, ft_vec3d_plus_vec3d(cylinder->coords, h)))
 		rec->normal = cylinder->orientation_vector;
 	else
 		rec->normal = ft_vec3d_unit_lenght(ft_vec3d_minus_vec3d(rec->p, h));
