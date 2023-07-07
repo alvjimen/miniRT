@@ -11,6 +11,32 @@
 /* ************************************************************************** */
 #include "minirt.h"
 
+void	ft_normal_cone(t_hit_record *rec, t_element *cylinder, t_ray *ray);
+int	ft_base_of_the_cone_v2(t_ray *ray, t_camera *camera,
+		t_hit_record *rec, t_element *cone)
+{
+	double	t;
+
+	t = ft_hit_surface_base(ray, camera, cone, rec);
+	if (isnan(t))
+		return (0);
+	if (t > rec->t)
+	{
+		rec->t = t;
+		rec->normal = ft_vec3d_negative(cone->orientation_vector);
+		rec->p = ft_ray_at(ray, rec->t);
+		rec->q = 0.0;
+		rec->h = cone->coords;
+		ft_cylinder_uv(rec, cone);
+	}
+	else
+	{
+		ft_normal_cone(rec, cone, ray);
+	}
+//	ft_cone_uv(rec, cone);
+	return (1);
+}
+
 int	ft_base_of_the_cone(t_ray *ray, t_camera *camera,
 		t_hit_record *rec, t_element *cone)
 {
@@ -22,6 +48,8 @@ int	ft_base_of_the_cone(t_ray *ray, t_camera *camera,
 	rec->t = t;
 	rec->normal = ft_vec3d_negative(cone->orientation_vector);
 	rec->p = ft_ray_at(ray, rec->t);
+	rec->q = 0.0;
+	rec->h = cone->coords;
 	ft_cylinder_uv(rec, cone);
 //	ft_cone_uv(rec, cone);
 	return (1);
@@ -88,14 +116,44 @@ static double	ft_calculate_coefficients(t_ray *ray, t_element *cylinder,
 	return (ft_check_discriminant(abc, camera, ray, uh));
 }
 
+void	ft_normal_cone(t_hit_record *rec, t_element *cylinder, t_ray *ray)
+{
+	double	q;
+	double	m;
+	t_vec3d	h;
+
+	h = ft_vec3d_pro_double(cylinder->orientation_vector, cylinder->height);
+	rec->p = ft_ray_at(ray, rec->t);
+	/* calculating the normal */
+	m = (cylinder->radius * cylinder->radius) / ft_vec3d_squared_len(
+			h);
+	/* calculating the height on the axis */
+	q = ft_vec3d_squared_len(ft_vec3d_minus_vec3d(cylinder->coords, rec->p));
+	q = sqrt(q - ((cylinder->radius - m) * (cylinder->radius - m)));
+//	q = sqrt(-(cylinder->radius * cylinder->radius) + ft_vec3d_squared_len(
+//				ft_vec3d_minus_vec3d(cylinder->coords, rec->p)));
+	/* calculating the point of the axis */
+	rec->q = q;
+	h = ft_vec3d_plus_vec3d(cylinder->coords, ft_vec3d_pro_double(
+				ft_vec3d_unit_lenght(cylinder->orientation_vector),
+				q));
+	rec->h = h;
+	if (ft_vec3d_eq(rec->p, h))
+		rec->normal = cylinder->orientation_vector;
+	else
+		rec->normal = ft_vec3d_unit_lenght(ft_vec3d_minus_vec3d(rec->p, h));
+	ft_cone_uv(rec, cylinder);
+}
+
 int	ft_hit_cone(t_ray *ray, t_camera *camera, t_hit_record *rec,
 		t_element *cylinder)
 {
 	double	intersect;
 	double	len_h;
-	double	q;
+	//double	q;
 	t_vec3d	h;
 	double	t;
+	//double	m;
 
 	/* h = ph */
 	h = ft_vec3d_plus_vec3d(cylinder->coords, ft_vec3d_pro_double(
@@ -114,25 +172,11 @@ int	ft_hit_cone(t_ray *ray, t_camera *camera, t_hit_record *rec,
 	{
 		t = rec->t;
 		ft_base_of_the_cone(ray, camera, rec, cylinder);
-		if (t > rec->t)
+		if (!isnan(rec->t) && t > rec->t)
 			return (1);
 		rec->t = t;
-		rec->p = ft_ray_at(ray, rec->t);
-		/* calculating the normal */
-		/* calculating the height on the axis */
-		q = sqrt(-(cylinder->radius * cylinder->radius) + ft_vec3d_squared_len(
-					ft_vec3d_minus_vec3d(cylinder->coords, rec->p)));
-		//q = sqrt(-(cylinder->radius * cylinder->radius) + ft_vec3d_squared_len(
-		//			ft_vec3d_minus_vec3d(cylinder->coords, rec->p)));
-		/* calculating the point of the axis */
-		h = ft_vec3d_plus_vec3d(cylinder->coords, ft_vec3d_pro_double(
-					ft_vec3d_unit_lenght(cylinder->orientation_vector),
-					q));
-		rec->h = h;
-		rec->normal = ft_vec3d_unit_lenght(ft_vec3d_minus_vec3d(rec->p, h));
-		ft_cylinder_uv(rec, cylinder);
+		ft_normal_cone(rec, cylinder, ray);
 		return (1);
 	}
-	else
-		return (ft_base_of_the_cone(ray, camera, rec, cylinder));
+	return (ft_base_of_the_cone(ray, camera, rec, cylinder));
 }

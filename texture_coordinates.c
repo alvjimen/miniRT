@@ -34,6 +34,13 @@ void	ft_cylinder_uv(t_hit_record *rec, t_element *cylinder)
 	rec->v = 1 - (rec->q / cylinder->height);
 }
 
+void	ft_cone_uv(t_hit_record *rec, t_element *cylinder)
+{
+	rec->u = 0.5 + atan2(rec->normal.x / cylinder->radius, rec->normal.z / cylinder->radius) / (2 * M_PI);
+	rec->v = ft_vec3d_len(ft_vec3d_minus_vec3d(cylinder->coords, rec->h)) / cylinder->height;
+//	rec->v = 1 - (rec->q / cylinder->height);
+}
+
 double	ft_perlin_noise(t_hit_record *rec, t_data *img)
 {
 	int i;
