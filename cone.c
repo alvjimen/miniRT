@@ -6,12 +6,11 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 16:20:39 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/07/07 18:11:45 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/07/08 16:48:21 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
 
-void	ft_normal_cone(t_hit_record *rec, t_element *cylinder, t_ray *ray);
 int	ft_base_of_the_cone_v2(t_ray *ray, t_camera *camera,
 		t_hit_record *rec, t_element *cone)
 {

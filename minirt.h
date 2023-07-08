@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:49:59 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/07/06 16:37:23 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/07/08 16:51:32 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINIRT_H
@@ -418,9 +418,11 @@ int				ft_hit_cylinder(t_ray *ray, t_camera *camera, t_hit_record *rec,
 					t_element *cylinder);
 double			ft_hit_surface_base(t_ray *ray, t_camera *camera,
 					t_element *cylinder, t_hit_record *rec);
+void			ft_normal_cylinder(t_hit_record *rec, t_element *cylinder);
 /* cone.c */
 int				ft_hit_cone(t_ray *ray, t_camera *camera, t_hit_record *rec,
 					t_element *cylinder);
+void			ft_normal_cone(t_hit_record *rec, t_element *cylinder, t_ray *ray);
 /* light.c */
 int				ft_find_light(void *node);
 t_vec3d			ft_calculate_lights(t_hit_record *rec, t_ray *ray, t_data *img,
