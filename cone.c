@@ -140,7 +140,6 @@ void	ft_normal_cone(t_hit_record *rec, t_element *cylinder, t_ray *ray)
 		rec->normal = cylinder->orientation_vector;
 	else
 		rec->normal = ft_vec3d_unit_lenght(ft_vec3d_minus_vec3d(rec->p, h));
-	ft_cone_uv(rec, cylinder);
 }
 
 int	ft_hit_cone(t_ray *ray, t_camera *camera, t_hit_record *rec,
@@ -174,6 +173,8 @@ int	ft_hit_cone(t_ray *ray, t_camera *camera, t_hit_record *rec,
 			return (1);
 		rec->t = t;
 		ft_normal_cone(rec, cylinder, ray);
+		ft_cone_uv(rec, cylinder);
+		ft_hit_face(ray, rec);
 		return (1);
 	}
 	return (ft_base_of_the_cone(ray, camera, rec, cylinder));
