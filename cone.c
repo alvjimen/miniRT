@@ -81,12 +81,6 @@ static double	ft_check_discriminant(double abc[3], t_camera *camera,
 		if (t < camera->t_min || camera->t_max < t)
 			return (NAN);
 	}
-	else
-	{
-		t = (-abc[1] + sqrtd) / (2 * abc[0]);
-		if (t < camera->t_min || camera->t_max < t)
-			return (NAN);
-	}
 	return (t);
 }
 

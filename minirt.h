@@ -442,6 +442,7 @@ double			ft_perlin_noise(t_hit_record *rec, t_data *img);
 void			ft_perlin_init(t_data *img);
 void			ft_checkerboard(t_hit_record *rec, t_element *element, t_data *img);
 void			ft_cylinder_uv(t_hit_record *rec, t_element *cylinder);
+void			ft_cone_uv(t_hit_record *rec, t_element *cylinder);
 void			ft_plane_uv(t_hit_record *rec, t_element *plane);
 void			ft_checkerboard_v2(t_hit_record *rec, t_element *element,
 					t_data *img);
