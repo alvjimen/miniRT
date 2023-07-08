@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:49:59 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/07/08 16:51:32 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/07/08 18:48:40 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINIRT_H
@@ -237,6 +237,10 @@ typedef struct s_mouse
 	int	y;
 }	t_mouse;
 
+typedef struct s_ptr_fun_color	{
+	t_vec3d	(*f)(t_hit_record, t_ray *, t_data *);
+}	t_ptr_fun_color;
+
 typedef struct s_data
 {
 	void		*mlx;
@@ -260,7 +264,8 @@ typedef struct s_data
 	t_vec3d		vector;
 	double		modifier;
 	double		angle;
-	t_vec3d		(*ft_color)(t_hit_record *, t_ray *, t_data *);
+	//t_ptr_fun_color	ft_color;
+	t_vec3d		(*ft_color)(t_hit_record *a, t_ray *b, struct s_data *c);
 	int			value_color;
 	t_vec3d		perlin;
 	double		perlin_ranfloat[256];
@@ -281,7 +286,7 @@ typedef struct s_data
 	int			xpm_bump_endian;
 	int			textured;
 	void		(*ft_texture)(t_hit_record *, struct s_element *,
-			t_data *);
+			struct s_data *);
 }	t_data;
 
 /* normalize.c */
@@ -424,10 +429,6 @@ int				ft_hit_cone(t_ray *ray, t_camera *camera, t_hit_record *rec,
 					t_element *cylinder);
 void			ft_normal_cone(t_hit_record *rec, t_element *cylinder, t_ray *ray);
 /* light.c */
-int				ft_find_light(void *node);
-t_vec3d			ft_calculate_lights(t_hit_record *rec, t_ray *ray, t_data *img,
-					t_vec3d (*f)(t_hit_record *, t_ray *, t_data *, t_element *));
-t_vec3d			ft_specular_reflection(t_vec3d direction, t_vec3d normal);
 t_vec3d			ft_diffuse_light(t_hit_record *rec, t_ray *ray, t_data *img,
 					t_element *light);
 t_vec3d			ft_specular_light(t_hit_record *rec, t_ray *ray, t_data *img,
@@ -436,13 +437,38 @@ t_vec3d			ft_ambient_light(t_hit_record *rec, t_data *img);
 void			ft_img_color(t_data *img);
 t_vec3d			ft_color_diffuse_specular_ambiance_light(t_hit_record *rec,
 					t_ray *ray, t_data *img);
+/*light_utils.c*/
+int				ft_find_light(void *node);
+t_vec3d			ft_calculate_lights(t_hit_record *rec, t_ray *ray, t_data *img,
+					t_vec3d (*f)(t_hit_record *, t_ray *, t_data *,
+						t_element *));
+double			ft_shadow_ray(t_hit_record *rec, t_data *img, t_element *light);
+void			ft_img_color(t_data *img);
+/* Unused function */
+t_vec3d			ft_color_ambient_light(t_hit_record *rec, t_ray *ray,
+				t_data *img);
+t_vec3d			ft_specular_reflection(t_vec3d direction, t_vec3d normal);
+/* light_fun.c */
+t_vec3d			ft_color_diffuse_light(t_hit_record *rec, t_ray *ray,
+				t_data *img);
+t_vec3d			ft_color_specular_light(t_hit_record *rec, t_ray *ray,
+					t_data *img);
+t_vec3d			ft_color_ambient_diffuse_light(t_hit_record *rec, t_ray *ray,
+				t_data *img);
+t_vec3d			ft_color_specular_ambient_light(t_hit_record *rec, t_ray *ray,
+				t_data *img);
+t_vec3d			ft_color_specular_diffuse_light(t_hit_record *rec, t_ray *ray,
+				t_data *img);
 /* texture_coordinates.c  */
 void			ft_sphere_uv(t_hit_record *rec, t_element *sphere);
-void			ft_checker_texture(t_hit_record *rec, t_element *sphere, t_data *img);
-void			ft_checker_texture_image(t_hit_record *rec, t_element *sphere, t_data *img);
+void			ft_checker_texture(t_hit_record *rec, t_element *sphere,
+					t_data *img);
+void			ft_checker_texture_image(t_hit_record *rec, t_element *sphere,
+				t_data *img);
 double			ft_perlin_noise(t_hit_record *rec, t_data *img);
 void			ft_perlin_init(t_data *img);
-void			ft_checkerboard(t_hit_record *rec, t_element *element, t_data *img);
+void			ft_checkerboard(t_hit_record *rec, t_element *element,
+				t_data *img);
 void			ft_cylinder_uv(t_hit_record *rec, t_element *cylinder);
 void			ft_cone_uv(t_hit_record *rec, t_element *cylinder);
 void			ft_plane_uv(t_hit_record *rec, t_element *plane);

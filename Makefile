@@ -59,6 +59,8 @@ SRC					=	main.c\
 						light.c\
 						texture_coordinates.c\
 						matrix.c\
+						light_utils.c\
+						light_fun_ptr.c\
 						#diffuse_materials.c\
 						perspective.c\
 						normalize.c\
