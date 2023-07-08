@@ -191,6 +191,8 @@ int	hook_mouse(int button, int x, int y, void *param)
 		img->element = ft_hittable_element(&ray, img, &rec);
 		printf("rec->u: %f\trec->v: %f\n", rec.u, rec.v);
 		ft_print_vector("normal", rec.normal);
+		ft_print_vector("color", ft_ray_color(&ray, img));
+
 	}
 	return (0);
 }
