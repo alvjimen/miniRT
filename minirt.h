@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:49:59 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/07/08 18:48:40 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/07/09 18:56:34 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINIRT_H
@@ -122,6 +122,7 @@
 # define IMG 2
 # define BUMP 3
 # define BUMP_IMG 4
+# define TMAX INFINITY
 
 typedef enum e_type
 {
