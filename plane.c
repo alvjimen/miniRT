@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 18:33:33 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/07/09 11:45:23 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/07/09 19:00:39 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -26,6 +26,8 @@ t_vec3d	ft_vec3d_yz(t_vec3d v1)
 void	ft_plane_uv(t_hit_record *rec, t_element *plane)
 {
 	t_m3x3	tbn;
+
+	tbn = ft_tbn(rec->normal);
 	if (ft_vec3d_eq(rec->normal, ft_init_vec3d(0, 0, 1)))
 	{
 		rec->u = rec->p.x;
@@ -33,13 +35,15 @@ void	ft_plane_uv(t_hit_record *rec, t_element *plane)
 	}
 	else
 	{
-		rec->u = ft_vec3d_dot(ft_vec3d_xz(rec->p), ft_vec3d_xz(plane->orientation_vector));
-		rec->v = ft_vec3d_dot(ft_vec3d_yz(rec->p), ft_vec3d_yz(plane->orientation_vector));
+		rec->u = ft_vec3d_dot(ft_vec3d_xz(rec->p),
+				ft_vec3d_xz(plane->orientation_vector));
+		rec->v = ft_vec3d_dot(ft_vec3d_yz(rec->p),
+				ft_vec3d_yz(plane->orientation_vector));
 	}
-	tbn = ft_tbn(rec->normal);
-	rec->u = ft_vec3d_dot(ft_vec3d_pro_matrix(rec->p, tbn), ft_init_vec3d(1, 0 ,0));
-	rec->v = ft_vec3d_dot(ft_vec3d_pro_matrix(rec->p, tbn), ft_init_vec3d(0, 1 ,0));
-
+	rec->u = ft_vec3d_dot(ft_vec3d_pro_matrix(rec->p, tbn),
+			ft_init_vec3d(1, 0 ,0));
+	rec->v = ft_vec3d_dot(ft_vec3d_pro_matrix(rec->p, tbn),
+			ft_init_vec3d(0, 1 ,0));
 	rec->u = fmod(rec->u, 17.777778);
 	rec->v = fmod(rec->v, 10.0);
 	if (rec->u < 0)
