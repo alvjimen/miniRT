@@ -6,7 +6,7 @@
 /*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 18:04:11 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/07/09 11:52:16 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/07/09 11:53:01 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -48,7 +48,7 @@ t_camera	ft_set_camera_vars(t_vec3d lookfrom, const double aspect_ratio,
 	ptr.viewport_height = 2.0 * ptr.h;
 	ptr.viewport_width = aspect_ratio * ptr.viewport_height;
 	ptr.focal_length = 1.0;
-
+	return (ptr);
 }
 
 t_camera	ft_init_camera(t_vec3d lookfrom, const double aspect_ratio,
