@@ -6,10 +6,22 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 18:33:33 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/07/06 14:45:58 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/07/09 11:45:23 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
+
+t_vec3d	ft_vec3d_xz(t_vec3d v1)
+{
+	v1.y = 0;
+	return (v1);
+}
+
+t_vec3d	ft_vec3d_yz(t_vec3d v1)
+{
+	v1.x = 0;
+	return (v1);
+}
 
 void	ft_plane_uv(t_hit_record *rec, t_element *plane)
 {
