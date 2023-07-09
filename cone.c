@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 16:20:39 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/07/09 12:44:35 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/07/09 13:16:14 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -86,8 +86,8 @@ static double	ft_calculate_coefficients(t_ray *ray, t_element *cylinder,
 
 /* h = height */
 /* ratio = hipotenusa_prima / hipotenusa */
-static double	ft_calculate_height_on_axis(t_hit_record *rec, t_element *cylinder,
-		t_vec3d h)
+static double	ft_calculate_height_on_axis(t_hit_record *rec,
+		t_element *cylinder, t_vec3d h)
 {
 	t_vec3d	q;
 	t_vec3d	t;
