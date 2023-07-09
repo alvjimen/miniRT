@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 16:20:39 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/07/09 12:03:15 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/07/09 12:06:13 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -62,27 +62,30 @@ static double	ft_check_discriminant(double abc[3], t_camera *camera,
 static double	ft_calculate_coefficients(t_ray *ray, t_element *cylinder,
 		t_camera *camera, t_vec3d ph)
 {
-	t_vec3d	uh;
+//	t_vec3d	uh;
 	t_vec3d	w;
 	double	m;
 	double	abc[3];
 
 	w = ft_vec3d_minus_vec3d(ray->origin, ph);
 	/* h = H - C; h = h^*/
-	uh = ft_vec3d_unit_lenght(ft_vec3d_minus_vec3d(ph, cylinder->coords));
-	if (ft_vec3d_eq(uh, cylinder->orientation_vector))
-		printf("uh == cylinder->orientation_vector");
+//	uh = ft_vec3d_unit_lenght(ft_vec3d_minus_vec3d(ph, cylinder->coords));
+//	if (ft_vec3d_eq(uh, cylinder->orientation_vector))
+//		printf("uh == cylinder->orientation_vector");
 	m = (cylinder->radius * cylinder->radius) / ft_vec3d_squared_len(
 			ft_vec3d_minus_vec3d(ph, cylinder->coords));
 	/* a = v · v - (v · h^)^2*/
 	abc[0] = ft_vec3d_dot(ray->direction, ray->direction) - (m + 1) * pow(
-			ft_vec3d_dot(ray->direction, uh), 2);
+			ft_vec3d_dot(ray->direction, cylinder->orientation_vector), 2);
 	/* b = (v · w) - v · h^ * w · h^ */
 	abc[1] = 2 * (ft_vec3d_dot(ray->direction, w) - (m + 1)
-			* (ft_vec3d_dot(ray->direction, uh) * ft_vec3d_dot(w, uh)));
+			* (ft_vec3d_dot(ray->direction, cylinder->orientation_vector)
+			* ft_vec3d_dot(w, cylinder->orientation_vector)));
 	/* c = w · w - (w · h^)^2 - r^2*/
-	abc[2] = ft_vec3d_dot(w, w) - (m + 1) * pow(ft_vec3d_dot(w, uh), 2);
-	return (ft_check_discriminant(abc, camera, ray, uh));
+	abc[2] = ft_vec3d_dot(w, w) - (m + 1) * pow(ft_vec3d_dot(w,
+				cylinder->orientation_vector), 2);
+	return (ft_check_discriminant(abc, camera, ray,
+				cylinder->orientation_vector));
 }
 
 void	ft_normal_cone(t_hit_record *rec, t_element *cylinder, t_ray *ray)
