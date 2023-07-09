@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 16:20:39 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/07/09 12:31:37 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/07/09 12:39:24 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -121,29 +121,17 @@ void	ft_normal_cone(t_hit_record *rec, t_element *cylinder, t_ray *ray)
 				ft_vec3d_minus_vec3d(rec->p, rec->h));
 }
 
-int	ft_hit_cone(t_ray *ray, t_camera *camera, t_hit_record *rec,
-		t_element *cylinder)
+/* intersect = (Lint - C) · h -> rec->p - cylinder->coords · h*/
+int	ft_calculate_intersection(t_hit_record *rec, t_element *cylinder,
+		t_ray *ray, t_camera *camera)
 {
 	double	intersect;
 	double	len_h;
-	//double	q;
-	t_vec3d	h;
 	double	t;
-	//double	m;
 
-	/* h = ph */
-	h = ft_vec3d_plus_vec3d(cylinder->coords, ft_vec3d_pro_double(
-				ft_vec3d_unit_lenght(cylinder->orientation_vector),
-				cylinder->height));
-	rec->t = ft_calculate_coefficients(ray, cylinder, camera, h);
-	if (isnan(rec->t))
-		return (0);
-	rec->p = ft_ray_at(ray, rec->t);
-	/* h = h */
-	h = ft_vec3d_minus_vec3d(h, cylinder->coords);
-	/* intersect = (Lint - C) · h -> rec->p - cylinder->coords · h*/
-	intersect = ft_vec3d_dot(ft_vec3d_minus_vec3d(rec->p, cylinder->coords), h);
-	len_h = ft_vec3d_len(h);
+	intersect = ft_vec3d_dot(ft_vec3d_minus_vec3d(rec->p, cylinder->coords),
+			rec->h);
+	len_h = ft_vec3d_len(rec->h);
 	if (0.0 <= intersect && intersect <= len_h)
 	{
 		t = rec->t;
@@ -157,4 +145,40 @@ int	ft_hit_cone(t_ray *ray, t_camera *camera, t_hit_record *rec,
 		return (1);
 	}
 	return (ft_base_of_the_cone(ray, camera, rec, cylinder));
+}
+
+int	ft_hit_cone(t_ray *ray, t_camera *camera, t_hit_record *rec,
+		t_element *cylinder)
+{
+//	double	intersect;
+//	double	len_h;
+	t_vec3d	h;
+//	double	t;
+
+	h = ft_vec3d_plus_vec3d(cylinder->coords, ft_vec3d_pro_double(
+				ft_vec3d_unit_lenght(cylinder->orientation_vector),
+				cylinder->height));
+	rec->t = ft_calculate_coefficients(ray, cylinder, camera, h);
+	if (isnan(rec->t))
+		return (0);
+	rec->p = ft_ray_at(ray, rec->t);
+	h = ft_vec3d_minus_vec3d(h, cylinder->coords);
+	rec->h = h;
+	/* intersect = (Lint - C) · h -> rec->p - cylinder->coords · h*/
+	//intersect = ft_vec3d_dot(ft_vec3d_minus_vec3d(rec->p, cylinder->coords), h);
+	//len_h = ft_vec3d_len(h);
+	//if (0.0 <= intersect && intersect <= len_h)
+	//{
+	//	t = rec->t;
+	//	ft_base_of_the_cone(ray, camera, rec, cylinder);
+	//	if (!isnan(rec->t) && t > rec->t)
+	//		return (1);
+	//	rec->t = t;
+	//	ft_normal_cone(rec, cylinder, ray);
+	//	ft_cone_uv(rec, cylinder);
+	//	ft_hit_face(ray, rec);
+	//	return (1);
+	//}
+	//return (ft_base_of_the_cone(ray, camera, rec, cylinder));
+	return (ft_calculate_intersection(rec, cylinder, ray, camera));
 }
