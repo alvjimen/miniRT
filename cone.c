@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 16:20:39 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/07/09 12:24:23 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/07/09 12:28:13 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -110,16 +110,15 @@ void	ft_normal_cone(t_hit_record *rec, t_element *cylinder, t_ray *ray)
 
 	rec->p = ft_ray_at(ray, rec->t);
 	h = ft_vec3d_pro_double(cylinder->orientation_vector, cylinder->height);
-	rec->q = ft_calculate_height_on_axis(rec, cylinder, h);
+	rec->q = ft_calculate_height_on_axis(rec, cylinder, h);// cylinder->height * ratio;
+	h = ft_vec3d_plus_vec3d(cylinder->coords, ft_vec3d_pro_double(
+				ft_vec3d_unit_lenght(cylinder->orientation_vector),
+				rec->q));
+	rec->h = h;
 	if (rec->q == cylinder->height)
 		rec->normal = cylinder->orientation_vector;
 	else
-	{
-		rec->h = ft_vec3d_plus_vec3d(cylinder->coords, ft_vec3d_pro_double(
-					ft_vec3d_unit_lenght(cylinder->orientation_vector),
-					rec->q));
 		rec->normal = ft_vec3d_unit_lenght(ft_vec3d_minus_vec3d(rec->p, h));
-	}
 }
 
 int	ft_hit_cone(t_ray *ray, t_camera *camera, t_hit_record *rec,
