@@ -6,35 +6,10 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 16:20:39 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/07/08 16:48:21 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/07/09 12:03:15 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
-
-int	ft_base_of_the_cone_v2(t_ray *ray, t_camera *camera,
-		t_hit_record *rec, t_element *cone)
-{
-	double	t;
-
-	t = ft_hit_surface_base(ray, camera, cone, rec);
-	if (isnan(t))
-		return (0);
-	if (t > rec->t)
-	{
-		rec->t = t;
-		rec->normal = ft_vec3d_negative(cone->orientation_vector);
-		rec->p = ft_ray_at(ray, rec->t);
-		rec->q = 0.0;
-		rec->h = cone->coords;
-//		ft_cone_uv(rec, cone);
-	}
-	else
-	{
-		ft_normal_cone(rec, cone, ray);
-	}
-	//ft_cone_uv(rec, cone);
-	return (1);
-}
 
 int	ft_base_of_the_cone(t_ray *ray, t_camera *camera,
 		t_hit_record *rec, t_element *cone)
@@ -49,14 +24,13 @@ int	ft_base_of_the_cone(t_ray *ray, t_camera *camera,
 	rec->p = ft_ray_at(ray, rec->t);
 	rec->q = 0.0;
 	rec->h = cone->coords;
-//	ft_cylinder_uv(rec, cone);
 	ft_cone_uv(rec, cone);
 	return (1);
 }
 
 /*
    h = h^
-   i 0, 1, 2
+   i	0, 1, 2
    abc { a, b, c }
  */
 static double	ft_check_discriminant(double abc[3], t_camera *camera,
@@ -96,9 +70,11 @@ static double	ft_calculate_coefficients(t_ray *ray, t_element *cylinder,
 	w = ft_vec3d_minus_vec3d(ray->origin, ph);
 	/* h = H - C; h = h^*/
 	uh = ft_vec3d_unit_lenght(ft_vec3d_minus_vec3d(ph, cylinder->coords));
-	/* a = v · v - (v · h^)^2*/
+	if (ft_vec3d_eq(uh, cylinder->orientation_vector))
+		printf("uh == cylinder->orientation_vector");
 	m = (cylinder->radius * cylinder->radius) / ft_vec3d_squared_len(
 			ft_vec3d_minus_vec3d(ph, cylinder->coords));
+	/* a = v · v - (v · h^)^2*/
 	abc[0] = ft_vec3d_dot(ray->direction, ray->direction) - (m + 1) * pow(
 			ft_vec3d_dot(ray->direction, uh), 2);
 	/* b = (v · w) - v · h^ * w · h^ */
