@@ -427,7 +427,7 @@ void			ft_normal_cylinder(t_hit_record *rec, t_element *cylinder);
 /* cone.c */
 int				ft_hit_cone(t_ray *ray, t_camera *camera, t_hit_record *rec,
 					t_element *cylinder);
-void			ft_normal_cone(t_hit_record *rec, t_element *cylinder, t_ray *ray);
+//void			ft_normal_cone(t_hit_record *rec, t_element *cylinder, t_ray *ray);
 /* light.c */
 t_vec3d			ft_diffuse_light(t_hit_record *rec, t_ray *ray, t_data *img,
 					t_element *light);
