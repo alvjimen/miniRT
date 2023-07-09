@@ -6,7 +6,7 @@
 /*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 18:04:11 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/07/04 16:56:11 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/07/09 11:52:16 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -33,6 +33,24 @@ void	ft_img(t_data *img, const int image_width, const double aspect_ratio)
 	img->modifier = 0.1;
 }
 
+t_camera	ft_set_camera_vars(t_vec3d lookfrom, const double aspect_ratio, 
+		const double fov, t_vec3d lookat)
+{
+	t_camera	ptr;
+
+	ptr.lookfrom = lookfrom;
+	ptr.lookat = lookat;
+	ptr.aspect_ratio = aspect_ratio;
+	ptr.fov = fov;
+	ptr.origin = lookfrom;
+	ptr.theta = ft_degree_to_radians(fov);
+	ptr.h = tan(ptr.theta / 2);
+	ptr.viewport_height = 2.0 * ptr.h;
+	ptr.viewport_width = aspect_ratio * ptr.viewport_height;
+	ptr.focal_length = 1.0;
+
+}
+
 t_camera	ft_init_camera(t_vec3d lookfrom, const double aspect_ratio,
 		const double fov, t_vec3d lookat)
 {
@@ -42,10 +60,11 @@ t_camera	ft_init_camera(t_vec3d lookfrom, const double aspect_ratio,
 	t_vec3d		v;
 	t_vec3d		vup;
 
-	/* Added for navigate and save the values that got */
+	ft_set_camera_vars(lookfrom, aspect_ratio, fov, lookat);
+	/*
 	ptr.lookfrom = lookfrom;
 	ptr.lookat = lookat;
-	/* End */
+	
 	ptr.aspect_ratio = aspect_ratio;
 	ptr.fov = fov;
 	ptr.origin = lookfrom;
@@ -54,6 +73,7 @@ t_camera	ft_init_camera(t_vec3d lookfrom, const double aspect_ratio,
 	ptr.viewport_height = 2.0 * ptr.h;
 	ptr.viewport_width = aspect_ratio * ptr.viewport_height;
 	ptr.focal_length = 1.0;
+	*/
 	/*Recalculate for move lookat 1*/
 	w = ft_vec3d_unit_lenght(ft_vec3d_minus_vec3d(lookfrom, lookat));
 	/*End*/
