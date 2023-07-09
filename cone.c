@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 16:20:39 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/07/09 12:22:13 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/07/09 12:24:23 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -107,33 +107,19 @@ double	ft_calculate_height_on_axis(t_hit_record *rec, t_element *cylinder,
 void	ft_normal_cone(t_hit_record *rec, t_element *cylinder, t_ray *ray)
 {
 	t_vec3d	h;
-//	t_vec3d	q1;
-//	t_vec3d	t;
-//	t_vec3d	ph;
-//	double	hipotenusa;
-//	double	hipotenusa_prima;
-//	double	ratio;
 
 	rec->p = ft_ray_at(ray, rec->t);
 	h = ft_vec3d_pro_double(cylinder->orientation_vector, cylinder->height);
-	/* calculating the height on the axis */
-	//q1 = ft_vec3d_minus_vec3d(cylinder->coords, ft_init_vec3d(cylinder->radius, 0, 0));
-	//t = ft_vec3d_plus_vec3d(cylinder->coords, h);
-	//hipotenusa =  ft_vec3d_len(ft_vec3d_minus_vec3d(q1, t));
-	//ph = ft_vec3d_minus_vec3d(t, rec->p);
-	//hipotenusa_prima =  hipotenusa - ft_vec3d_len(ph);
-	//ratio = hipotenusa_prima / hipotenusa;
-	rec->q = ft_calculate_height_on_axis(rec, cylinder, h);// cylinder->height * ratio;
-	/* calculating the point of the axis */
-	h = ft_vec3d_plus_vec3d(cylinder->coords, ft_vec3d_pro_double(
-				ft_vec3d_unit_lenght(cylinder->orientation_vector),
-				rec->q));
-	rec->h = h;
-	/* calculating the normal */
+	rec->q = ft_calculate_height_on_axis(rec, cylinder, h);
 	if (rec->q == cylinder->height)
 		rec->normal = cylinder->orientation_vector;
 	else
+	{
+		rec->h = ft_vec3d_plus_vec3d(cylinder->coords, ft_vec3d_pro_double(
+					ft_vec3d_unit_lenght(cylinder->orientation_vector),
+					rec->q));
 		rec->normal = ft_vec3d_unit_lenght(ft_vec3d_minus_vec3d(rec->p, h));
+	}
 }
 
 int	ft_hit_cone(t_ray *ray, t_camera *camera, t_hit_record *rec,
