@@ -6,7 +6,7 @@
 /*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 18:10:03 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/07/08 18:49:16 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/07/10 15:57:05 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ t_vec3d	ft_diffuse_light(t_hit_record *rec, t_ray *ray, t_data *img,
 
 	result = 0;
 	if (!ft_shadow_ray(rec, img, light))
-		return (ft_vec3d_pro_double(ft_colour_to_vec3d(rec->colour), result));
+		return (ft_init_vec3d(0, 0, 0));
 	r = ft_vec3d_minus_vec3d(light->coords, rec->p);
 	i_r2 = light->light_ratio / ft_vec3d_squared_len(r);
 	n_l = ft_vec3d_dot(rec->normal, ft_vec3d_unit_lenght(r));
@@ -71,7 +71,7 @@ t_vec3d	ft_specular_light(t_hit_record *rec, t_ray *ray, t_data *img,
 
 	result = 0;
 	if (!ft_shadow_ray(rec, img, light))
-		return (ft_vec3d_pro_double(ft_colour_to_vec3d(light->colour), result));
+		return (ft_init_vec3d(0, 0, 0));
 	r = ft_vec3d_minus_vec3d(light->coords, rec->p);
 	i_r2 = light->light_ratio / ft_vec3d_squared_len(r);
 	h = ft_vec3d_unit_lenght(ft_vec3d_plus_vec3d(ft_vec3d_negative(

@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   texture_coordinates.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/10 13:45:56 by alvjimen          #+#    #+#             */
+/*   Updated: 2023/07/10 15:27:01 by alvjimen         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "minirt.h"
 
 /*
@@ -23,28 +34,51 @@ void	ft_sphere_uv(t_hit_record *rec, t_element *sphere)
 	rec->u = phi / (2 * M_PI);
 	rec->v = theta / M_PI;
 }
+
 /*
  * u = (M_PI + tetha) / (2 * M_PI)
  * v = (h/2 + y) / h
- */
+*/
+void	ft_plane_uv(t_hit_record *rec, t_element *plane)
+{
+	t_m3x3	tbn;
+
+	tbn = ft_tbn(rec->normal);
+	rec->u = ft_vec3d_dot(ft_vec3d_pro_matrix(rec->p, tbn),
+			ft_init_vec3d(1, 0, 0));
+	rec->v = ft_vec3d_dot(ft_vec3d_pro_matrix(rec->p, tbn),
+			ft_init_vec3d(0, 1, 0));
+	rec->u = fmod(rec->u, 17.777778);
+	rec->v = fmod(rec->v, 10.0);
+	if (rec->u < 0)
+		rec->u = rec->u + 17.777778;
+	if (rec->v < 0)
+		rec->v = rec->v + 10;
+	rec->u = ft_dabs((rec->u / 17.777778) - 1);
+	rec->v = rec->v / 10;
+	if (plane)
+		return ;
+}
+
 void	ft_cylinder_uv(t_hit_record *rec, t_element *cylinder)
 {
-	rec->u = 0.5 + atan2(rec->normal.x / cylinder->radius, rec->normal.z / cylinder->radius) / (2 * M_PI);
-//	rec->v = ft_vec3d_len(ft_vec3d_minus_vec3d(cylinder->coords, rec->h)) / cylinder->height;
+	rec->u = 0.5 + atan2(rec->normal.x / cylinder->radius,
+			rec->normal.z / cylinder->radius) / (2 * M_PI);
 	rec->v = 1 - (rec->q / cylinder->height);
 }
 
 void	ft_cone_uv(t_hit_record *rec, t_element *cylinder)
 {
-	rec->u = ft_dabs(1 - (0.5 + atan2(rec->normal.x / cylinder->radius, rec->normal.z / cylinder->radius) / (2 * M_PI)));
+	rec->u = ft_dabs(1 - (0.5 + atan2(rec->normal.x / cylinder->radius,
+					rec->normal.z / cylinder->radius) / (2 * M_PI)));
 	rec->v = 1 - (rec->q / cylinder->height);
 }
 
 double	ft_perlin_noise(t_hit_record *rec, t_data *img)
 {
-	int i;
-	int j;
-	int k;
+	int	i;
+	int	j;
+	int	k;
 
 	if (!img->perlin_init)
 		ft_perlin_init(img);
@@ -71,19 +105,19 @@ void	ft_checker_texture(t_hit_record *rec, t_element *sphere, t_data *img)
 	else
 		ft_perlin_init(img);
 	ft_bzero(&rec->colour, sizeof(rec->colour));
-		rec->colour.red =  ft_perlin_noise(rec, img) * 255;
-		rec->colour.green =  ft_perlin_noise(rec, img) * 255;
-		rec->colour.blue =  ft_perlin_noise(rec, img) * 255;
+		rec->colour.red = ft_perlin_noise(rec, img) * 255;
+		rec->colour.green = ft_perlin_noise(rec, img) * 255;
+		rec->colour.blue = ft_perlin_noise(rec, img) * 255;
 }
 /*
 u = i / (Nx - 1);
 v = j / (Ny - 1);
 */
+
 void	ft_checkerboard_v2(t_hit_record *rec, t_element *element, t_data *img)
 {
-
-	if (((fmod(ft_dabs(rec->v), 0.05) < 0.025) == (fmod(ft_dabs(rec->u), 0.05) < 0.025)))
-//	if ((rec->v + rec-> u) > 1)
+	if (((fmod(ft_dabs(rec->v), 0.05) < 0.025)
+			== (fmod(ft_dabs(rec->u), 0.05) < 0.025)))
 		ft_bzero(&rec->colour, sizeof(rec->colour));
 	else
 	{
@@ -120,14 +154,15 @@ void	ft_load_img(t_data *img)
 				&img->xpm_width, &img->xpm_height);
 		if (!img->xpm)
 			exit (1);
-		img->xpm_address = mlx_get_data_addr(img->xpm, &img->xpm_bits_per_pixel, 
-				&img->xpm_line_length, &img->xpm_endian);
+		img->xpm_address = mlx_get_data_addr(img->xpm,
+				&img->xpm_bits_per_pixel, &img->xpm_line_length,
+				&img->xpm_endian);
 		if (!img->xpm_address)
 			exit (1);
 	}
 	if (!img->xpm_bump)
 	{
-		img->xpm_bump = mlx_xpm_file_to_image(img->mlx, XPM_BUMP_PATH,//"brick wall.xpm",
+		img->xpm_bump = mlx_xpm_file_to_image(img->mlx, XPM_BUMP_PATH,
 				&img->xpm_bump_width, &img->xpm_bump_height);
 		if (!img->xpm_bump)
 			exit (1);
@@ -139,7 +174,8 @@ void	ft_load_img(t_data *img)
 	}
 }
 
-void	ft_checker_texture_image(t_hit_record *rec, t_element *sphere, t_data *img)
+void	ft_checker_texture_image(t_hit_record *rec, t_element *sphere,
+		t_data *img)
 {
 	int		i;
 	int		j;
@@ -156,17 +192,36 @@ void	ft_checker_texture_image(t_hit_record *rec, t_element *sphere, t_data *img)
 		i = img->xpm_width - 1;
 	if (j >= img->xpm_height)
 		j = img->xpm_height - 1;
-	pixel = &img->xpm_address[j * img->xpm_line_length + i * (img->xpm_bits_per_pixel / 8)];
-	rec->colour.alpha = pixel[0];
-	rec->colour.red = pixel[1];
-	rec->colour.green = pixel[2];
-	rec->colour.blue = pixel[3];
+	pixel = &img->xpm_address[j * img->xpm_line_length + i
+		* (img->xpm_bits_per_pixel / 8)];
+	rec->colour.alpha = pixel[3];
+	rec->colour.red = pixel[2];
+	rec->colour.green = pixel[1];
+	rec->colour.blue = pixel[0];
 }
 
-unsigned char	*ft_bump_pixel(int x, int y, t_data *img)
+t_vec3d	ft_new_normal(int x, int y, t_data *img, t_hit_record *rec)
 {
-	return ((void *)&img->xpm_bump_address[y * img->xpm_bump_line_length +
-			x * (img->xpm_bump_bits_per_pixel / 8)]);
+	unsigned char	*pixel;
+	t_m3x3			tbn;
+	t_vec3d			bump;
+	t_vec3d			t;
+	t_vec3d			b;
+
+	t = ft_vec3d_cross(rec->normal, ft_init_vec3d(0, 1, 0));
+	if (!ft_vec3d_squared_len(t))
+		t = ft_vec3d_cross(rec->normal, ft_init_vec3d(0, 0, 1));
+	t = ft_vec3d_unit_lenght(t);
+	b = ft_vec3d_unit_lenght(ft_vec3d_cross(rec->normal, t));
+	pixel = ((void *)&img->xpm_bump_address[y * img->xpm_bump_line_length
+			+ x * (img->xpm_bump_bits_per_pixel / 8)]);
+	bump = ft_init_vec3d(pixel[2], pixel[1], pixel[0]);
+	bump = ft_vec3d_minus_vec3d(
+			ft_vec3d_pro_double(ft_vec3d_div_double(bump,
+					255), 2), ft_init_vec3d(1, 1, 1));
+	tbn = ft_init_m3x3(t, b, rec->normal);
+	bump = ft_vec3d_unit_lenght(ft_vec3d_pro_matrix(bump, tbn));
+	return (bump);
 }
 
 void	ft_texture(t_data *img)
@@ -185,15 +240,9 @@ void	ft_texture(t_data *img)
 void	ft_checker_bump(t_hit_record *rec, t_element *sphere,
 		t_data *img)
 {
-	int				i;
-	int				j;
-	t_vec3d			t;
-	t_vec3d			b;
-	t_vec3d			map;
-	t_m3x3			tbn;
-	unsigned char	*pixel;
+	int	i;
+	int	j;
 
-//	ft_load_img(img);
 	rec->u = clamp(rec->u, 0.0, 1.0);
 	rec->v = clamp(rec->v, 0.0, 1.0);
 	i = rec->u * img->xpm_bump_width;
@@ -202,20 +251,7 @@ void	ft_checker_bump(t_hit_record *rec, t_element *sphere,
 		i = img->xpm_bump_width - 1;
 	if (j >= img->xpm_bump_height)
 		j = img->xpm_bump_height - 1;
-	t = ft_vec3d_cross(rec->normal, ft_init_vec3d(0, 1, 0));
-	if (!ft_vec3d_squared_len(t))
-		t = ft_vec3d_cross(rec->normal, ft_init_vec3d(0, 0, 1));
-	t = ft_vec3d_unit_lenght(t);
-	b = ft_vec3d_unit_lenght(ft_vec3d_cross(rec->normal, t));
-	pixel = ft_bump_pixel(i, j, img);
-	map = ft_init_vec3d(pixel[0], pixel[1], pixel[2]);
-	map = ft_vec3d_minus_vec3d(
-			ft_vec3d_pro_double(ft_vec3d_div_double(map,
-					255), 2), ft_init_vec3d(1, 1, 1));
-	tbn = ft_init_m3x3(t, b, rec->normal);
-	rec->normal = ft_vec3d_unit_lenght(
-			ft_vec3d_pro_matrix(map, tbn));
-	//ft_checker_texture_image(rec, sphere, img);
+	rec->normal = ft_new_normal(i, j, img, rec);
 	if (sphere)
 		return ;
 }
@@ -223,82 +259,6 @@ void	ft_checker_bump(t_hit_record *rec, t_element *sphere,
 void	ft_checker_bump_image(t_hit_record *rec, t_element *sphere,
 		t_data *img)
 {
-	int				i;
-	int				j;
-	t_vec3d			t;
-	t_vec3d			b;
-	t_vec3d			map;
-	t_m3x3			tbn;
-	unsigned char	*pixel;
-
-	ft_load_img(img);
-	rec->u = clamp(rec->u, 0.0, 1.0);
-	rec->v = clamp(rec->v, 0.0, 1.0);
-	i = rec->u * img->xpm_bump_width;
-	j = rec->v * img->xpm_bump_height;
-	if (i >= img->xpm_bump_width)
-		i = img->xpm_bump_width - 1;
-	if (j >= img->xpm_bump_height)
-		j = img->xpm_bump_height - 1;
-	t = ft_vec3d_cross(rec->normal, ft_init_vec3d(0, 1, 0));
-	if (!ft_vec3d_squared_len(t))
-		t = ft_vec3d_cross(rec->normal, ft_init_vec3d(0, 0, 1));
-	t = ft_vec3d_unit_lenght(t);
-	b = ft_vec3d_unit_lenght(ft_vec3d_cross(rec->normal, t));
-		pixel = ft_bump_pixel(i, j, img);
-	map = ft_init_vec3d(pixel[0], pixel[1], pixel[2]);
-	map = ft_vec3d_minus_vec3d(
-			ft_vec3d_pro_double(ft_vec3d_div_double(map,
-					255), 2), ft_init_vec3d(1, 1, 1));
-	tbn = ft_init_m3x3(t, b, rec->normal);
-	rec->normal = ft_vec3d_unit_lenght(
-			ft_vec3d_pro_matrix(map, tbn));
+	ft_checker_bump(rec, sphere, img);
 	ft_checker_texture_image(rec, sphere, img);
-	if (sphere)
-		return ;
 }
-
-/*
-void	ft_checker_bump_image(t_hit_record *rec, t_element *sphere, t_data *img)
-{
-	int		i;
-	int		j;
-	t_vec3d	bu;
-	t_vec3d	bv;
-	t_vec3d	bump_normal;
-	t_vec3d	new_normal_bumped;
-
-	if (!sphere && !rec)
-		return ;
-	ft_load_img(img);
-	rec->u = clamp(rec->u, 0.0, 1.0);
-	rec->v = clamp(rec->v, 0.0, 1.0);
-	i = rec->u * img->xpm_bump_width;
-	j = rec->v * img->xpm_bump_height;
-	if (i >= img->xpm_bump_width)
-		i = img->xpm_bump_width - 1;
-	if (j >= img->xpm_bump_height)
-		j = img->xpm_bump_height - 1;
-	ft_finite_difference(rec, img, &bu, &bv);
-	//bump_normal = ft_init_vec3d(bu.x, bv.y, sqrt(1 - bu.x * bu.x - bu.y * bu.y));
-	//bump_normal = ft_vec3d_div_double(ft_vec3d_plus_vec3d(bump_normal, ft_init_vec3d(1, 1, 1)), 2);
-	bump_normal = ft_vec3d_cross(ft_vec3d_plus_vec3d(rec->normal, bu), ft_vec3d_plus_vec3d(rec->normal, bv));
-	new_normal_bumped = ft_vec3d_plus_vec3d(bump_normal, rec->normal);
-	//More or less the same result
-//	new_normal_bumped = bump_normal;
-	if (ft_vec3d_squared_len(new_normal_bumped) != 1.0)
-		new_normal_bumped = ft_vec3d_unit_lenght(new_normal_bumped);
-	rec->normal = new_normal_bumped;
-	//ft_checker_bump_image(rec, sphere, img);
-}*//*
-p' = p + (f(u,v)*N) / ||N||
-*/
-/*
-void	ft_checker_bump_mapping(t_hit_record *rec, t_element *sphere, t_data *img)
-{
-
-}
-*/
-/*
-TODO configure the textures/ image with more than unit radius sphere. 
-*/

@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 18:56:49 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/27 18:53:34 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/07/10 15:28:21 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -61,5 +61,6 @@ t_vec3d	ft_ray_color(t_ray *ray, t_data *img)
 	ft_bzero(&rec, sizeof(rec));
 	if (!ft_hittable(ray, img, &rec))
 		return (ft_init_vec3d(0, 0, 0));
+	ft_hit_face(ray, &rec);
 	return (img->ft_color(&rec, ray, img));
 }
