@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 08:47:36 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/21 08:47:39 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/09/07 17:09:24 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -33,14 +33,6 @@ int	ft_parse_comma(char *str, size_t *pos)
 	if ((str[*pos] != ','))
 		return (-1);
 	pos[0]++;
-	return (0);
-}
-
-int	ft_parse_end(char *str, size_t pos)
-{
-	ft_run_is_space(str, &pos);
-	if (str[pos] != '\0')
-		return (-1);
 	return (0);
 }
 

@@ -36,7 +36,6 @@ SRC					=	main.c\
 						vec3d.c\
 						vec3d_math_vec3d.c\
 						vec3d_math_double.c\
-						vector4d.c\
 						ray.c\
 						ppm.c\
 						camera.c\
@@ -61,10 +60,16 @@ SRC					=	main.c\
 						matrix.c\
 						light_utils.c\
 						light_fun_ptr.c\
+						parse_utils_v2.c\
+						init_figures_utils.c\
+						light_fun_ptr_utils.c\
+						cone_utils.c\
+						cylinder_utils.c\
 						#diffuse_materials.c\
 						perspective.c\
 						normalize.c\
 						projection.c\
+						vector4d.c\
 
 OBJ		=	$(SRC:.c=.o)
 RM		=	rm -rf

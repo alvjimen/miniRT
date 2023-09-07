@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:49:59 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/07/09 18:56:34 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/09/07 17:04:52 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINIRT_H
@@ -239,7 +239,7 @@ typedef struct s_mouse
 }	t_mouse;
 
 typedef struct s_ptr_fun_color	{
-	t_vec3d	(*f)(t_hit_record, t_ray *, t_data *);
+	t_vec3d	(*f)(t_hit_record, t_ray *, struct s_data *);
 }	t_ptr_fun_color;
 
 typedef struct s_data
@@ -484,4 +484,21 @@ void			ft_load_img(t_data *img);
 /* matrix.c */
 t_m3x3			ft_init_m3x3(t_vec3d v1, t_vec3d v2, t_vec3d v3);
 t_m3x3			ft_tbn(t_vec3d normal);
+/* parse.c */
+int	ft_parse_sphere(char *str, size_t pos, t_data *img);
+int	ft_parse_camera(char *str, size_t pos, t_data *img);
+int	ft_parse_ambient_light(char *str, size_t pos, t_data *img);
+int	ft_parse_light(char *str, size_t pos, t_data *img);
+int	ft_parse_plane(char *str, size_t pos, t_data *img);
+/* cone_utils.c */
+int	ft_base_of_the_cone(t_ray *ray, t_camera *camera,
+		t_hit_record *rec, t_element *cone);
+void	ft_normal_cone(t_hit_record *rec, t_element *cylinder, t_ray *ray);
+/* cylinder_utils.h */
+double	ft_hit_surface_base(t_ray *ray, t_camera *camera, t_element *cylinder,
+		t_hit_record *rec);
+double	ft_hit_surface_top(t_ray *ray, t_camera *camera, t_element *cylinder,
+		t_hit_record *rec);
+int	ft_base_of_the_cylinder(t_ray *ray, t_camera *camera, t_hit_record *rec,
+		t_element *cylinder);
 #endif

@@ -6,7 +6,7 @@
 /*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 18:42:31 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/07/08 18:49:13 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/09/07 15:42:11 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -40,20 +40,4 @@ t_vec3d	ft_color_specular_ambient_light(t_hit_record *rec, t_ray *ray,
 {
 	return (ft_vec3d_plus_vec3d(ft_color_specular_light(rec, ray, img),
 			ft_color_ambient_light(rec, ray, img)));
-}
-
-t_vec3d	ft_color_specular_diffuse_light(t_hit_record *rec, t_ray *ray,
-		t_data *img)
-{
-	return (ft_vec3d_plus_vec3d(ft_color_specular_light(rec, ray, img),
-			ft_color_diffuse_light(rec, ray, img)));
-}
-
-t_vec3d	ft_color_diffuse_specular_ambiance_light(t_hit_record *rec, t_ray *ray,
-		t_data *img)
-{
-	return (ft_vec3d_div_double(ft_vec3d_plus_vec3d(ft_colour_to_vec3d(
-					rec->colour), ft_vec3d_plus_vec3d(
-					ft_color_specular_diffuse_light(rec, ray, img),
-					ft_color_ambient_light(rec, ray, img))), 2));
 }

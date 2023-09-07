@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:56:57 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/07/06 17:36:40 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/09/07 14:03:10 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -161,7 +161,6 @@ int	key_hook(int keycode, t_data *img)
 				img->element->textured = 1;
 			img->element->ft_texture = img->ft_texture;
 		}
-
 	}
 	else
 		printf("Keycode: %d\n", keycode);
@@ -192,7 +191,6 @@ int	hook_mouse(int button, int x, int y, void *param)
 		printf("rec->u: %f\trec->v: %f\n", rec.u, rec.v);
 		ft_print_vector("normal", rec.normal);
 		ft_print_vector("color", ft_ray_color(&ray, img));
-
 	}
 	return (0);
 }
