@@ -65,6 +65,9 @@ SRC					=	main.c\
 						light_fun_ptr_utils.c\
 						cone_utils.c\
 						cylinder_utils.c\
+						texture_coordinates_figures.c\
+						texture_coordinates_utils.c\
+						parse_utils_v3.c\
 						#diffuse_materials.c\
 						perspective.c\
 						normalize.c\

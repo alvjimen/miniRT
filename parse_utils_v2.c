@@ -6,7 +6,7 @@
 /*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 13:51:54 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/09/07 17:09:22 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/09/08 17:11:16 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -22,9 +22,8 @@ int	ft_parse_cylinder(char *str, size_t pos, t_data *img)
 	if (str[pos] != 'c' || str[pos + 1] != 'y')
 		return (-1);
 	pos += 2;
-	if (ft_parse_vec3d(str, &pos, &coords))
-		return (-1);
-	if (ft_parse_vec3d(str, &pos, &normalized_orientation_vector))
+	if (ft_common_cylinder_cone(str, &pos, &coords,
+			&normalized_orientation_vector))
 		return (-1);
 	if (ft_parse_double(str, &pos, &param[0]))
 		return (-1);
@@ -52,9 +51,8 @@ int	ft_parse_cone(char *str, size_t pos, t_data *img)
 	if (str[pos] != 'c' || str[pos + 1] != 'o')
 		return (-1);
 	pos += 2;
-	if (ft_parse_vec3d(str, &pos, &coords))
-		return (-1);
-	if (ft_parse_vec3d(str, &pos, &normalized_orientation_vector))
+	if (ft_common_cylinder_cone(str, &pos, &coords,
+			&normalized_orientation_vector))
 		return (-1);
 	if (ft_parse_double(str, &pos, &param[0]))
 		return (-1);

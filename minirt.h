@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:49:59 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/09/07 17:04:52 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/09/08 17:09:34 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINIRT_H
@@ -501,4 +501,7 @@ double	ft_hit_surface_top(t_ray *ray, t_camera *camera, t_element *cylinder,
 		t_hit_record *rec);
 int	ft_base_of_the_cylinder(t_ray *ray, t_camera *camera, t_hit_record *rec,
 		t_element *cylinder);
+/* parse_utils_v2 */
+int	ft_common_cylinder_cone(char *str, size_t *pos, t_vec3d *coords,
+		t_vec3d *normalized_orientation_vector);
 #endif

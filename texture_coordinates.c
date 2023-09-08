@@ -6,88 +6,12 @@
 /*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 13:45:56 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/07/10 15:27:01 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/09/08 16:30:42 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
 
 /*
-y = -cos(tetha)
-x = -cos(phi)sin(tetha)
-z = sin(phi)sin(tetha)
-
-u = phi / (2 * PI)
-v = tetha / PI
-phi = with atan2(z, -x)
-phi = atan2(-z, x) + PI
-tetha = acos(-y)
-*/
-void	ft_sphere_uv(t_hit_record *rec, t_element *sphere)
-{
-	t_vec3d	p;
-	double	theta;
-	double	phi;
-
-	p = ft_vec3d_unit_lenght(ft_vec3d_minus_vec3d(sphere->coords, rec->p));
-	theta = acos(-p.y);
-	phi = atan2(-p.z, p.x) + M_PI;
-	rec->u = phi / (2 * M_PI);
-	rec->v = theta / M_PI;
-}
-
-/*
- * u = (M_PI + tetha) / (2 * M_PI)
- * v = (h/2 + y) / h
-*/
-void	ft_plane_uv(t_hit_record *rec, t_element *plane)
-{
-	t_m3x3	tbn;
-
-	tbn = ft_tbn(rec->normal);
-	rec->u = ft_vec3d_dot(ft_vec3d_pro_matrix(rec->p, tbn),
-			ft_init_vec3d(1, 0, 0));
-	rec->v = ft_vec3d_dot(ft_vec3d_pro_matrix(rec->p, tbn),
-			ft_init_vec3d(0, 1, 0));
-	rec->u = fmod(rec->u, 17.777778);
-	rec->v = fmod(rec->v, 10.0);
-	if (rec->u < 0)
-		rec->u = rec->u + 17.777778;
-	if (rec->v < 0)
-		rec->v = rec->v + 10;
-	rec->u = ft_dabs((rec->u / 17.777778) - 1);
-	rec->v = rec->v / 10;
-	if (plane)
-		return ;
-}
-
-void	ft_cylinder_uv(t_hit_record *rec, t_element *cylinder)
-{
-	rec->u = 0.5 + atan2(rec->normal.x / cylinder->radius,
-			rec->normal.z / cylinder->radius) / (2 * M_PI);
-	rec->v = 1 - (rec->q / cylinder->height);
-}
-
-void	ft_cone_uv(t_hit_record *rec, t_element *cylinder)
-{
-	rec->u = ft_dabs(1 - (0.5 + atan2(rec->normal.x / cylinder->radius,
-					rec->normal.z / cylinder->radius) / (2 * M_PI)));
-	rec->v = 1 - (rec->q / cylinder->height);
-}
-
-double	ft_perlin_noise(t_hit_record *rec, t_data *img)
-{
-	int	i;
-	int	j;
-	int	k;
-
-	if (!img->perlin_init)
-		ft_perlin_init(img);
-	i = (int)(4 * rec->p.x) & 0xff;
-	j = (int)(4 * rec->p.y) & 0xff;
-	k = (int)(4 * rec->p.z) & 0xff;
-	return (img->perlin_ranfloat[i ^ j ^ k]);
-}
-
 void	ft_perlin_init(t_data *img)
 {
 	int		counter;
@@ -109,6 +33,7 @@ void	ft_checker_texture(t_hit_record *rec, t_element *sphere, t_data *img)
 		rec->colour.green = ft_perlin_noise(rec, img) * 255;
 		rec->colour.blue = ft_perlin_noise(rec, img) * 255;
 }
+*/
 /*
 u = i / (Nx - 1);
 v = j / (Ny - 1);
@@ -145,61 +70,6 @@ void	ft_checkerboard(t_hit_record *rec, t_element *element, t_data *img)
 		return ;
 }
 */
-
-void	ft_load_img(t_data *img)
-{
-	if (!img->xpm)
-	{
-		img->xpm = mlx_xpm_file_to_image(img->mlx, XPM_PATH,
-				&img->xpm_width, &img->xpm_height);
-		if (!img->xpm)
-			exit (1);
-		img->xpm_address = mlx_get_data_addr(img->xpm,
-				&img->xpm_bits_per_pixel, &img->xpm_line_length,
-				&img->xpm_endian);
-		if (!img->xpm_address)
-			exit (1);
-	}
-	if (!img->xpm_bump)
-	{
-		img->xpm_bump = mlx_xpm_file_to_image(img->mlx, XPM_BUMP_PATH,
-				&img->xpm_bump_width, &img->xpm_bump_height);
-		if (!img->xpm_bump)
-			exit (1);
-		img->xpm_bump_address = mlx_get_data_addr(img->xpm_bump,
-				&img->xpm_bump_bits_per_pixel, &img->xpm_bump_line_length,
-				&img->xpm_bump_endian);
-		if (!img->xpm_bump_address)
-			exit (1);
-	}
-}
-
-void	ft_checker_texture_image(t_hit_record *rec, t_element *sphere,
-		t_data *img)
-{
-	int		i;
-	int		j;
-	char	*pixel;
-
-	if (!sphere && !rec)
-		return ;
-	ft_load_img(img);
-	rec->u = clamp(rec->u, 0.0, 1.0);
-	rec->v = clamp(rec->v, 0.0, 1.0);
-	i = rec->u * img->xpm_width;
-	j = rec->v * img->xpm_height;
-	if (i >= img->xpm_width)
-		i = img->xpm_width - 1;
-	if (j >= img->xpm_height)
-		j = img->xpm_height - 1;
-	pixel = &img->xpm_address[j * img->xpm_line_length + i
-		* (img->xpm_bits_per_pixel / 8)];
-	rec->colour.alpha = pixel[3];
-	rec->colour.red = pixel[2];
-	rec->colour.green = pixel[1];
-	rec->colour.blue = pixel[0];
-}
-
 t_vec3d	ft_new_normal(int x, int y, t_data *img, t_hit_record *rec)
 {
 	unsigned char	*pixel;
