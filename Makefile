@@ -68,7 +68,7 @@ SRC					=	main.c\
 						texture_coordinates_figures.c\
 						texture_coordinates_utils.c\
 						parse_utils_v3.c\
-						#diffuse_materials.c\
+						# diffuse_materials.c\
 						perspective.c\
 						normalize.c\
 						projection.c\
@@ -90,7 +90,8 @@ END-RULE				=	@echo "$(CSI)$(BLINK)$(END)🎉🎊$(CSI)$(UNBLINK)$(END)\
 	$(CSI)$(FOREGROUND)$(GREEN)$(END) $@ $(CSI)$(END)$(CSI)$(BLINK)$(END)🎊\
 	$(CSI)$(UNBLINK)$(END)"
 
-CFLAGS			=	-Wall -Werror -Wextra $(INFLAGS) -g3 -fsanitize=address
+PPFLAGS				:=	-MMD -MP #-I $(INC) -I $(INCS)
+CFLAGS			=	-Wall -Werror -Wextra $(INFLAGS) $(PPFLAGS) -g3 -fsanitize=address
 all:	$(NAME)
 
 $(NAME):	$(OBJ) $(LIB)

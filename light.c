@@ -6,7 +6,7 @@
 /*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 18:10:03 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/07/10 15:57:05 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/09/14 12:24:18 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,8 @@ t_vec3d	ft_ambient_light(t_hit_record *rec, t_data *img)
 {
 	t_vec3d	colour;
 
-	colour = ft_colour_to_vec3d(img->ambient_light.colour);
-	if (rec)
-		return (ft_vec3d_pro_double(colour,
-				img->ambient_light.light_ratio));
+	colour = ft_vec3d_pro_vec3d(ft_colour_to_vec3d(img->ambient_light.colour),
+			ft_colour_to_vec3d(rec->colour));
 	return (ft_vec3d_pro_double(colour, img->ambient_light.light_ratio));
 }
 
@@ -57,7 +55,7 @@ t_vec3d	ft_diffuse_light(t_hit_record *rec, t_ray *ray, t_data *img,
 	v = ft_colour_to_vec3d(light->colour);
 	if (ray)
 		return (ft_vec3d_pro_double(v, result));
-	return (ft_vec3d_pro_double(v, result));
+	return (ft_vec3d_pro_double(ft_vec3d_pro_vec3d(v, ft_colour_to_vec3d(rec->colour)), result));
 }
 
 t_vec3d	ft_specular_light(t_hit_record *rec, t_ray *ray, t_data *img,

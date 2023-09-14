@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:49:59 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/09/08 17:09:34 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/09/14 12:03:53 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINIRT_H
@@ -373,6 +373,7 @@ void			ft_img(t_data *img, const int image_width,
 					const double aspect_ratio);
 t_camera		ft_init_camera(t_vec3d lookfrom, const double aspect_ratio,
 					const double fov, t_vec3d lookat);
+void	ft_fix_camera_lookat(t_camera *camera);
 /* sphere.c */
 int				ft_hit_sphere(t_ray *ray, t_camera *camera,
 					t_hit_record *rec, t_element *sphere);

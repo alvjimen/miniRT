@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 13:03:13 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/22 19:15:12 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/09/14 12:05:59 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -19,6 +19,7 @@ void	ft_draw_without_antialiasing(t_data *img)
 	t_ray	ray;
 	t_vec3d	vector;
 
+	ft_fix_camera_lookat(&img->camera);
 	y = 0;
 	while (y < img->image_height)
 	{
