@@ -6,7 +6,7 @@
 /*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 18:10:03 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/09/14 12:24:18 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/09/14 12:27:10 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ t_vec3d	ft_diffuse_light(t_hit_record *rec, t_ray *ray, t_data *img,
 	i_r2 = light->light_ratio / ft_vec3d_squared_len(r);
 	n_l = ft_vec3d_dot(rec->normal, ft_vec3d_unit_lenght(r));
 	result += 0.4 * i_r2 * ft_max(0, n_l);
-	v = ft_colour_to_vec3d(light->colour);
+	v = ft_vec3d_pro_vec3d(ft_colour_to_vec3d(light->colour),
+			ft_colour_to_vec3d(rec->colour));
 	if (ray)
 		return (ft_vec3d_pro_double(v, result));
 	return (ft_vec3d_pro_double(ft_vec3d_pro_vec3d(v, ft_colour_to_vec3d(rec->colour)), result));

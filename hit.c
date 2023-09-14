@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 14:17:03 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/07/09 18:58:42 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/09/14 13:27:58 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -54,6 +54,7 @@ t_element	*ft_hittable_element(t_ray *ray, t_data *img, t_hit_record *rec)
 	t_list			*world;
 
 	world = img->world;
+	element_bk = NULL;
 	while (world)
 	{
 		element = world->content;
