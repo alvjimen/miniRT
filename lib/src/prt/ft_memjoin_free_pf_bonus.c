@@ -1,14 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memjoin_free_bonus.c                            :+:      :+:    :+:   */
+/*   ft_memjoin_free_pf_bonus.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvaro </var/spool/mail/alvaro>            +#+  +:+       +#+        */
+/*   By: dmacicio <dmacicio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 18:16:00 by alvaro            #+#    #+#             */
-/*   Updated: 2022/09/12 19:18:45 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/10/02 20:23:13 by dmacicio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "prt.h"
 
 void	*ft_memjoin_free_pf(void **nsbuf, void *line, size_t n_chr,

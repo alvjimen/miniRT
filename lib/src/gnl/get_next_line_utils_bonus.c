@@ -1,14 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dmacicio <dmacicio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 11:07:03 by alvjimen          #+#    #+#             */
-/*   Updated: 2022/09/22 17:35:21 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/10/02 20:23:13 by dmacicio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "gnl.h"
 
 void	*ft_memjoin_free(void **nsbuf, void **line, size_t *n_chr, ssize_t *b_c)

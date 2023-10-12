@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atof.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dmacicio <dmacicio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:45:04 by alvjimen          #+#    #+#             */
-/*   Updated: 2022/10/28 16:42:58 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/10/02 16:59:17 by dmacicio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
 double	ft_atof(char	*str)
@@ -24,13 +25,13 @@ double	ft_atof(char	*str)
 		divider = -divider;
 	if (ft_is_plus_or_minus(*str, *str))
 		str++;
-	while (*str >= '0' && *str < '9')
+	while (*str >= '0' && *str <= '9')
 		str++;
 	if (*str == '.')
 	{
 		str++;
 		period = ft_atoi(str);
-		while (*str >= '0' && *str < '9')
+		while (*str >= '0' && *str <= '9')
 		{
 			str ++;
 			divider *= 10;

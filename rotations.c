@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   rotations.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dmacicio <dmacicio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 11:19:38 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/21 19:31:03 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/10/12 13:33:39 by dmacicio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minirt.h"
 
 t_vec3d	ft_rotate_x(t_vec3d vector, double angle)

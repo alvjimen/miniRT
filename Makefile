@@ -97,7 +97,7 @@ END-RULE				=	@echo "$(CSI)$(BLINK)$(END)🎉🎊$(CSI)$(UNBLINK)$(END)\
 -include $(DEPS)
 
 PPFLAGS				:=	-MMD -MP #-I $(INC) -I $(INCS)
-CFLAGS			=	-Wall -Werror -Wextra $(INFLAGS) $(PPFLAGS) -g3 -fsanitize=address
+CFLAGS			=	-Wall -Werror -Wextra $(INFLAGS) $(PPFLAGS) -g3 #-fsanitize=address
 all:	$(NAME)
 
 $(NAME):	$(OBJ) $(LIB)

@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putpointer_pf_bonus.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvaro </var/spool/mail/alvaro>            +#+  +:+       +#+        */
+/*   By: dmacicio <dmacicio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 17:34:16 by alvaro            #+#    #+#             */
-/*   Updated: 2022/09/12 19:35:36 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/10/02 20:23:13 by dmacicio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "prt.h"
 
 static ssize_t	ft_putpointer_pf_write(size_t pointer, t_flags *flags)

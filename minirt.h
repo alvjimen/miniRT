@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dmacicio <dmacicio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:49:59 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/10/12 11:58:37 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/10/12 13:34:42 by dmacicio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #ifndef MINIRT_H
 # define MINIRT_H
 /*KEYBOARD BINDING*/
@@ -143,6 +144,65 @@
 # define BUMP_IMG 5
 # define NORMAL_IMG 6
 # define TMAX INFINITY
+
+/*ERROR MESSAGE*/
+# define EFE "Empty File error\n"
+
+# define CVE "Camera Viewpoint error\n"
+# define CNOVE "Camera normalized orientation vector error\n"
+# define CFOVE "Camera vision angle error\n"
+# define CELE "Camera end line error\n"
+# define CNOVRE "Camera normalized orientation vector range error\n"
+# define CFOVRE "Camera vision angle range error\n"
+
+# define ALIE "Ambient light intensity error\n"
+# define ALCE "Ambient light colour error\n"
+# define ALELE "Ambient light end line error\n"
+# define ALCRE "Ambient light colour range error [0, 255]\n"
+# define ALIRE "Ambient light intensity range error [0.0,1.0]\n"
+
+# define CYCE "Cylinder coordenate error\n"
+# define CYNOVE "Cylinder normalized orientation vector error\n"
+# define CYFPE "Cylinder first param error\n"
+# define CYSPE "Cylinder second param error\n"
+# define CYCOLOURE "Cylinder colour error\n"
+# define CYELE "Cylinder end line error\n"
+# define CYNOVRE "Cylinder normalized orientation vector range error [-1,1]\n"
+# define CYDRE "Cylinder diameter must be bigger than 0\n"
+# define CYHRE "Cylinder height must be bigger than 0\n"
+
+# define CNCE "Cone coordenate error\n"
+# define CNNOVE "Cone normalized orientation vector error\n"
+# define CNFPE "Cone first param error\n"
+# define CNSPE "Cone second param error\n"
+# define CNCOLOURE "Cone colour error\n"
+# define CNELE "Cone end line error\n"
+
+# define SPOE "Sphere origin error\n"
+# define SPDE "Sphere diameter error\n"
+# define SPCE "Sphere colour error\n"
+# define SPELE "Sphere end line error\n"
+# define SPDRE "Sphere diameter must be bigger than 0\n"
+# define SPCRE "Spherre colour range error [0, 255]\n"
+
+# define LCE "Light coordenate error\n"
+# define LBE "Light brigthness error\n"
+# define LCOLOURE "Light colour error\n"
+# define LELE "Light end line error\n"
+# define LCRE "Ambient light colour range error [0, 255]\n"
+# define LBRE "Light brigthness range error [0.0,1.0]\n"
+
+# define PCE "Plane coordenate error\n"
+# define PNOVE "Plane normalized orientation vector error\n"
+# define PCOLOURE "Plane colour error\n"
+# define PELE "Plane end line error\n"
+# define PCRE "Plane colour range error [0, 255]\n"
+# define PNOVRE "Plane normalized orientation vector range error [-1,1]\n"
+
+# define FEMTOC "File error: more than one camera\n"
+# define FENC "File error: no camera\n"
+# define FEMTOAL "File error: More than one ambient light\n"
+# define FEAL3E "Error: At least 3 elements: sphera, plane and cylinder/cone\n"
 
 typedef enum e_type
 {
@@ -296,7 +356,23 @@ typedef struct s_data
 //	t_vec3d		perlin;
 //	double		perlin_ranfloat[256];
 //	int			perlin_init;
+	int			err;
+	int			numcamera;
+	int			num_ambient_light;
+	int			num_sphera;
+	int			num_plane;
+	int			num_cy;
 }	t_data;
+
+typedef struct s_cone_cylinder
+{
+	t_list		*node;
+	t_vec3d		normalized_orientation_vector;
+	t_vec3d		coords;
+	double		param[2];
+	t_colour	colour;
+}	t_cone_cylinder;
+
 
 
 /* normalize.c */
@@ -398,13 +474,13 @@ int				ft_is_space(char chr);
 /* ft_atof.c */
 double			ft_atof(char	*str);
 /* parse_utils.c */
-int				ft_parse_double(char *str, size_t *pos, double *value);
+int				ft_parse_double(char *str, size_t *pos, double *value, char *msg);
 int				ft_parse_unsigned_char(char *str, size_t *pos,
-					unsigned char *value);
+					unsigned char *value, char *msg);
 int				ft_parse_comma(char *str, size_t *pos);
-int				ft_parse_end(char *str, size_t pos);
-int				ft_parse_vec3d(char *str, size_t *pos, t_vec3d *vector);
-int				ft_parse_colour(char *str, size_t *pos, t_colour *colour);
+int				ft_parse_end(char *str, size_t pos, char *msg);
+int				ft_parse_vec3d(char *str, size_t *pos, t_vec3d *vector, char *msg);
+int				ft_parse_colour(char *str, size_t *pos, t_colour *colour, char *msg);
 /* ft_run.c */
 void			ft_run_is_space(char *str, size_t *pos);
 int				ft_run_atof(char *str, size_t *pos);
@@ -497,8 +573,8 @@ double	ft_hit_surface_top(t_ray *ray, t_camera *camera, t_element *cylinder,
 int	ft_base_of_the_cylinder(t_ray *ray, t_camera *camera, t_hit_record *rec,
 		t_element *cylinder);
 /* parse_utils_v2 */
-int	ft_common_cylinder_cone(char *str, size_t *pos, t_vec3d *coords,
-		t_vec3d *normalized_orientation_vector);
+// // int	ft_common_cylinder_cone(char *str, size_t *pos, t_vec3d *coords,
+// // 		t_vec3d *normalized_orientation_vector);
 /* bump.c */
 t_vec3d	ft_raw_vec3d_to_normalized(t_vec3d raw);
 t_vec3d ft_raw_bu(t_mlx_img *img, int x, int y);
@@ -508,4 +584,8 @@ t_vec3d	ft_bump(int x, int y, t_data *img, t_hit_record *rec);
 t_colour	ft_color_mix(const t_hit_record *rec, const t_ray *ray, t_data *img);
 t_colour	ft_color_mirror(const t_hit_record *rec, const t_ray *ray, t_data *img);
 t_vec3d	reflect(t_vec3d vector_n, t_vec3d normal_n);
+int	ft_common_cylinder_cone(char *str, size_t *pos, t_cone_cylinder	*cy_co, char *msg1, char *msg2);
+int	ft_is_valid_double(char *str);
+int	ft_common_cylinder_cone(char *str, size_t *pos, t_cone_cylinder	*cy_co, char *msg1, char *msg2);
+int	ft_is_valid_double(char *str);
 #endif

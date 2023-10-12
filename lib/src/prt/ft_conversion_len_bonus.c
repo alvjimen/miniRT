@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   ft_conversion_len_bonus.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvaro </var/spool/mail/alvaro>            +#+  +:+       +#+        */
+/*   By: dmacicio <dmacicio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/27 12:42:37 by alvaro            #+#    #+#             */
-/*   Updated: 2022/09/20 17:08:37 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/10/02 20:23:13 by dmacicio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "prt.h"
 
 static ssize_t	ft_conversion_len_base(t_flags *flags, void *data, char *str)

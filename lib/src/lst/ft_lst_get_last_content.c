@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lst_get_last_content.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dmacicio <dmacicio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 15:51:46 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/01/30 17:17:43 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/10/02 20:23:13 by dmacicio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "lst.h"
 
 void	*ft_get_last_content(t_list *node)

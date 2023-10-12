@@ -3,12 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   camera.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dmacicio <dmacicio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/25 18:04:11 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/10/09 18:10:49 by alvjimen         ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2023/10/12 13:26:29 by dmacicio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
+
 #include "minirt.h"
 
 void	ft_img(t_data *img, const int image_width, const double aspect_ratio)

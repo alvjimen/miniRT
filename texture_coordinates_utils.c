@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   texture_coordinates_utils.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dmacicio <dmacicio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 16:27:24 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/10/09 12:19:52 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/10/12 13:33:53 by dmacicio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minirt.h"
 
 static void	ft_load_img_aux(t_data *img, t_mlx_img *target, char *path)

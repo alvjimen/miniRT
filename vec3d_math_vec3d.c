@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   vec3d_math_vec3d.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dmacicio <dmacicio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 17:14:17 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/05/27 15:18:59 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/10/02 16:59:17 by dmacicio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minirt.h"
 
 t_vec3d	ft_vec3d_plus_vec3d(t_vec3d o1, t_vec3d o2)

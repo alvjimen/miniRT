@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cone_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dmacicio <dmacicio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/07 16:11:08 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/10/07 18:10:12 by alvjimen         ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2023/10/12 13:27:21 by dmacicio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 #include "minirt.h"
 
 /* h = height */

@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putdigit_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvaro </var/spool/mail/alvaro>            +#+  +:+       +#+        */
+/*   By: dmacicio <dmacicio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/07 16:56:02 by alvaro            #+#    #+#             */
-/*   Updated: 2022/09/20 17:34:02 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/10/02 20:23:13 by dmacicio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "prt.h"
 
 static ssize_t	ft_putdigit_pf_write(int nbr, t_flags *flags)

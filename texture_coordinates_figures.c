@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   texture_coordinates_figures.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dmacicio <dmacicio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 14:12:45 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/09/08 14:15:39 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/10/02 16:59:17 by dmacicio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minirt.h"
 
 /*

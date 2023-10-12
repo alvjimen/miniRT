@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_is_space.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dmacicio <dmacicio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 18:07:28 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/06 18:15:54 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/10/02 16:59:17 by dmacicio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "libft.h"
 
 int	ft_is_space(char chr)
 {

@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   ft_fill_cell.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dmacicio <dmacicio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 19:16:47 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/01/30 17:34:18 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/10/02 20:23:13 by dmacicio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "dbg.h"
 
 void	ft_fill_cell(char *str, size_t times, int fd)

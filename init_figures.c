@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   init_figures.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dmacicio <dmacicio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 09:14:56 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/10/09 17:52:31 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/10/12 13:29:44 by dmacicio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minirt.h"
 
 t_element	*sphere(t_vec3d coord, double diameter,

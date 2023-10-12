@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   ft_conversions_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dmacicio <dmacicio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 18:32:45 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/01/30 17:11:49 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/10/02 20:23:13 by dmacicio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "prt.h"
 
 static void	ft_conversion_char(char **str, t_flags *flags, va_list args,

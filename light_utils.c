@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   light_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dmacicio <dmacicio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 18:19:10 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/10/12 08:11:26 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/10/12 13:30:17 by dmacicio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minirt.h"
 
 int	ft_find_light(void *node)

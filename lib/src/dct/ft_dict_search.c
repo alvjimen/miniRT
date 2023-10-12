@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   ft_dict_search.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dmacicio <dmacicio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 16:06:00 by alvjimen          #+#    #+#             */
-/*   Updated: 2022/09/26 16:30:38 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/10/02 20:23:13 by dmacicio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "dct.h"
 
 void	*ft_dict_search(t_list *lst, void *key, size_t step_size)

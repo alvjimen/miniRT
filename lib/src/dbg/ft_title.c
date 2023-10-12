@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   ft_title.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dmacicio <dmacicio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 19:16:47 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/01/30 17:35:18 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/10/02 20:23:13 by dmacicio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "dbg.h"
 
 static void	top_border(int fd, int padding, size_t len_str)

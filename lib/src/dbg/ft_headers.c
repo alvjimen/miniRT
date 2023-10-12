@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   ft_headers.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dmacicio <dmacicio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 17:36:05 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/01/30 20:32:09 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/10/02 20:23:13 by dmacicio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "dbg.h"
 
 static void	ft_set_delim(char *delim[4])

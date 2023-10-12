@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   plane.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dmacicio <dmacicio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 18:33:33 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/07/10 13:40:12 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/10/02 16:59:17 by dmacicio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minirt.h"
 
 t_vec3d	ft_vec3d_xz(t_vec3d v1)

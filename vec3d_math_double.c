@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   vec3d_math_double.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dmacicio <dmacicio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 17:13:19 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/05/30 18:13:04 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/10/02 16:59:17 by dmacicio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minirt.h"
 
 t_vec3d	ft_vec3d_pro_double(t_vec3d o1, double o2)

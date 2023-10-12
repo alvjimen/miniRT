@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   ft_handle_flags_bonus.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvaro </var/spool/mail/alvaro>            +#+  +:+       +#+        */
+/*   By: dmacicio <dmacicio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 17:23:11 by alvaro            #+#    #+#             */
-/*   Updated: 2022/08/16 18:47:24 by alvaro           ###   ########.fr       */
+/*   Updated: 2023/10/02 20:23:13 by dmacicio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "prt.h"
 
 void	ft_handle_flags(t_flags *flags, char **str)

@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   ppm.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dmacicio <dmacicio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 14:26:13 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/10/07 18:30:18 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/10/12 13:33:21 by dmacicio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minirt.h"
 
 void	ft_draw_ppm_header(int width, int height, int fd)

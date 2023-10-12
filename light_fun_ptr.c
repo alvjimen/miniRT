@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   light_fun_ptr.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dmacicio <dmacicio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 18:42:31 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/10/09 18:32:21 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/10/12 13:30:05 by dmacicio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minirt.h"
 
 t_vec3d	ft_color_ambient_light(t_hit_record *rec, t_ray *ray, t_data *img)

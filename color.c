@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   color.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dmacicio <dmacicio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:16:42 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/10/07 18:08:00 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/10/12 13:25:29 by dmacicio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minirt.h"
 
 static int	ft_color_double_to_int(double c)

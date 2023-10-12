@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   cylinder_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dmacicio <dmacicio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 17:01:19 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/10/07 18:16:24 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/10/12 13:28:08 by dmacicio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minirt.h"
 
 double	ft_hit_surface_base(t_ray *ray, t_camera *camera, t_element *cylinder,

@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   sphere.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dmacicio <dmacicio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 18:32:04 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/10/07 18:36:04 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/10/12 13:33:46 by dmacicio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minirt.h"
 
 static double	ft_sqrt_sphere(double discriminant, double a, double half_b,

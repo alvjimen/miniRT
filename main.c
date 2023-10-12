@@ -3,13 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dmacicio <dmacicio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 13:09:45 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/10/02 14:41:25 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/10/12 13:30:27 by dmacicio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minirt.h"
+
+void	ft_leaks(void)
+{
+	system("leaks graphics");
+}
 
 int	main(int argc, char	*argv[])
 {
@@ -17,6 +23,7 @@ int	main(int argc, char	*argv[])
 
 	if (argc < 2 && !*argv)
 		return (1);
+	ft_leaks();
 	ft_bzero(&img, sizeof(img));
 	ft_img(&img, WIN_W, ASPECT_RATIO);
 	ft_load_img(&img);

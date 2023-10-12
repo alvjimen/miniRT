@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   ft_flags_is_str_bonus.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvaro </var/spool/mail/alvaro>            +#+  +:+       +#+        */
+/*   By: dmacicio <dmacicio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 12:26:08 by alvaro            #+#    #+#             */
-/*   Updated: 2022/07/28 16:30:28 by alvaro           ###   ########.fr       */
+/*   Updated: 2023/10/02 20:23:13 by dmacicio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "prt.h"
 
 int	ft_flags_is_str(char *str)

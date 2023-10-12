@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   ft_fix_flags_hex_bonus.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvaro </var/spool/mail/alvaro>            +#+  +:+       +#+        */
+/*   By: dmacicio <dmacicio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/05 18:10:48 by alvaro            #+#    #+#             */
-/*   Updated: 2022/09/20 17:24:33 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/10/02 20:23:13 by dmacicio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "prt.h"
 
 void	ft_fix_flags_hex(t_flags *flags, size_t pointer, ssize_t len)

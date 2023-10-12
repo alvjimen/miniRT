@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   ft_search_list.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dmacicio <dmacicio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 20:09:40 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/22 18:41:49 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/10/02 19:52:52 by dmacicio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "lst.h"
 
 t_list	*ft_search_list(t_list *lst, int (*f)(void *))

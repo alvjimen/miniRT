@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dmacicio <dmacicio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/22 16:10:37 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/04/22 16:11:27 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/10/02 20:25:09 by dmacicio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include <stdlib.h>
 
 void	ft_free(void **ptr)
@@ -16,4 +17,3 @@ void	ft_free(void **ptr)
 	free(*ptr);
 	*ptr = NULL;
 }
-

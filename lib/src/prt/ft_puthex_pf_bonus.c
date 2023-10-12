@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   ft_puthex_pf_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvaro </var/spool/mail/alvaro>            +#+  +:+       +#+        */
+/*   By: dmacicio <dmacicio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/13 14:00:49 by alvaro            #+#    #+#             */
-/*   Updated: 2022/09/20 17:36:04 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/10/02 20:23:13 by dmacicio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "prt.h"
 
 static ssize_t	ft_puthex_pf_write(unsigned int num, t_flags *flags, char *str)
