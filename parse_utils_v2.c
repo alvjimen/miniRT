@@ -6,7 +6,7 @@
 /*   By: dmacicio <dmacicio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 13:51:54 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/10/11 20:36:33 by dmacicio         ###   ########.fr       */
+/*   Updated: 2023/10/12 15:52:54 by dmacicio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,11 +150,7 @@ int	ft_parse_file(char *file, t_data *img)
 		if (!str)
 		{
 			if (anyline)
-			{
-				//if(!img->err)
 				return ft_valid_img(img);
-				//return (img->err);
-			}
 
 			write(1, EFE, ft_strlen(EFE));
 			return (-1);
@@ -163,7 +159,7 @@ int	ft_parse_file(char *file, t_data *img)
 		anyline++;
 		if (ft_parse_line(str, img))
 			img->err = -1;;
-//		free(str);
+		free(str);
 	}
 	return (img->err);
 }
@@ -178,10 +174,4 @@ int	ft_parse_end(char *str, size_t pos, char *msg)
 	}
 	return (0);
 }
-
-// if (ft_parse_line(str, img))
-// {
-// 	free(str);
-// 	return (-1);
-// }
 		
