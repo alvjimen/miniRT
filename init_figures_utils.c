@@ -6,7 +6,7 @@
 /*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 13:47:34 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/09/07 13:48:15 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/10/09 17:53:06 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -26,6 +26,7 @@ t_element	*cylinder(t_vec3d coords, t_vec3d normalized_orientation_vector,
 	element->radius = element->diameter / 2;
 	element->height = param[1];
 	element->colour = colour;
+	element->reflection_index = 0;
 	element->hittable = 1;
 	element->ft_hit = ft_hit_cylinder;
 	return (element);
@@ -46,6 +47,7 @@ t_element	*cone(t_vec3d coords, t_vec3d normalized_orientation_vector,
 	element->radius = element->diameter / 2;
 	element->height = param[1];
 	element->colour = colour;
+	element->reflection_index = 0;
 	element->hittable = 1;
 	element->ft_hit = ft_hit_cone;
 	return (element);

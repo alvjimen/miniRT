@@ -36,13 +36,13 @@ void	ft_draw_antialiasing(t_data *img)
 	int		colour;
 
 	y = 0;
-	while (y < img->image_height)
+	while (y < img->display.height)
 	{
 		x = 0;
-		while (x < img->image_width)
+		while (x < img->display.width)
 		{
 			colour = ft_antialiasing(img, x, y);
-			my_mlx_pixel_put(img, x, y, colour);
+			my_mlx_pixel_put(&img->display, x, y, colour);
 			x++;
 		}
 		y++;

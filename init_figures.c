@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 09:14:56 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/09/07 13:48:19 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/10/09 17:52:31 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -26,6 +26,7 @@ t_element	*sphere(t_vec3d coord, double diameter,
 	element->colour = colour;
 	element->hittable = 1;
 	element->ft_hit = ft_hit_sphere;
+	element->reflection_index = 0;
 	return (element);
 }
 
@@ -67,5 +68,6 @@ t_element	*plane(t_vec3d coords, t_vec3d normalized_orientation_vector,
 	element->colour = colour;
 	element->hittable = 1;
 	element->ft_hit = ft_hit_plane;
+	element->reflection_index = 0;
 	return (element);
 }

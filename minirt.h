@@ -6,7 +6,7 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:49:59 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/09/14 12:03:53 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/10/12 11:58:37 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINIRT_H
@@ -46,6 +46,7 @@
 #  define F1 122
 /* Make a picture */
 #  define F2 120
+#  define F3 99
 /* undefined */
 /* Put or quit shadow/light effects */
 #  define U 32
@@ -55,11 +56,19 @@
 #  define K 40
 #  define L_CLICK 1
 #  define SHIFT 257
+#  define G 103
+#  define V 118
+#  define LEFT_ARROW 123
+#  define RIGHT_ARROW  124
+#  define UP_ARROW 126
+#  define DOWN_ARROW 125
+#  define M 46
 # else
 #  define ESC 65307
 /* REDRAW */
 #  define F1 65470
 #  define F2 65471
+#  define F3 65472
 /* Camera Origin */
 #  define Q 113
 #  define W 119
@@ -101,13 +110,22 @@
 #  define O 111
 #  define U 117
 #  define SHIFT 65505
+#  define G 103
+#  define V 118
+#  define LEFT_ARROW 65361
+#  define RIGHT_ARROW 65363
+#  define UP_ARROW 65362
+#  define DOWN_ARROW 65364
+#  define M 109
+
 # endif
 /*WIN SIZE*/
 # define ASPECT_RATIO 1.7777777777777777 // 16.0 / 9.0
 # define WIN_W 640.0
 # define NEAR_ZERO 1e-8;
-# define XPM_BUMP_PATH	"./earthmap_normal.xpm" //"./earthmap_bump.xpm"
-# define XPM_PATH	"./earthmap.xpm"
+# define XPM_BUMP_PATH	  "./xpm/earthmap_bumpmap.xpm"
+# define XPM_NORMAL_PATH	"./xpm/earthmap_normal.xpm"
+# define XPM_PATH	"./xpm/earthmap.xpm"
 # include <stdio.h>
 # include <stdlib.h>
 # include <math.h>
@@ -121,7 +139,9 @@
 # define CHECKER 1
 # define IMG 2
 # define BUMP 3
-# define BUMP_IMG 4
+# define NORMAL 4
+# define BUMP_IMG 5
+# define NORMAL_IMG 6
 # define TMAX INFINITY
 
 typedef enum e_type
@@ -169,31 +189,20 @@ typedef struct s_colour
 	unsigned char	blue;
 }	t_colour;
 
-typedef struct s_vec4d
-{
-	double	x;
-	double	y;
-	double	z;
-	double	w;
-}	t_vec4d;
-
 typedef struct s_m3x3
 {
 	t_vec3d	r[3];
 }	t_m3x3;
 
 /* w = 0 if vector w = 1 if point */
-typedef struct s_m4x4
-{
-	t_vec4d	r[4];
-}	t_m4x4;
-
 typedef struct s_ray
 {
 	t_vec3d	origin;
 	t_vec3d	direction;
 	t_vec3d	unit_direction;
 }	t_ray;
+
+typedef struct s_element	t_element;
 
 typedef struct s_hit_record
 {
@@ -208,6 +217,8 @@ typedef struct s_hit_record
 	double		brightess_light;
 	t_vec3d		h;
 	double		q;
+	double		reflection_index;
+  t_colour	mirror_color;
 }	t_hit_record;
 
 typedef struct s_data	t_data;
@@ -223,12 +234,18 @@ typedef struct s_element
 	double		height;
 	double		light_ratio;
 	double		hfov;
-	int			hittable;
-	int			(*ft_hit)(t_ray *, t_camera *, t_hit_record *,
-			struct s_element *);
-	int			textured;
-	void		(*ft_texture)(t_hit_record *, struct s_element *,
+	int				hittable;
+	int				(*ft_hit)(t_ray *, t_camera *, t_hit_record *,
+								struct s_element *);
+	void			(*ft_texture)(t_hit_record *, struct s_element *,
 			t_data *);
+	int				textured; // init 0
+	double		displacement_u; // init 0
+	double		displacement_v; // init 0
+	double		reflection_index; // init 0
+	double		coefficient_diffuse; // init 1
+	double		coefficient_ambient; // init 1
+	double		coefficient_specular; // init 1
 }	t_element;
 /*Horizontalfield of view in degrees 0-180*/
 
@@ -238,22 +255,24 @@ typedef struct s_mouse
 	int	y;
 }	t_mouse;
 
-typedef struct s_ptr_fun_color	{
-	t_vec3d	(*f)(t_hit_record, t_ray *, struct s_data *);
-}	t_ptr_fun_color;
+typedef struct s_mlx_img {
+	void	*img;
+	char	*address;
+	int	width;
+	int	height;
+	int	bits_per_pixel;
+	int	line_length;
+	int	endian;
+}       t_mlx_img;
 
 typedef struct s_data
 {
-	void		*mlx;
-	void		*mlx_win;
-	void		*img;
-	char		*addr;
-	int			bits_per_pixel;
-	int			line_length;
-	int			endian;
-	int			image_width;
-	int			image_height;
-	int			samplex_per_pixel;
+	void			*mlx;
+	void			*mlx_win;
+	t_mlx_img	display;
+	int				samplex_per_pixel;
+	int				rotated: 1;
+	int				axis: 1;
 	t_list		*world;
 	t_camera	camera;
 	t_element	ambient_light;
@@ -265,30 +284,20 @@ typedef struct s_data
 	t_vec3d		vector;
 	double		modifier;
 	double		angle;
-	//t_ptr_fun_color	ft_color;
 	t_vec3d		(*ft_color)(t_hit_record *a, t_ray *b, struct s_data *c);
 	int			value_color;
-	t_vec3d		perlin;
-	double		perlin_ranfloat[256];
-	int			perlin_init;
-	void		*xpm;
-	char		*xpm_address;
-	int			xpm_width;
-	int			xpm_height;
-	int			xpm_bits_per_pixel;
-	int			xpm_line_length;
-	int			xpm_endian;
-	void		*xpm_bump;
-	char		*xpm_bump_address;
-	int			xpm_bump_width;
-	int			xpm_bump_height;
-	int			xpm_bump_bits_per_pixel;
-	int			xpm_bump_line_length;
-	int			xpm_bump_endian;
+	t_mlx_img	img;
+	t_mlx_img	normal;
+	t_mlx_img	bump;
 	int			textured;
 	void		(*ft_texture)(t_hit_record *, struct s_element *,
 			struct s_data *);
+	int			mirror_limit;
+//	t_vec3d		perlin;
+//	double		perlin_ranfloat[256];
+//	int			perlin_init;
 }	t_data;
+
 
 /* normalize.c */
 double			normalize_coord(double coord, double max_coord,
@@ -296,31 +305,21 @@ double			normalize_coord(double coord, double max_coord,
 double			unnormalize_coord(double n_coord, double max_coord,
 					double min_coord);
 /* hooks.c */
+void	    ft_double_normalize(double *nbr);
 int				key_hook(int keycode, t_data *img);
 int				hook_close(void);
 int				hook_mouse(int button, int x, int y, void *param);
 void	ft_print_vector(const char *str, t_vec3d vector);
 /* draw.c */
 void			ft_draw_without_antialiasing(t_data *img);
-void			my_mlx_pixel_put(t_data *data, int x, int y, int color);
+void			my_mlx_pixel_put(t_mlx_img *img, int x, int y, int color);
 /* rotations.c */
 t_vec3d			ft_rotate_x(t_vec3d vector, double angle);
 t_vec3d			ft_rotate_y(t_vec3d vector, double angle);
 t_vec3d			ft_rotate_z(t_vec3d vector, double angle);
-t_vec3d			ft_vec3d_pro_matrix(t_vec3d vector, t_m3x3 matrix);
-/*
-void			rotation_x(double angle, t_vec4d *v);
-void			rotation_y(double angle, t_vec4d *v);
-void			rotation_z(double angle, t_vec4d *v);
-void			ft_rotate_elements(t_list *lst, void (f)(double, t_vec4d *));
-*/
 /* angle.c */
 double			ft_degree_to_radians(double degree);
 double			ft_radians_to_degree(double radians);
-/*projection.c*/
-/*
-void			*ft_get_matrix_projection(double fovangle);
-*/
 /* init_figures.c */
 t_element		*sphere(t_vec3d coord, double diameter,
 					t_colour colour);
@@ -332,11 +331,6 @@ t_element		*cylinder(t_vec3d coords, t_vec3d normalized_orientation_vector,
 					double param[2], t_colour colour);
 t_element		*cone(t_vec3d coords, t_vec3d normalized_orientation_vector,
 					double param[2], t_colour colour);
-/* matrix.c */
-/*
-* void			matrixmultiplication(t_vec4d *origin, t_vec4d *destiny,
-					t_m4x4 *matrix);
-*/
 /* vec3d.c */
 t_vec3d			ft_init_vec3d(double x, double y, double z);
 double			ft_vec3d_len(t_vec3d o1);
@@ -355,8 +349,6 @@ t_vec3d			ft_vec3d_cross(t_vec3d o1, t_vec3d o2);
 /* vec3d_math_double.c */
 t_vec3d			ft_vec3d_pro_double(t_vec3d o1, double o2);
 t_vec3d			ft_vec3d_div_double(t_vec3d o1, double o2);
-/* vector4d.c */
-t_vec4d			*ft_vec4d_init(double x, double y, double z, double w);
 /* ray.c */
 t_ray			ft_init_ray(t_vec3d origin, t_vec3d direction);
 t_vec3d			ft_ray_at(t_ray *ray, double t);
@@ -364,9 +356,9 @@ t_vec3d			ft_ray_color(t_ray *ray, t_data *img);
 t_vec3d			ft_ray_direction(t_data *img, int x, int y, int flag);
 /* ppm.c */
 void			ft_draw_ppm_header(int width, int height, int fd);
-void			ft_draw_ppm_pixel(int colour, int fd);
-int				get_mlx_pixel_colour(t_data *img, int x, int y);
-void			ft_prt_ppm_file_from_img(t_data *img, int width, int height,
+void			ft_draw_ppm_pixel(int colour, int fd, int endian);
+int				get_mlx_pixel_colour(t_mlx_img *img, int x, int y);
+void			ft_prt_ppm_file_from_img(t_mlx_img *img, int width, int height,
 					int fd);
 /* camera.c */
 void			ft_img(t_data *img, const int image_width,
@@ -393,11 +385,11 @@ void			ft_draw_antialiasing(t_data *img);
 /* color.c */
 int				ft_write_color(t_vec3d vector, int samplex_per_pixel);
 t_vec3d			ft_colour_to_vec3d(t_colour colour);
+t_vec3d	  ft_pixel_to_raw_color_vec3d(int pixel, int endian);
+
 /* number.c */
 double			clamp(double x, double min, double max);
 double			ft_dabs(double num);
-double			ft_quadratic_equation(double a, double b, double c,
-					t_camera *camera);
 /* parse.c */
 void			ft_run_is_space(char *str, size_t *pos);
 int				ft_parse_file(char *file, t_data *img);
@@ -435,7 +427,7 @@ t_vec3d			ft_diffuse_light(t_hit_record *rec, t_ray *ray, t_data *img,
 					t_element *light);
 t_vec3d			ft_specular_light(t_hit_record *rec, t_ray *ray, t_data *img,
 					t_element *light);
-t_vec3d			ft_ambient_light(t_hit_record *rec, t_data *img);
+t_vec3d			ft_ambient_light(t_hit_record *rec, t_ray *ray, t_data *img);
 void			ft_img_color(t_data *img);
 t_vec3d			ft_color_diffuse_specular_ambiance_light(t_hit_record *rec,
 					t_ray *ray, t_data *img);
@@ -449,7 +441,6 @@ void			ft_img_color(t_data *img);
 /* Unused function */
 t_vec3d			ft_color_ambient_light(t_hit_record *rec, t_ray *ray,
 				t_data *img);
-t_vec3d			ft_specular_reflection(t_vec3d direction, t_vec3d normal);
 /* light_fun.c */
 t_vec3d			ft_color_diffuse_light(t_hit_record *rec, t_ray *ray,
 				t_data *img);
@@ -462,6 +453,8 @@ t_vec3d			ft_color_specular_ambient_light(t_hit_record *rec, t_ray *ray,
 t_vec3d			ft_color_specular_diffuse_light(t_hit_record *rec, t_ray *ray,
 				t_data *img);
 /* texture_coordinates.c  */
+void	ft_checker_normal_image(t_hit_record *rec, t_element *sphere,
+		t_data *img);
 void			ft_sphere_uv(t_hit_record *rec, t_element *sphere);
 void			ft_checker_texture(t_hit_record *rec, t_element *sphere,
 					t_data *img);
@@ -474,17 +467,18 @@ void			ft_checkerboard(t_hit_record *rec, t_element *element,
 void			ft_cylinder_uv(t_hit_record *rec, t_element *cylinder);
 void			ft_cone_uv(t_hit_record *rec, t_element *cylinder);
 void			ft_plane_uv(t_hit_record *rec, t_element *plane);
-void			ft_checkerboard_v2(t_hit_record *rec, t_element *element,
-					t_data *img);
 void			ft_checker_bump_image(t_hit_record *rec, t_element *sphere,
 					t_data *img);
 void			ft_checker_bump(t_hit_record *rec, t_element *sphere,
+					t_data *img);
+void			ft_checker_normal(t_hit_record *rec, t_element *sphere,
 					t_data *img);
 void			ft_texture(t_data *img);
 void			ft_load_img(t_data *img);
 /* matrix.c */
 t_m3x3			ft_init_m3x3(t_vec3d v1, t_vec3d v2, t_vec3d v3);
 t_m3x3			ft_tbn(t_vec3d normal);
+t_vec3d			ft_vec3d_pro_matrix(t_vec3d vector, t_m3x3 matrix);
 /* parse.c */
 int	ft_parse_sphere(char *str, size_t pos, t_data *img);
 int	ft_parse_camera(char *str, size_t pos, t_data *img);
@@ -505,4 +499,13 @@ int	ft_base_of_the_cylinder(t_ray *ray, t_camera *camera, t_hit_record *rec,
 /* parse_utils_v2 */
 int	ft_common_cylinder_cone(char *str, size_t *pos, t_vec3d *coords,
 		t_vec3d *normalized_orientation_vector);
+/* bump.c */
+t_vec3d	ft_raw_vec3d_to_normalized(t_vec3d raw);
+t_vec3d ft_raw_bu(t_mlx_img *img, int x, int y);
+t_vec3d ft_raw_bv(t_mlx_img *img, int x, int y);
+t_vec3d	ft_bump(int x, int y, t_data *img, t_hit_record *rec);
+/*reflect */
+t_colour	ft_color_mix(const t_hit_record *rec, const t_ray *ray, t_data *img);
+t_colour	ft_color_mirror(const t_hit_record *rec, const t_ray *ray, t_data *img);
+t_vec3d	reflect(t_vec3d vector_n, t_vec3d normal_n);
 #endif

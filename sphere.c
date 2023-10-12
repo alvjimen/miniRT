@@ -6,18 +6,17 @@
 /*   By: alvjimen <alvjimen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 18:32:04 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/16 08:05:25 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/10/07 18:36:04 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
 
-double	ft_sqrt_sphere(double discriminant, double a, double half_b,
+static double	ft_sqrt_sphere(double discriminant, double a, double half_b,
 			t_camera *camera)
 {
-	double	sqrtd;
-	double	t;
+	const double	sqrtd = sqrt(discriminant);
+	double			t;
 
-	sqrtd = sqrt(discriminant);
 	t = (-half_b - sqrtd) / a;
 	if (t < camera->t_min || camera->t_max < t)
 	{
@@ -28,7 +27,7 @@ double	ft_sqrt_sphere(double discriminant, double a, double half_b,
 	return (t);
 }
 
-double	ft_root_sphere(t_vec3d *oc, t_ray *ray, t_camera *camera,
+static double	ft_root_sphere(const t_vec3d *oc, t_ray *ray, t_camera *camera,
 		t_element *sphere)
 {
 	double	a;
@@ -48,9 +47,8 @@ double	ft_root_sphere(t_vec3d *oc, t_ray *ray, t_camera *camera,
 int	ft_hit_sphere(t_ray *ray, t_camera *camera, t_hit_record *rec,
 		t_element *sphere)
 {
-	t_vec3d	oc;
+	const t_vec3d	oc = ft_vec3d_minus_vec3d(ray->origin, sphere->coords);
 
-	oc = ft_vec3d_minus_vec3d(ray->origin, sphere->coords);
 	rec->t = ft_root_sphere(&oc, ray, camera, sphere);
 	if (isnan(rec->t))
 		return (0);

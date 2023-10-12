@@ -33,7 +33,7 @@ int	ft_hit_plane(t_ray *ray, t_camera *camera, t_hit_record *rec,
 		return (0);
 	rec->t = ft_vec3d_dot(plane->orientation_vector,
 			ft_vec3d_minus_vec3d(plane->coords, ray->origin)) / denom;
-	if (rec->t >= 0)
+	if (rec->t >= camera->t_min || camera->t_max <= rec->t)
 	{
 		rec->p = ft_ray_at(ray, rec->t);
 		rec->normal = plane->orientation_vector;
@@ -41,7 +41,5 @@ int	ft_hit_plane(t_ray *ray, t_camera *camera, t_hit_record *rec,
 		ft_plane_uv(rec, plane);
 		return (1);
 	}
-	if (camera)
-		return (0);
 	return (0);
 }

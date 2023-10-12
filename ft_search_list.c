@@ -13,22 +13,12 @@
 
 t_list	*ft_search_list(t_list *lst, int (*f)(void *))
 {
-	t_list	*node;
-	t_tkn	*tokens;
-
 	if (!lst)
 		return (NULL);
-	node = lst;
 	while (lst)
 	{
-		if (!f(lst->content))
-		{
-			tokens = lst->content;
-			if (!tokens)
-				continue ;
-			tokens->found = 1;
+		if (!f(lst->content) && lst->content)
 			break ;
-		}
 		lst = lst->next;
 	}
 	return (lst);

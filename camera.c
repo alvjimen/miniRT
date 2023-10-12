@@ -6,7 +6,7 @@
 /*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 18:04:11 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/09/14 12:03:40 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/10/09 18:10:49 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
@@ -19,14 +19,16 @@ void	ft_img(t_data *img, const int image_width, const double aspect_ratio)
 	img->mlx = mlx_init();
 	img->mlx_win = mlx_new_window(img->mlx, image_width, image_height,
 			"miniRT");
-	img->img = mlx_new_image(img->mlx, image_width, image_height);
-	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel,
-			&img->line_length, &img->endian);
+	img->mirror_limit = 50;
+	img->display.img = mlx_new_image(img->mlx, image_width, image_height);
+	img->display.address = mlx_get_data_addr(img->display.img,
+			&img->display.bits_per_pixel, &img->display.line_length,
+			&img->display.endian);
 	mlx_key_hook(img->mlx_win, key_hook, img);
 	mlx_hook(img->mlx_win, 17, 0, hook_close, img);
 	mlx_mouse_hook(img->mlx_win, hook_mouse, img);
-	img->image_width = image_width;
-	img->image_height = image_height;
+	img->display.width = image_width;
+	img->display.height = image_height;
 	img->aspect_ratio = aspect_ratio;
 	img->samplex_per_pixel = 100;
 	img->ft_draw = ft_draw_without_antialiasing;
@@ -38,6 +40,7 @@ t_camera	ft_set_camera_vars(t_vec3d lookfrom, const double aspect_ratio,
 {
 	t_camera	ptr;
 
+	ft_bzero(&ptr, sizeof(ptr));
 	ptr.lookfrom = lookfrom;
 	ptr.lookat = lookat;
 	ptr.aspect_ratio = aspect_ratio;
@@ -54,17 +57,14 @@ t_camera	ft_set_camera_vars(t_vec3d lookfrom, const double aspect_ratio,
 t_camera	ft_init_camera(t_vec3d lookfrom, const double aspect_ratio,
 		const double fov, t_vec3d lookat)
 {
-	t_camera	ptr;
-	t_vec3d		w;
-	t_vec3d		u;
-	t_vec3d		v;
-	t_vec3d		vup;
+	t_camera		ptr;
+	const t_vec3d	w = ft_vec3d_unit_lenght(ft_vec3d_minus_vec3d(lookfrom,
+				lookat));
+	const t_vec3d	vup = ft_init_vec3d(0, 1, 0);
+	const t_vec3d	u = ft_vec3d_unit_lenght(ft_vec3d_cross(vup, w));
+	const t_vec3d	v = ft_vec3d_cross(w, u);
 
 	ptr = ft_set_camera_vars(lookfrom, aspect_ratio, fov, lookat);
-	w = ft_vec3d_unit_lenght(ft_vec3d_minus_vec3d(lookfrom, lookat));
-	vup = ft_init_vec3d(0, 1, 0);
-	u = ft_vec3d_unit_lenght(ft_vec3d_cross(vup, w));
-	v = ft_vec3d_cross(w, u);
 	ptr.horizontal = ft_vec3d_pro_double(u, ptr.viewport_width);
 	ptr.vertical = ft_vec3d_pro_double(v, ptr.viewport_height);
 	ptr.lower_left_corner = ft_vec3d_minus_vec3d(lookfrom,

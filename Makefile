@@ -30,7 +30,6 @@ SRC					=	main.c\
 						hooks.c\
 						draw.c\
 						angle.c\
-						element.c\
 						init_figures.c\
 						sphere.c\
 						vec3d.c\
@@ -40,15 +39,11 @@ SRC					=	main.c\
 						ppm.c\
 						camera.c\
 						hit.c\
-						world.c\
 						antialiasing.c\
 						random_number.c\
 						number.c\
 						color.c\
 						parse.c\
-						ft_is_space.c\
-						ft_isdigit.c\
-						ft_atof.c\
 						ft_run.c\
 						parse_utils.c\
 						plane.c\
@@ -68,7 +63,16 @@ SRC					=	main.c\
 						texture_coordinates_figures.c\
 						texture_coordinates_utils.c\
 						parse_utils_v3.c\
-						# diffuse_materials.c\
+						ft_search_list.c\
+						bump.c\
+						reflect.c\
+						#xpm.c \
+						ft_is_space.c\
+						ft_isdigit.c\
+						ft_atof.c\
+						world.c\
+						#diffuse_materials.c\
+						element.c\
 						perspective.c\
 						normalize.c\
 						projection.c\
@@ -80,7 +84,7 @@ UNAME	:=	$(shell uname)
 LIB		:=	lib/libft.a
 
 ifeq ($(UNAME), Linux)
-	LFLAGS			:=	-Lmlx_linux -lmlx_Linux -L/usr/lib -lbsd -lXext -lX11 -lm -lz
+	LFLAGS			:=	-Lmlx_linux -lmlx_Linux -L/usr/lib -lbsd -lXext -lX11 -lm #-lz
 	INFLAGS			:=	-Imlx_linux -I/usr/include -I./lib/include
 else
 	LFLAGS			:=	-lmlx -framework OpenGL -framework Appkit -lm
@@ -89,6 +93,8 @@ endif
 END-RULE				=	@echo "$(CSI)$(BLINK)$(END)🎉🎊$(CSI)$(UNBLINK)$(END)\
 	$(CSI)$(FOREGROUND)$(GREEN)$(END) $@ $(CSI)$(END)$(CSI)$(BLINK)$(END)🎊\
 	$(CSI)$(UNBLINK)$(END)"
+
+-include $(DEPS)
 
 PPFLAGS				:=	-MMD -MP #-I $(INC) -I $(INCS)
 CFLAGS			=	-Wall -Werror -Wextra $(INFLAGS) $(PPFLAGS) -g3 -fsanitize=address
@@ -100,8 +106,9 @@ $(NAME):	$(OBJ) $(LIB)
 
 $(LIB):
 	$(MAKE) -C lib
+
 clean:
-	$(RM) $(OBJ)
+	$(RM) $(OBJ) *.d
 
 fclean:	clean
 	$(RM) $(NAME)

@@ -11,16 +11,6 @@
 /* ************************************************************************** */
 #include "minirt.h"
 
-t_vec3d	ft_vec3d_pro_matrix(t_vec3d vector, t_m3x3 matrix)
-{
-	t_vec3d	value;
-
-	value.x = ft_vec3d_dot(vector, matrix.r[0]);
-	value.y = ft_vec3d_dot(vector, matrix.r[1]);
-	value.z = ft_vec3d_dot(vector, matrix.r[2]);
-	return (value);
-}
-
 t_vec3d	ft_rotate_x(t_vec3d vector, double angle)
 {
 	t_m3x3	rotate;

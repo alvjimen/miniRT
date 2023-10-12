@@ -6,59 +6,57 @@
 /*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 16:27:24 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/09/08 16:31:10 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/10/09 12:19:52 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minirt.h"
 
-void	ft_load_img(t_data *img)
+static void	ft_load_img_aux(t_data *img, t_mlx_img *target, char *path)
 {
-	if (!img->xpm)
+	if (!target->img)
 	{
-		img->xpm = mlx_xpm_file_to_image(img->mlx, XPM_PATH,
-				&img->xpm_width, &img->xpm_height);
-		if (!img->xpm)
+		target->img = mlx_xpm_file_to_image(img->mlx, path,
+				&target->width, &target->height);
+		if (!target->img)
 			exit (1);
-		img->xpm_address = mlx_get_data_addr(img->xpm,
-				&img->xpm_bits_per_pixel, &img->xpm_line_length,
-				&img->xpm_endian);
-		if (!img->xpm_address)
+		target->address = mlx_get_data_addr(target->img,
+				&target->bits_per_pixel, &target->line_length,
+				&target->endian);
+		if (!target->address)
 			exit (1);
-	}
-	if (!img->xpm_bump)
-	{
-		img->xpm_bump = mlx_xpm_file_to_image(img->mlx, XPM_BUMP_PATH,
-				&img->xpm_bump_width, &img->xpm_bump_height);
-		if (!img->xpm_bump)
-			exit (1);
-		img->xpm_bump_address = mlx_get_data_addr(img->xpm_bump,
-				&img->xpm_bump_bits_per_pixel, &img->xpm_bump_line_length,
-				&img->xpm_bump_endian);
-		if (!img->xpm_bump_address)
-			exit (1);
+		target->endian = img->display.endian;
 	}
 }
 
-void	ft_checker_texture_image(t_hit_record *rec, t_element *sphere,
+// TODO Error MSG in case the img load fail
+void	ft_load_img(t_data *img)
+{
+	ft_load_img_aux(img, &img->img, XPM_PATH);
+	ft_load_img_aux(img, &img->bump, XPM_BUMP_PATH);
+	ft_load_img_aux(img, &img->normal, XPM_NORMAL_PATH);
+}
+
+void	ft_checker_texture_image(t_hit_record *rec, t_element *element,
 		t_data *img)
 {
 	int		i;
 	int		j;
 	char	*pixel;
 
-	if (!sphere && !rec)
+	if (!element && !rec)
 		return ;
-	ft_load_img(img);
-	rec->u = clamp(rec->u, 0.0, 1.0);
-	rec->v = clamp(rec->v, 0.0, 1.0);
-	i = rec->u * img->xpm_width;
-	j = rec->v * img->xpm_height;
-	if (i >= img->xpm_width)
-		i = img->xpm_width - 1;
-	if (j >= img->xpm_height)
-		j = img->xpm_height - 1;
-	pixel = &img->xpm_address[j * img->xpm_line_length + i
-		* (img->xpm_bits_per_pixel / 8)];
+	rec->u = clamp(rec->u, 0.0, 1.0) + element->displacement_u;
+	rec->v = clamp(rec->v, 0.0, 1.0) + element->displacement_v;
+	ft_double_normalize(&rec->u);
+	ft_double_normalize(&rec->v);
+	i = rec->u * img->img.width;
+	j = rec->v * img->img.height;
+	if (i >= img->img.width)
+		i = img->bump.width - 1;
+	if (j >= img->img.height)
+		j = img->img.height - 1;
+	pixel = &img->img.address[j * img->img.line_length + i
+		* (img->img.bits_per_pixel / 8)];
 	rec->colour.alpha = pixel[3];
 	rec->colour.red = pixel[2];
 	rec->colour.green = pixel[1];
