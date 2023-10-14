@@ -6,7 +6,7 @@
 /*   By: dmacicio <dmacicio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 13:45:56 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/10/12 13:34:00 by dmacicio         ###   ########.fr       */
+/*   Updated: 2023/10/14 18:46:48 by dmacicio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,8 +112,7 @@ void	ft_texture(t_data *img)
 //https://stackoverflow.com/questions/41015574/raytracing-normal-mapping
 // I should make to create a function for all rec->u, rec->v i, j
 
-void	ft_checker_normal(t_hit_record *rec, t_element *element,
-		t_data *img)
+void	ft_checker_normal(t_hit_record *rec, t_element *element, t_data *img)
 {
 	int	i;
 	int	j;
@@ -152,18 +151,4 @@ void	ft_checker_bump(t_hit_record *rec, t_element *element,
 	rec->normal = ft_bump(i, j, img, rec);
 	if (element)
 		return ;
-}
-
-void	ft_checker_normal_image(t_hit_record *rec, t_element *sphere,
-		t_data *img)
-{
-	ft_checker_normal(rec, sphere, img);
-	ft_checker_texture_image(rec, sphere, img);
-}
-
-void	ft_checker_bump_image(t_hit_record *rec, t_element *sphere,
-		t_data *img)
-{
-	ft_checker_bump(rec, sphere, img);
-	ft_checker_texture_image(rec, sphere, img);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reflect.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dmacicio <dmacicio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 19:03:42 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/10/12 12:01:51 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/10/14 18:15:27 by dmacicio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ t_vec3d	ft_color_mirror(const t_hit_record *rec, const t_ray *ray, t_data *img)
 }
 */
 
-t_colour	ft_color_mirror(const t_hit_record *rec, const t_ray *ray, t_data *img)
+t_colour	ft_color_mirror(const t_hit_record *rec, const t_ray *ray,
+							t_data *img)
 {
 	const t_vec3d	direction = reflect(ray->direction, rec->normal);
 	t_ray			new_ray;
@@ -46,7 +47,7 @@ t_colour	ft_color_mirror(const t_hit_record *rec, const t_ray *ray, t_data *img)
 	return (colour);
 }
 
-t_vec3d	ft_color_merge(t_vec3d color1, t_vec3d color2,  double ratio1,
+t_vec3d	ft_color_merge(t_vec3d color1, t_vec3d color2, double ratio1,
 	double ratio2)
 {
 	t_vec3d	color;

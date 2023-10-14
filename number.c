@@ -6,10 +6,9 @@
 /*   By: dmacicio <dmacicio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 15:57:16 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/10/14 12:38:45 by dmacicio         ###   ########.fr       */
+/*   Updated: 2023/10/14 18:22:18 by dmacicio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "minirt.h"
 
@@ -84,4 +83,3 @@ int	ft_is_valid_int(char *str)
 	}
 	return (-1);
 }
-

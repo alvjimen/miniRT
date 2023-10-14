@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   light.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dmacicio <dmacicio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 18:10:03 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/10/09 18:46:05 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/10/14 18:40:11 by dmacicio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ t_vec3d	ft_diffuse_light(t_hit_record *rec, t_ray *ray, t_data *img,
 	colour = ft_vec3d_pro_vec3d(ft_colour_to_vec3d(light->colour), colour);
 	return (ft_vec3d_pro_double(colour, intesity));
 }
-	//https://stackoverflow.com/questions/15619830/raytracing-how-to-combine-diffuse-and-specular-color
+	//https://stackoverflow.com/questions/15619830/raytracing-how-to-combine-
+	//diffuse-and-specular-color
 	//_n  == normalized == unit_vector
 
 static t_vec3d	reflect_n(t_vec3d *vector_n, t_vec3d *normal_n)

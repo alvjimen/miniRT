@@ -6,7 +6,7 @@
 /*   By: dmacicio <dmacicio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 18:19:10 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/10/12 13:30:17 by dmacicio         ###   ########.fr       */
+/*   Updated: 2023/10/14 18:37:26 by dmacicio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ t_vec3d	ft_calculate_lights(t_hit_record *rec, t_ray *ray, t_data *img,
 		return (colour);
 	return (ft_vec3d_div_double(colour, counter));
 }
+
 // const t_element light
 double	ft_shadow_ray(t_hit_record *rec, t_data *img, t_element *light)
 {

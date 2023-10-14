@@ -37,6 +37,7 @@ SRC					=	main.c\
 						vec3d_math_double.c\
 						ray.c\
 						ppm.c\
+						ppm_utils.c\
 						camera.c\
 						hit.c\
 						antialiasing.c\
@@ -62,6 +63,7 @@ SRC					=	main.c\
 						cylinder_utils.c\
 						texture_coordinates_figures.c\
 						texture_coordinates_utils.c\
+						texture_coordinates_utils_2.c\
 						parse_utils_v3.c\
 						ft_search_list.c\
 						bump.c\

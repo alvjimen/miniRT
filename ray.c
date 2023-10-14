@@ -6,7 +6,7 @@
 /*   By: dmacicio <dmacicio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 18:56:49 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/10/12 19:54:24 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/10/14 18:37:04 by dmacicio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,14 +80,13 @@ t_vec3d	ft_ray_color(t_ray *ray, t_data *img, int bounce)
 	color = img->ft_color(&rec, ray, img);
 	if (rec.reflection_index == 0)
 		return (ft_vec3d_plus_vec3d(color,
-ft_vec3d_pro_double(bounce_light(&rec, img,
-bounce), 0)));
+				ft_vec3d_pro_double(bounce_light(&rec, img, bounce), 0)));
 	else if (rec.reflection_index == 1)
 		return (ft_colour_to_vec3d(rec.mirror_color));
 	mirror = ft_colour_to_vec3d(rec.mirror_color);
-	color = ft_vec3d_plus_vec3d(color, ft_vec3d_pro_double(bounce_light(&rec,
-img, bounce), 0));
+	color = ft_vec3d_plus_vec3d(color,
+			ft_vec3d_pro_double(bounce_light(&rec, img, bounce), 0));
 	color = ft_color_merge(color, mirror, 1 - rec.reflection_index,
-		rec.reflection_index);
+			rec.reflection_index);
 	return (color);
 }

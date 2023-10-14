@@ -5,11 +5,10 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: dmacicio <dmacicio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/10/12 13:27:21 by dmacicio         ###   ########.fr       */
+/*   Created: 2023/06/01 14:16:42 by alvjimen          #+#    #+#             */
+/*   Updated: 2023/10/14 18:25:09 by dmacicio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "minirt.h"
 
