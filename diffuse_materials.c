@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   diffuse_materials.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dmacicio <dmacicio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 15:50:28 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/06/01 18:46:12 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/10/14 18:00:44 by dmacicio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minirt.h"
 
 t_vec3d	ft_vec3d_random(double min, double max)

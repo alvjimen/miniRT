@@ -67,12 +67,12 @@ SRC					=	main.c\
 						bump.c\
 						reflect.c\
 						parse_utils_v4.c\
+						diffuse_materials.c\
 						#xpm.c \
 						ft_is_space.c\
 						ft_isdigit.c\
 						ft_atof.c\
 						world.c\
-						#diffuse_materials.c\
 						element.c\
 						perspective.c\
 						normalize.c\

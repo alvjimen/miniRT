@@ -6,7 +6,7 @@
 /*   By: dmacicio <dmacicio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:49:59 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/10/14 17:10:38 by dmacicio         ###   ########.fr       */
+/*   Updated: 2023/10/14 17:30:51 by dmacicio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -286,7 +286,7 @@ typedef struct s_hit_record
 	double		q;
 	double		reflection_index;
 	t_colour	mirror_color;
-	int				bounce;
+	int			bounce;
 }	t_hit_record;
 
 typedef struct s_data	t_data;
