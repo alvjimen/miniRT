@@ -6,7 +6,7 @@
 /*   By: dmacicio <dmacicio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 18:56:49 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/10/14 18:37:04 by dmacicio         ###   ########.fr       */
+/*   Updated: 2023/10/14 19:40:50 by dmacicio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,20 @@ t_vec3d	ft_ray_direction(t_data *img, int x, int y, int antialiasing)
 	return (ft_vec3d_minus_vec3d(display_point, img->camera.origin));
 }
 
+//TODO Renombrar la función si no te cuadra 
+//mir = mirror
+//c = color
+//bl = bounce_light
+//rc = rec
+static t_vec3d	get_color(t_vec3d *c, t_vec3d bl, t_hit_record rc, t_vec3d mir)
+{
+	*c = ft_vec3d_plus_vec3d(*c,
+			ft_vec3d_pro_double(bl, 0));
+	*c = ft_color_merge(*c, mir, 1 - rc.reflection_index,
+			rc.reflection_index);
+	return (*c);
+}
+
 t_vec3d	ft_ray_color(t_ray *ray, t_data *img, int bounce)
 {
 	t_hit_record	rec;
@@ -84,9 +98,15 @@ t_vec3d	ft_ray_color(t_ray *ray, t_data *img, int bounce)
 	else if (rec.reflection_index == 1)
 		return (ft_colour_to_vec3d(rec.mirror_color));
 	mirror = ft_colour_to_vec3d(rec.mirror_color);
+	color = get_color(&color, bounce_light(&rec, img, bounce), rec, mirror);
+	return (color);
+}
+
+/*	Esto es commo estaba antes de sustituirla por la función kk a renombrar
+	una vez probado que funciona correctamente y que no he metido la pata.
+
 	color = ft_vec3d_plus_vec3d(color,
 			ft_vec3d_pro_double(bounce_light(&rec, img, bounce), 0));
 	color = ft_color_merge(color, mirror, 1 - rec.reflection_index,
 			rec.reflection_index);
-	return (color);
-}
+*/

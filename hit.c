@@ -6,7 +6,7 @@
 /*   By: dmacicio <dmacicio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 14:17:03 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/10/12 18:40:12 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/10/14 19:34:06 by dmacicio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ t_element	*ft_hittable_element(t_ray *ray, t_data *img, t_hit_record *rec)
 	}
 	if (element_bk && element_bk->reflection_index != 0.0)
 	{
-		rec->mirror_color = ft_color_mirror(rec, ray, img); 
+		rec->mirror_color = ft_color_mirror(rec, ray, img);
 		// The line below is for debugging purpouse
 //		rec->colour = rec->mirror_color;
 //		rec->colour = img->ft_color(rec, ray, img)
