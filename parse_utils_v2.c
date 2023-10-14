@@ -6,7 +6,7 @@
 /*   By: dmacicio <dmacicio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 13:51:54 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/10/12 15:52:54 by dmacicio         ###   ########.fr       */
+/*   Updated: 2023/10/14 16:46:56 by dmacicio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	ft_cylinder_ok(t_cone_cylinder	cy)
 {
-	int err;
-	int out;
+	int	err;
+	int	out;
 
 	out = 0;
 	err = cy.normalized_orientation_vector.x > 1;
@@ -32,11 +32,6 @@ int	ft_cylinder_ok(t_cone_cylinder	cy)
 		write(1, CYHRE, ft_strlen(CYHRE));
 	if (cy.param[0] <= 0 || cy.param[1] <= 0 || err)
 		out = -1;
-	err = cy.colour.red > 255 || cy.colour.red < 0;
-	err |= cy.colour.green > 255 || cy.colour.green < 0;
-	err |= cy.colour.blue > 255 || cy.colour.blue < 0;
-	if (err)
-		write(1, CYHRE, ft_strlen(CYHRE));
 	return (out - err);
 }
 
@@ -54,10 +49,11 @@ int	ft_parse_cylinder(char *str, size_t pos, t_data *img)
 		return (-1);
 	if (ft_parse_double(str, &pos, &cy.param[1], CYSPE))
 		return (-1);
-	if (ft_parse_colour(str, &pos, &cy.colour, CYCOLOURE))
+	if (ft_parse_colour(str, &pos, ft_colour(&cy.colour, CYCOLE, CYCOLRE)))
 		return (-1);
 	if (ft_cylinder_ok(cy))
 		return (-1);
+	ft_putstr_fd("OK!\n", 1);
 	cy.node = ft_lstnew(cylinder(cy.coords, cy.normalized_orientation_vector,
 				cy.param, cy.colour));
 	ft_lstadd_back(&img->world, cy.node);
@@ -65,6 +61,29 @@ int	ft_parse_cylinder(char *str, size_t pos, t_data *img)
 		return (0);
 	ft_lstclear(&img->world, free);
 	return (1);
+}
+
+int	ft_cone_ok(t_cone_cylinder	cn)
+{
+	int	err;
+	int	out;
+
+	out = 0;
+	err = cn.normalized_orientation_vector.x > 1;
+	err |= cn.normalized_orientation_vector.x < -1;
+	err |= cn.normalized_orientation_vector.y > 1;
+	err |= cn.normalized_orientation_vector.y < -1;
+	err |= cn.normalized_orientation_vector.z > 1;
+	err |= cn.normalized_orientation_vector.z < -1;
+	if (err)
+		ft_putstr_fd(CNNOVRE, 1);
+	if (cn.param[0] <= 0)
+		ft_putstr_fd(CNDRE, 1);
+	if (cn.param[1] <= 0)
+		ft_putstr_fd(CNHRE, 1);
+	if (cn.param[0] <= 0 || cn.param[1] <= 0 || err)
+		out = -1;
+	return (out - err);
 }
 
 int	ft_parse_cone(char *str, size_t pos, t_data *img)
@@ -76,12 +95,15 @@ int	ft_parse_cone(char *str, size_t pos, t_data *img)
 		return (-1);
 	if (ft_parse_vec3d(str, &pos, &cn.normalized_orientation_vector, CNNOVE))
 		return (-1);
-	if (ft_parse_double(str, &pos, &cn.param[0], CNFPE))
+	if (ft_parse_double(str, &pos, &cn.param[0], CNDE))
 		return (-1);
-	if (ft_parse_double(str, &pos, &cn.param[1], CNSPE))
+	if (ft_parse_double(str, &pos, &cn.param[1], CNHE))
 		return (-1);
-	if (ft_parse_colour(str, &pos, &cn.colour, CNCOLOURE))
+	if (ft_parse_colour(str, &pos, ft_colour(&cn.colour, CNCOLE, CNCOLRE)))
 		return (-1);
+	if (ft_cone_ok(cn))
+		return (-1);
+	ft_putstr_fd("OK!\n", 1);
 	cn.node = ft_lstnew(cone(cn.coords, cn.normalized_orientation_vector,
 				cn.param, cn.colour));
 	ft_lstadd_back(&img->world, cn.node);
@@ -91,10 +113,13 @@ int	ft_parse_cone(char *str, size_t pos, t_data *img)
 	return (1);
 }
 
-int	ft_parse_line(char *str, t_data *img)
+int	ft_parse_line(char *str, t_data *img, int line)
 {
 	size_t	pos;
 
+	ft_putstr_fd("Línea ", 1);
+	ft_putnbr_fd(line, 1);
+	ft_putstr_fd(": ", 1);
 	pos = 0;
 	ft_run_is_space(str, &pos);
 	if (str[pos] == '\0')
@@ -115,63 +140,3 @@ int	ft_parse_line(char *str, t_data *img)
 		return (ft_parse_cone(str, pos, img));
 	return (-1);
 }
-
-int ft_valid_img(t_data *img)
-{
-	int minelement;
-
-	if(!img)
-		return (img->err);
-	if (!img->numcamera)
-		ft_putstr_fd(FENC, 1);
-	minelement = !img->num_cy || !img->num_plane || !img->num_sphera;
-	if (minelement)
-		ft_putstr_fd(FEAL3E, 1);
-	if(!img->err && (img->numcamera != 1 || minelement))
-		return (-1);
-	return (img->err);
-}
-
-int	ft_parse_file(char *file, t_data *img)
-{
-	int		fd;
-	char	*str;
-	int		anyline;
-
-	fd = open(file, O_RDONLY);
-	if (fd < 0 || fd > FD_SETSIZE)
-		return (-1);
-	str = (void *)1;
-	img->err = 0;
-	anyline = 0;
-	while (str)
-	{
-		str = get_next_line(fd);
-		if (!str)
-		{
-			if (anyline)
-				return ft_valid_img(img);
-
-			write(1, EFE, ft_strlen(EFE));
-			return (-1);
-			
-		}
-		anyline++;
-		if (ft_parse_line(str, img))
-			img->err = -1;;
-		free(str);
-	}
-	return (img->err);
-}
-
-int	ft_parse_end(char *str, size_t pos, char *msg)
-{
-	ft_run_is_space(str, &pos);
-	if (str[pos] != '\0')
-	{
-		write(1, msg, ft_strlen(msg));
-		return (-1);
-	}
-	return (0);
-}
-		

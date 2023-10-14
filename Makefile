@@ -66,6 +66,7 @@ SRC					=	main.c\
 						ft_search_list.c\
 						bump.c\
 						reflect.c\
+						parse_utils_v4.c\
 						#xpm.c \
 						ft_is_space.c\
 						ft_isdigit.c\

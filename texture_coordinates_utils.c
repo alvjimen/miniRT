@@ -6,35 +6,56 @@
 /*   By: dmacicio <dmacicio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 16:27:24 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/10/12 13:33:53 by dmacicio         ###   ########.fr       */
+/*   Updated: 2023/10/12 19:25:12 by dmacicio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-static void	ft_load_img_aux(t_data *img, t_mlx_img *target, char *path)
+int	ft_error_read_image_file(char *path)
+{
+	ft_putstr_fd("Error reading ", 1);
+	ft_putstr_fd(path, 1);
+	ft_putstr_fd(" file.\n", 1);
+	return (-1);
+}
+
+int	ft_error_getting_image_address(char *path)
+{
+	ft_putstr_fd("Error getting ", 1);
+	ft_putstr_fd(path, 1);
+	ft_putstr_fd(" imagen address.\n", 1);
+	return (-1);
+}
+
+static int	ft_load_img_aux(t_data *img, t_mlx_img *target, char *path)
 {
 	if (!target->img)
 	{
 		target->img = mlx_xpm_file_to_image(img->mlx, path,
 				&target->width, &target->height);
 		if (!target->img)
-			exit (1);
+			return (ft_error_read_image_file(path));
 		target->address = mlx_get_data_addr(target->img,
 				&target->bits_per_pixel, &target->line_length,
 				&target->endian);
 		if (!target->address)
-			exit (1);
+			return (ft_error_getting_image_address(path));
 		target->endian = img->display.endian;
+		return (0);
 	}
+	return (0);
 }
 
-// TODO Error MSG in case the img load fail
-void	ft_load_img(t_data *img)
+int	ft_load_img(t_data *img)
 {
-	ft_load_img_aux(img, &img->img, XPM_PATH);
-	ft_load_img_aux(img, &img->bump, XPM_BUMP_PATH);
-	ft_load_img_aux(img, &img->normal, XPM_NORMAL_PATH);
+	if (ft_load_img_aux(img, &img->img, XPM_PATH))
+		return (-1);
+	if (ft_load_img_aux(img, &img->bump, XPM_BUMP_PATH))
+		return (-1);
+	if (ft_load_img_aux(img, &img->normal, XPM_NORMAL_PATH))
+		return (-1);
+	return (0);
 }
 
 void	ft_checker_texture_image(t_hit_record *rec, t_element *element,

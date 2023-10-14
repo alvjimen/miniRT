@@ -6,7 +6,7 @@
 /*   By: dmacicio <dmacicio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 15:57:16 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/10/12 13:21:54 by dmacicio         ###   ########.fr       */
+/*   Updated: 2023/10/14 12:38:45 by dmacicio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,3 +70,18 @@ int	ft_is_valid_double(char *str)
 	}
 	return (-1);
 }
+
+int	ft_is_valid_int(char *str)
+{
+	if (*str == '-' || *str == '+')
+		str++;
+	if (ft_isdigit(*str))
+	{
+		while (*str && ft_isdigit(*str))
+			str++;
+		if (ft_is_space(*str) || *str == ',' || *str == '\0' || *str == '\n')
+			return (0);
+	}
+	return (-1);
+}
+
