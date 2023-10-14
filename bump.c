@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   bump.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvjimen <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dmacicio <dmacicio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 14:54:02 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/10/07 15:12:18 by alvjimen         ###   ########.fr       */
+/*   Updated: 2023/10/14 20:06:38 by dmacicio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minirt.h"
 
 //int				get_mlx_pixel_colour(t_mlx_img *img, int x, int y);
