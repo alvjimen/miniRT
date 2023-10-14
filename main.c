@@ -12,10 +12,12 @@
 
 #include "minirt.h"
 
+/*
 void	ft_leaks(void)
 {
 	system("leaks graphics");
 }
+*/
 
 int	main(int argc, char	*argv[])
 {
@@ -23,7 +25,7 @@ int	main(int argc, char	*argv[])
 
 	if (argc < 2 && !*argv)
 		return (1);
-	ft_leaks();
+//	ft_leaks();
 	ft_bzero(&img, sizeof(img));
 	ft_img(&img, WIN_W, ASPECT_RATIO);
 	ft_load_img(&img);

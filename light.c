@@ -38,8 +38,9 @@ t_vec3d	ft_diffuse_light(t_hit_record *rec, t_ray *ray, t_data *img,
 	double		diffuse_factor;
 	double		intesity;
 
+	(void)ray;
 	if (ft_shadow_ray(rec, img, light))
-		return (ft_init_vec3d(0, 0, 0));
+		return (ft_vec3d_pro_double(bounce_light(rec, img, rec->bounce), 0.2));
 	r = ft_vec3d_minus_vec3d(light->coords, rec->p);
 	intesity = light->light_ratio / ft_vec3d_squared_len(r);
 	if (ft_vec3d_squared_len(r) != 1)
@@ -49,7 +50,6 @@ t_vec3d	ft_diffuse_light(t_hit_record *rec, t_ray *ray, t_data *img,
 	intesity = intesity * diffuse_factor;
 	colour = ft_colour_to_vec3d(rec->colour);
 	colour = ft_vec3d_pro_vec3d(ft_colour_to_vec3d(light->colour), colour);
-	(void)ray;
 	return (ft_vec3d_pro_double(colour, intesity));
 }
 	//https://stackoverflow.com/questions/15619830/raytracing-how-to-combine-diffuse-and-specular-color
@@ -83,8 +83,9 @@ t_vec3d	ft_specular_light(t_hit_record *rec, t_ray *ray, t_data *img,
 	double	intesity;
 	t_vec3d	specular_color;
 
+	(void)ray;
 	if (ft_shadow_ray(rec, img, light))
-		return (ft_init_vec3d(0, 0, 0));
+		return (ft_vec3d_pro_double(bounce_light(rec, img, rec->bounce), 0.2));
 	pos_lightpos_n = ft_vec3d_minus_vec3d(rec->p, light->coords);
 	intesity = light->light_ratio / ft_vec3d_squared_len(pos_lightpos_n);
 	reflected_n = reflect_n(&pos_lightpos_n, &rec->normal);

@@ -25,7 +25,7 @@ static int	ft_antialiasing(t_data *img, int x, int y)
 	{
 		vector = ft_ray_direction(img, x, y, 1);
 		ray = ft_init_ray(img->camera.origin, vector);
-		acum = ft_vec3d_plus_vec3d(acum, ft_ray_color(&ray, img));
+		acum = ft_vec3d_plus_vec3d(acum, ft_ray_color(&ray, img, 3));
 	}
 	return (ft_write_color(acum, img->samplex_per_pixel));
 }

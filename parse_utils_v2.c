@@ -118,16 +118,16 @@ int	ft_parse_line(char *str, t_data *img)
 
 int ft_valid_img(t_data *img)
 {
-	int minelement;
-
+//	int minelement;
+//
 	if(!img)
 		return (img->err);
 	if (!img->numcamera)
 		ft_putstr_fd(FENC, 1);
-	minelement = !img->num_cy || !img->num_plane || !img->num_sphera;
-	if (minelement)
-		ft_putstr_fd(FEAL3E, 1);
-	if(!img->err && (img->numcamera != 1 || minelement))
+//	minelement = !img->num_cy || !img->num_plane || !img->num_sphera;
+//	if (minelement)
+//		ft_putstr_fd(FEAL3E, 1);
+	if(!img->err && img->numcamera != 1)
 		return (-1);
 	return (img->err);
 }

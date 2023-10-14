@@ -37,9 +37,10 @@ int	ft_hittable(t_ray *ray, t_data *img, t_hit_record *rec)
 		{
 			hit_anything = 1;
 			img->camera.t_max = tmp_rec.t;
-			tmp_rec.colour = element->colour;
 			if (element->textured)
 				element->ft_texture(&tmp_rec, element, img);
+			tmp_rec.colour = element->colour;
+			if (element->textured)
 			*rec = tmp_rec;
 		}
 	}
