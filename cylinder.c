@@ -6,7 +6,7 @@
 /*   By: dmacicio <dmacicio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 18:32:16 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/10/12 13:28:24 by dmacicio         ###   ########.fr       */
+/*   Updated: 2023/10/14 19:57:24 by dmacicio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,16 @@ c = ft_vec3d_dot(w, w) - pow(ft_vec3d_dot(w, h), 2) - pow(r, 2);
 /* -b / 2a */
 /*(-b - sqrtd) / 2a*/
 /*(-b + sqrtd) / 2a*/
-static int	ft_t_is_valid(double t, t_camera *camera)
-{
-	return (!isnan(t) && t > camera->t_min && t < camera->t_max);
-}
 
-static double	ft_check_discriminant(double abc[3], t_camera *camera,
+//Lo he comentado para pasar la norminette, aplicando la condición dentro
+//de la función (Línea 90 y 97)
+// static int	ft_t_is_valid(double t, t_camera *camera)
+// {
+// 	return (!isnan(t) && t > camera->t_min && t < camera->t_max);
+// }
+
+//c = camera
+static double	ft_check_discriminant(double abc[3], t_camera *c,
 		t_ray *ray, t_vec3d h)
 {
 	const double	discriminant = (abc[1] * abc[1]) - (4 * abc[0] * abc[2]);
@@ -84,13 +88,14 @@ static double	ft_check_discriminant(double abc[3], t_camera *camera,
 	sqrtd = sqrt(discriminant);
 	t = (-abc[1] - sqrtd) / (2 * abc[0]);
 	t_2 = (-abc[1] + sqrtd) / (2 * abc[0]);
-	if (ft_t_is_valid(t, camera) && ft_t_is_valid(t_2, camera))
+	if ((!isnan(t) && t > c->t_min && t < c->t_max)
+		&& (!isnan(t_2) && t_2 > c->t_min && t_2 < c->t_max))
 	{
 		if (t < t_2)
 			return (t);
 		return (t_2);
 	}
-	else if (ft_t_is_valid(t, camera))
+	else if (!isnan(t) && t > c->t_min && t < c->t_max)
 		return (t);
 	return (t_2);
 }
