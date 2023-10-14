@@ -6,7 +6,7 @@
 /*   By: dmacicio <dmacicio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 14:17:03 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/10/12 13:28:49 by dmacicio         ###   ########.fr       */
+/*   Updated: 2023/10/12 18:40:12 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,10 @@ int	ft_hittable(t_ray *ray, t_data *img, t_hit_record *rec)
 		{
 			hit_anything = 1;
 			img->camera.t_max = tmp_rec.t;
-			tmp_rec.colour = element->colour;
 			if (element->textured)
 				element->ft_texture(&tmp_rec, element, img);
+			tmp_rec.colour = element->colour;
+			if (element->textured)
 			*rec = tmp_rec;
 		}
 	}
@@ -74,7 +75,7 @@ t_element	*ft_hittable_element(t_ray *ray, t_data *img, t_hit_record *rec)
 	{
 		rec->mirror_color = ft_color_mirror(rec, ray, img); 
 		// The line below is for debugging purpouse
-		rec->colour = rec->mirror_color;
+//		rec->colour = rec->mirror_color;
 //		rec->colour = img->ft_color(rec, ray, img)
 	}
 	img->camera.t_max = TMAX;

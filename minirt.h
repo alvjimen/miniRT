@@ -6,7 +6,7 @@
 /*   By: dmacicio <dmacicio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:49:59 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/10/14 16:58:22 by dmacicio         ###   ########.fr       */
+/*   Updated: 2023/10/14 17:10:38 by dmacicio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -286,6 +286,7 @@ typedef struct s_hit_record
 	double		q;
 	double		reflection_index;
 	t_colour	mirror_color;
+	int				bounce;
 }	t_hit_record;
 
 typedef struct s_data	t_data;
@@ -435,7 +436,7 @@ t_vec3d			ft_vec3d_div_double(t_vec3d o1, double o2);
 /* ray.c */
 t_ray			ft_init_ray(t_vec3d origin, t_vec3d direction);
 t_vec3d			ft_ray_at(t_ray *ray, double t);
-t_vec3d			ft_ray_color(t_ray *ray, t_data *img);
+t_vec3d			ft_ray_color(t_ray *ray, t_data *img, int bounce);
 t_vec3d			ft_ray_direction(t_data *img, int x, int y, int flag);
 /* ppm.c */
 void			ft_draw_ppm_header(int width, int height, int fd);
@@ -601,10 +602,17 @@ t_vec3d ft_raw_bu(t_mlx_img *img, int x, int y);
 t_vec3d ft_raw_bv(t_mlx_img *img, int x, int y);
 t_vec3d	ft_bump(int x, int y, t_data *img, t_hit_record *rec);
 /*reflect */
-t_colour	ft_color_mix(const t_hit_record *rec, const t_ray *ray, t_data *img);
+t_vec3d	ft_color_merge(t_vec3d color1, t_vec3d color2,  double ratio1,
+	double ratio2);
 t_colour	ft_color_mirror(const t_hit_record *rec, const t_ray *ray, t_data *img);
 t_vec3d	reflect(t_vec3d vector_n, t_vec3d normal_n);
 //int	ft_common_cylinder_cone(char *str, size_t *pos, t_cone_cylinder	*cy_co, char *msg1, char *msg2);
 int	ft_is_valid_double(char *str);
 int	ft_is_valid_int(char *str);
+/* diffuse_materials.c */
+t_vec3d	ft_vec3d_random(double min, double max);
+t_vec3d	random_in_unit_sphere(void);
+t_vec3d	random_in_unit_length_sphere(void);
+t_vec3d	random_on_hemisphere(t_vec3d normal);
+t_vec3d	bounce_light(t_hit_record *rec, t_data *img, int bounce);
 #endif

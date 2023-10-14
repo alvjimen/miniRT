@@ -39,7 +39,7 @@ t_colour	ft_color_mirror(const t_hit_record *rec, const t_ray *ray, t_data *img)
 	new_ray = ft_init_ray(rec->p, direction);
 	img->mirror_limit--;
 	img->camera.t_min = 0.00001;
-	tmp = ft_ray_color(&new_ray, img);
+	tmp = ft_ray_color(&new_ray, img, 3);
 	colour.red = (char)(clamp(tmp.x, 0, 1) * 255);
 	colour.green = (char)(clamp(tmp.y, 0, 1) * 255);
 	colour.blue = (char)(clamp(tmp.z, 0, 1) * 255);

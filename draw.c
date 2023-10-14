@@ -30,7 +30,7 @@ void	ft_draw_without_antialiasing(t_data *img)
 			vector = ft_ray_direction(img, x, y, 0);
 			ray = ft_init_ray(img->camera.origin, vector);
 			img->mirror_limit = 50;
-			colour = ft_ray_color(&ray, img);
+			colour = ft_ray_color(&ray, img, 3);
 			my_mlx_pixel_put(&img->display, x, y, ft_write_color(colour, 1));
 			x++;
 		}

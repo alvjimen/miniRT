@@ -300,7 +300,7 @@ int	hook_mouse(int button, int x, int y, void *param)
 		ft_print_vector("point", rec.p);
 		printf("rec->u: %f\trec->v: %f\n", rec.u, rec.v);
 		ft_print_vector("normal", rec.normal);
-		ft_print_vector("color", ft_ray_color(&ray, img));
+		ft_print_vector("color", ft_ray_color(&ray, img, 3));
 	}
 	return (0);
 }
