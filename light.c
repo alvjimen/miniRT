@@ -6,7 +6,7 @@
 /*   By: dmacicio <dmacicio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 18:10:03 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/10/14 18:40:11 by dmacicio         ###   ########.fr       */
+/*   Updated: 2023/10/16 11:37:58 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_vec3d	ft_diffuse_light(t_hit_record *rec, t_ray *ray, t_data *img,
 
 	(void)ray;
 	if (ft_shadow_ray(rec, img, light))
-		return (ft_vec3d_pro_double(bounce_light(rec, img, rec->bounce), 0.2));
+		return (ft_vec3d_pro_double(bounce_light(rec, img), 1));
 	r = ft_vec3d_minus_vec3d(light->coords, rec->p);
 	intesity = light->light_ratio / ft_vec3d_squared_len(r);
 	if (ft_vec3d_squared_len(r) != 1)
@@ -86,7 +86,7 @@ t_vec3d	ft_specular_light(t_hit_record *rec, t_ray *ray, t_data *img,
 
 	(void)ray;
 	if (ft_shadow_ray(rec, img, light))
-		return (ft_vec3d_pro_double(bounce_light(rec, img, rec->bounce), 0.2));
+		return (ft_vec3d_pro_double(bounce_light(rec, img), 1));
 	pos_lightpos_n = ft_vec3d_minus_vec3d(rec->p, light->coords);
 	intesity = light->light_ratio / ft_vec3d_squared_len(pos_lightpos_n);
 	reflected_n = reflect_n(&pos_lightpos_n, &rec->normal);

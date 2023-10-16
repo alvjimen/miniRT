@@ -6,7 +6,7 @@
 /*   By: dmacicio <dmacicio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 12:49:59 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/10/14 17:30:51 by dmacicio         ###   ########.fr       */
+/*   Updated: 2023/10/16 11:32:39 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -614,5 +614,5 @@ t_vec3d	ft_vec3d_random(double min, double max);
 t_vec3d	random_in_unit_sphere(void);
 t_vec3d	random_in_unit_length_sphere(void);
 t_vec3d	random_on_hemisphere(t_vec3d normal);
-t_vec3d	bounce_light(t_hit_record *rec, t_data *img, int bounce);
+t_vec3d	bounce_light(t_hit_record *rec, t_data *img);
 #endif

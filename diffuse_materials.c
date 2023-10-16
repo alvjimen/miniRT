@@ -6,7 +6,7 @@
 /*   By: dmacicio <dmacicio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 15:50:28 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/10/14 18:00:44 by dmacicio         ###   ########.fr       */
+/*   Updated: 2023/10/16 11:35:29 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,20 +56,12 @@ t_vec3d	random_on_hemisphere(t_vec3d normal)
 	return (ft_vec3d_negative(on_unit_sphere));
 }
 
-t_vec3d	bounce_light(t_hit_record *rec, t_data *img, int bounce)
+t_vec3d	bounce_light(t_hit_record *rec, t_data *img)
 {
 	t_ray	ray;
-	t_vec3d	direction;
 	t_vec3d	color;
-	int		num;
 
-	ft_bzero(&color, sizeof(color));
-	num = 0;
-	while (num++ < 5)
-	{
-		direction = random_on_hemisphere(rec->normal);
-		ray = ft_init_ray(rec->p, direction);
-		color = ft_vec3d_plus_vec3d(color, ft_ray_color(&ray, img, bounce - 1));
-	}
-	return (ft_vec3d_div_double(color, num));
+	ray = ft_init_ray(rec->p, rec->normal);
+	color = ft_ray_color(&ray, img, rec->bounce - 1);
+	return (ft_vec3d_div_double(color, 100));
 }

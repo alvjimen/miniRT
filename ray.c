@@ -6,7 +6,7 @@
 /*   By: dmacicio <dmacicio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 18:56:49 by alvjimen          #+#    #+#             */
-/*   Updated: 2023/10/14 19:40:50 by dmacicio         ###   ########.fr       */
+/*   Updated: 2023/10/16 11:31:49 by alvjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,10 @@ t_vec3d	ft_ray_direction(t_data *img, int x, int y, int antialiasing)
 //c = color
 //bl = bounce_light
 //rc = rec
-static t_vec3d	get_color(t_vec3d *c, t_vec3d bl, t_hit_record rc, t_vec3d mir)
+static t_vec3d	get_color(t_vec3d *c, t_hit_record rc, t_vec3d mir)
 {
-	*c = ft_vec3d_plus_vec3d(*c,
-			ft_vec3d_pro_double(bl, 0));
+	//*c = ft_vec3d_plus_vec3d(*c,
+	//		ft_vec3d_pro_double(bl, 0));
 	*c = ft_color_merge(*c, mir, 1 - rc.reflection_index,
 			rc.reflection_index);
 	return (*c);
@@ -94,11 +94,11 @@ t_vec3d	ft_ray_color(t_ray *ray, t_data *img, int bounce)
 	color = img->ft_color(&rec, ray, img);
 	if (rec.reflection_index == 0)
 		return (ft_vec3d_plus_vec3d(color,
-				ft_vec3d_pro_double(bounce_light(&rec, img, bounce), 0)));
+				ft_vec3d_pro_double(bounce_light(&rec, img), 0)));
 	else if (rec.reflection_index == 1)
 		return (ft_colour_to_vec3d(rec.mirror_color));
 	mirror = ft_colour_to_vec3d(rec.mirror_color);
-	color = get_color(&color, bounce_light(&rec, img, bounce), rec, mirror);
+	color = get_color(&color, rec, mirror);
 	return (color);
 }
 
